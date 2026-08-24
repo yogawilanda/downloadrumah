@@ -1,7 +1,9 @@
 <?php
 
-use App\Livewire\HomeFeed;
 use Illuminate\Support\Facades\Route;
+
+use App\Livewire\HomeFeed;
+use App\Livewire\EstateDetail;
 
 // Route::view('/', 'welcome');
 
@@ -14,5 +16,8 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::get('/', HomeFeed::class)->name('home');
+
+Route::get('/estate/{slug}', EstateDetail::class)->name('estate.show');
+
 
 require __DIR__.'/auth.php';
