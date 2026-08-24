@@ -1,19 +1,7 @@
 <div class="max-w-md mx-auto min-h-screen bg-gray-50 pb-20">
     <!-- Header & Sticky Search Bar -->
     <div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm">
-        <div class="flex items-center justify-between mb-3">
-            <div>
-                <h1 class="text-xl font-bold text-gray-900 tracking-tight">DownloadRumah</h1>
-                <p class="text-xs text-gray-500">Temukan hunian impianmu</p>
-            </div>
-            @auth
-                <a href="{{ route('dashboard') }}"
-                    class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full">Dashboard</a>
-            @else
-                <a href="{{ route('login') }}"
-                    class="text-xs font-semibold text-gray-600 bg-gray-100 px-3 py-1.5 rounded-full">Masuk</a>
-            @endauth
-        </div>
+        
 
         <!-- Input Search -->
         <div class="relative mb-2.5">
