@@ -1,7 +1,7 @@
 <div class="max-w-md mx-auto min-h-screen bg-gray-50 pb-20">
     <!-- Header & Sticky Search Bar -->
     <div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm">
-        
+
 
         <!-- Input Search -->
         <div class="relative mb-2.5">
@@ -46,7 +46,7 @@
     <!-- Feed Property Cards -->
     <div class="px-4 pt-4 space-y-4">
         @forelse ($estates as $estate)
-            <a href="{{ route('estate.show', $estate->slug) }}" wire:navigate
+            <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
                 class="block bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <div
                     class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">

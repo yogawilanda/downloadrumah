@@ -21,10 +21,19 @@ class EstateAttachment extends Model
     {
         return Attribute::make(
             get: function () {
+                if (!$this->file_path) {
+                    return null;
+                }
+
+                // Jika sudah berupa URL lengkap (e.g. S3 / HTTP)
                 if (filter_var($this->file_path, FILTER_VALIDATE_URL)) {
                     return $this->file_path;
                 }
-                return asset('storage/' . $this->file_path);
+
+                // Hapus prefix 'public/' jika tidak sengaja tersimpan di DB
+                $cleanPath = ltrim(str_replace('public/', '', $this->file_path), '/');
+
+                return asset('storage/' . $cleanPath);
             }
         );
     }

@@ -17,6 +17,11 @@ class Estate extends Model
         'attributes' => 'array',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     // 1. Accessor Format Rupiah Lengkap: Rp 1.200.000.000
     protected function formattedPrice(): Attribute
     {
