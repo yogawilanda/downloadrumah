@@ -30,16 +30,24 @@
         @forelse($estates as $estate)
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-3 space-y-3">
                 <div class="flex gap-3 items-center">
-                    <!-- Image Thumbnail dengan Fallback & Accessor ->url -->
+                    <!-- Image Thumbnail menggunakan Accessor ->url dari EstateAttachment -->
                     <div class="w-20 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 relative border border-gray-100">
-                        @php
-                            $cover = $estate->primaryImage ?? $estate->attachments->first();
-                        @endphp
+                       @php
+    $cover = $estate->primaryImage ?? $estate->attachments?->first();
+    $coverUrl = null;
 
-                        @if($cover)
-                            <img src="{{ $cover->url }}" class="w-full h-full object-cover" alt="{{ $estate->title }}">
-                        @else
-                            <div class="w-full h-full flex items-center justify-center text-[10px] text-gray-400 font-medium">No Image</div>
+    if ($cover && $cover->file_path) {
+        $cleanPath = ltrim(str_replace('public/', '', $cover->file_path), '/');
+        $coverUrl = url('media/' . $cleanPath);
+    }
+@endphp
+
+@if($coverUrl)
+    <img src="{{ $coverUrl }}" class="w-full h-full object-cover" alt="{{ $estate->title }}">
+@else
+                            <div class="w-full h-full flex items-center justify-center text-[10px] text-gray-400 font-medium">
+                                No Image
+                            </div>
                         @endif
 
                         <span class="absolute top-1 left-1 px-1.5 py-0.5 text-[9px] font-bold rounded-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-500 text-white' : 'bg-blue-500 text-white' }}">
@@ -57,10 +65,12 @@
 
                 <!-- Action Buttons Mobile -->
                 <div class="grid grid-cols-2 gap-2 pt-1 border-t border-gray-50">
-                    <a href="{{ route('estates.edit', $estate->slug) }}" class="py-2.5 rounded-xl bg-indigo-50 text-indigo-600 text-xs font-bold text-center active:scale-95 transition">
+                    <a href="{{ route('estates.edit', $estate->slug) }}"
+                        class="py-2.5 rounded-xl bg-indigo-50 text-indigo-600 text-xs font-bold text-center active:scale-95 transition">
                         Edit
                     </a>
-                    <button wire:click="deleteEstate({{ $estate->id }})" wire:confirm="Yakin ingin menghapus properti ini?" class="py-2.5 rounded-xl bg-red-50 text-red-600 text-xs font-bold text-center active:scale-95 transition">
+                    <button wire:click="deleteEstate({{ $estate->id }})" wire:confirm="Yakin ingin menghapus properti ini?"
+                        class="py-2.5 rounded-xl bg-red-50 text-red-600 text-xs font-bold text-center active:scale-95 transition">
                         Hapus
                     </button>
                 </div>

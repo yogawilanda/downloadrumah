@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class EstateAttachment extends Model
 {
@@ -25,15 +26,21 @@ class EstateAttachment extends Model
                     return null;
                 }
 
-                // Jika sudah berupa URL lengkap (e.g. S3 / HTTP)
+                // Jika sudah berupa URL lengkap (e.g. S3 / Cloudinary)
                 if (filter_var($this->file_path, FILTER_VALIDATE_URL)) {
                     return $this->file_path;
                 }
 
-                // Hapus prefix 'public/' jika tidak sengaja tersimpan di DB
+                // Bersihkan prefix 'public/' atau slash di awal
                 $cleanPath = ltrim(str_replace('public/', '', $this->file_path), '/');
 
-                return asset('storage/' . $cleanPath);
+                // Jika di environment local (Windows/Laragon), lewat route /media/
+                if (app()->environment('local')) {
+                    return url('media/' . $cleanPath);
+                }
+
+                // Jika di Production (Linux VPS), lewat Storage URL native
+                return Storage::url($cleanPath);
             }
         );
     }
