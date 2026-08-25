@@ -1,4 +1,4 @@
-<div class="max-w-md mx-auto min-h-screen bg-gray-50 pb-20">
+<div class="max-w-md mx-auto min-h-screen  pb-20">
     <!-- Header & Sticky Search Bar -->
     <div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm">
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Pages\Estates\EstateListing;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response; // <-- TAMBAHKAN INI
 use App\Livewire\HomeFeed;
@@ -27,6 +28,10 @@ Route::get('/media/{path}', function ($path) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/estates/create', EstateForm::class)->name('estates.create');
     Route::get('/dashboard', AgentDashboard::class)->name('dashboard');
+
+    // Listings
+    Route::get('/listings', EstateListing::class)->name('listings.index');
+
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
 });
 

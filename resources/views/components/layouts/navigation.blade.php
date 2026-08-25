@@ -1,62 +1,121 @@
 {{-- resources/views/components/layouts/navigation.blade.php --}}
-<div x-data="{ openMenu: false }">
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-gray-100 z-40">
-        <div class="grid grid-cols-5 h-16 items-center">
+<div x-data="{
+    openMenu: false,
+    activeTab: '{{ request()->routeIs('home') ? 'home' : (request()->routeIs('search*') ? 'search' : (request()->routeIs('listings*') ? 'listings' : (request()->routeIs('dashboard*') || request()->routeIs('profile*') || request()->routeIs('login') ? 'menu' : ''))) }}',
+    indicatorStyle: { left: '0px', width: '0px' },
+    init() {
+        this.updateIndicator();
+        // Recalculate saat Livewire selesasi navigasi
+        document.addEventListener('livewire:navigated', () => {
+            this.updateActiveTabFromRoute();
+            this.updateIndicator();
+        });
+    },
+    updateIndicator() {
+        this.$nextTick(() => {
+            setTimeout(() => {
+                const activeEl = this.$refs[this.activeTab];
+                if (activeEl) {
+                    this.indicatorStyle = {
+                        left: activeEl.offsetLeft + 'px',
+                        width: activeEl.offsetWidth + 'px'
+                    };
+                }
+            }, 50);
+        });
+    },
+    updateActiveTabFromRoute() {
+        const path = window.location.pathname;
+        if (path === '/' || path.includes('home')) this.activeTab = 'home';
+        else if (path.includes('search')) this.activeTab = 'search';
+        else if (path.includes('listings')) this.activeTab = 'listings';
+        else if (path.includes('dashboard') || path.includes('profile') || path.includes('login')) this.activeTab = 'menu';
+    }
+}"
+@resize.window.debounce.100ms="updateIndicator()">
+
+    <!-- Floating Bottom Navigation -->
+    <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
+        <nav class="relative flex items-center justify-between bg-white/80 backdrop-blur-xl border border-gray-100 shadow-xl rounded-full p-1.5">
+
+            <!-- Sliding Active Indicator Background -->
+            <div x-show="activeTab !== '' && indicatorStyle.width !== '0px'"
+                 class="absolute top-1.5 bottom-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full shadow-md shadow-purple-200 transition-all duration-300 ease-out pointer-events-none"
+                 :style="`left: ${indicatorStyle.left}; width: ${indicatorStyle.width};`"
+                 x-cloak>
+            </div>
 
             <!-- 1. Home -->
             <a href="{{ route('home') }}" wire:navigate
-                class="flex flex-col items-center justify-center h-full space-y-1 {{ request()->routeIs('home') ? 'text-indigo-600 font-semibold' : 'text-gray-400 hover:text-gray-600' }}">
-                <x-icons.icons-home />
-                <span class="text-[10px]">Beranda</span>
+               x-ref="home"
+               @click="activeTab = 'home'; updateIndicator()"
+               class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 {{ request()->routeIs('home') ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600' }}">
+                <x-icons.icons-home class="w-5 h-5 shrink-0" />
+                @if(request()->routeIs('home'))
+                    <span class="text-xs font-semibold whitespace-nowrap">Beranda</span>
+                @endif
             </a>
 
             <!-- 2. Search / Explore -->
             <a href="#" wire:navigate
-                class="flex flex-col items-center justify-center h-full space-y-1 text-gray-400 hover:text-gray-600">
-                <x-icons.icons-search />
-                <span class="text-[10px]">Cari</span>
+               x-ref="search"
+               @click="activeTab = 'search'; updateIndicator()"
+               class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 {{ request()->routeIs('search*') ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600' }}">
+                <x-icons.icons-search class="w-5 h-5 shrink-0" />
+                @if(request()->routeIs('search*'))
+                    <span class="text-xs font-semibold whitespace-nowrap">Cari</span>
+                @endif
             </a>
 
-            <!-- 3. Floating CTA Center Button (Pasang Iklan) -->
-            <div class="flex items-center justify-center h-full">
-                <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                    class="p-3 bg-indigo-600 text-white rounded-full shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition transform active:scale-95 -mt-5">
-                    <x-icons.icons-adds />
-                </a>
-            </div>
+            <!-- 3. Floating CTA Button (Pasang Iklan) -->
+            <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
+               class="relative z-10 flex items-center justify-center p-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full shadow-lg shadow-purple-200 hover:opacity-90 active:scale-95 transition-all shrink-0">
+                <x-icons.icons-adds class="w-5 h-5" />
+            </a>
 
-            <!-- 4. Listing Saya (Auth Only / Placeholder Guest) -->
+            <!-- 4. Listing Saya -->
             @auth
-                <a href="{{ route('dashboard') }}" wire:navigate
-                    class="flex flex-col items-center justify-center h-full space-y-1 {{ request()->routeIs('dashboard*') ? 'text-indigo-600 font-semibold' : 'text-gray-400 hover:text-gray-600' }}">
-                    <x-icons.icons-listings />
-                    <span class="text-[10px]">Listing Saya</span>
+                <a href="{{ route('listings.index') }}" wire:navigate
+                   x-ref="listings"
+                   @click="activeTab = 'listings'; updateIndicator()"
+                   class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 {{ request()->routeIs('listings*') ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600' }}">
+                    <x-icons.icons-listings class="w-5 h-5 shrink-0" />
+                    @if(request()->routeIs('listings*'))
+                        <span class="text-xs font-semibold whitespace-nowrap">Listing</span>
+                    @endif
                 </a>
             @else
                 <a href="{{ route('login') }}" wire:navigate
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-gray-400 hover:text-gray-600 opacity-60">
-                    <x-icons.icons-listings />
-                    <span class="text-[10px]">Listing Saya</span>
+                   class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 text-gray-400 opacity-60 hover:opacity-100">
+                    <x-icons.icons-listings class="w-5 h-5 shrink-0" />
                 </a>
             @endauth
 
-            <!-- 5. Menu Lain (Auth) / Masuk (Guest) -->
+            <!-- 5. Menu Lain / Masuk -->
             @auth
-                <button type="button" @click="openMenu = true"
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-gray-400 hover:text-gray-600 focus:outline-none">
-                    <x-icons.icons-menus />
-                    <span class="text-[10px]">Menu Lain</span>
+                <button type="button"
+                        x-ref="menu"
+                        @click="openMenu = true"
+                        class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 {{ request()->routeIs('dashboard*') || request()->routeIs('profile*') ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600' }} focus:outline-none">
+                    <x-icons.icons-menus class="w-5 h-5 shrink-0" />
+                    @if(request()->routeIs('dashboard*') || request()->routeIs('profile*'))
+                        <span class="text-xs font-semibold whitespace-nowrap">Menu</span>
+                    @endif
                 </button>
             @else
                 <a href="{{ route('login') }}" wire:navigate
-                    class="flex flex-col items-center justify-center h-full space-y-1 text-gray-400 hover:text-gray-600">
-                    <x-icons.icons-login />
-                    <span class="text-[10px]">Masuk</span>
+                   x-ref="menu"
+                   @click="activeTab = 'menu'; updateIndicator()"
+                   class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 {{ request()->routeIs('login') ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600' }}">
+                    <x-icons.icons-login class="w-5 h-5 shrink-0" />
+                    @if(request()->routeIs('login'))
+                        <span class="text-xs font-semibold whitespace-nowrap">Masuk</span>
+                    @endif
                 </a>
             @endauth
 
-        </div>
-    </nav>
+        </nav>
+    </div>
 
     <!-- Bottom Sheet Modal (Auth Only) -->
     @auth
@@ -98,12 +157,12 @@
 
                 <div class="space-y-1">
                     <a href="{{ route('dashboard') }}" wire:navigate @click="openMenu = false"
-                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl transition">
+                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl transition">
                         <span class="text-sm font-medium">Dashboard</span>
                     </a>
 
                     <a href="{{ route('profile') }}" wire:navigate @click="openMenu = false"
-                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 rounded-xl transition">
+                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl transition">
                         <span class="text-sm font-medium">Ubah Profil</span>
                     </a>
 
