@@ -26,7 +26,7 @@ class Estate extends Model
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'Rp ' . number_format($this->price, 0, ',', '.')
+            get: fn() => 'Rp ' . number_format($this->price, 0, ',', '.')
         );
     }
 
@@ -58,6 +58,10 @@ class Estate extends Model
 
     public function primaryImage()
     {
-        return $this->hasOne(EstateAttachment::class)->where('is_primary', true);
+        // Utamakan yang is_primary = true, kalau tidak ada otomatis ambil gambar terbaru (ID paling besar)
+        return $this->hasOne(EstateAttachment::class)->ofMany([
+            'is_primary' => 'max',
+            'id' => 'max',
+        ]);
     }
 }
