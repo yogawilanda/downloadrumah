@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
-{{-- resources/views/components/layouts/app.blade.php --}}
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'DownloadRumah' }}</title>
+
+    <!-- 1. Force HTTPS Asset kalau di Production -->
+    @if (app()->environment('production'))
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    @endif
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -16,6 +20,8 @@
     </main>
 
     <x-layouts.navigation />
-</body>
 
+    <!-- 2. Taruh Scripts wajib Livewire 3 di paling bawah body -->
+    @livewireScripts
+</body>
 </html>
