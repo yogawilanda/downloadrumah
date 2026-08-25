@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'DownloadRumah' }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+    <!-- PWA Web Manifest -->
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    <meta name="theme-color" content="#9333ea">
 
     <!-- 1. Force HTTPS Asset kalau di Production -->
     @if (app()->environment('production'))
@@ -21,7 +29,8 @@
 
     <x-layouts.navigation />
 
-<!-- 2. Taruh Scripts wajib Livewire 3 di paling bawah body -->
+    <!-- 2. Taruh Scripts wajib Livewire 3 di paling bawah body -->
     @livewireScripts
 </body>
+
 </html>
