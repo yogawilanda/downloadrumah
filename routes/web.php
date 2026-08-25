@@ -30,6 +30,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
 });
 
+Route::post('/logout', function () {
+    Auth::guard('web')->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+
+    return redirect('/');
+})->name('logout');
+
 // Halaman Detail Properti (Public / Dynamic Wildcard)
 Route::get('/estates/{estate:slug}', EstateShow::class)->name('estates.show');
 
