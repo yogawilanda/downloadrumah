@@ -38,16 +38,7 @@
     }
 }" @resize.window.debounce.100ms="updateIndicator()">
 
-    <!-- Top Bar Navigation (Fixed) -->
-    <div
-        class="fixed top-0 left-0 right-0 z-40 max-w-md mx-auto px-4 py-3 flex items-center justify-between pointer-events-none">
-        <a href="{{ route('home') }}" wire:navigate
-            class="p-2 rounded-full bg-white/80 backdrop-blur-md shadow-md text-gray-700 pointer-events-auto hover:bg-white transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-        </a>
-    </div>
+    
 
     <!-- Floating Bottom Navigation -->
     <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
