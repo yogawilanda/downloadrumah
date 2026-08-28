@@ -29,7 +29,6 @@
 
     <x-layouts.navigation />
 
-    <!-- 2. Taruh Scripts wajib Livewire 3 di paling bawah body -->
     @livewireScripts
 </body>
 
