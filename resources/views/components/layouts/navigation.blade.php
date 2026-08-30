@@ -38,7 +38,7 @@
     }
 }" @resize.window.debounce.100ms="updateIndicator()">
 
-    
+
 
     <!-- Floating Bottom Navigation -->
     <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
