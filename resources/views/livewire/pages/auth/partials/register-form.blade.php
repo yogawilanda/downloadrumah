@@ -1,0 +1,10 @@
+<div x-show="mode === 'register'" x-cloak x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="translate-x-full opacity-0" x-transition:enter-end="translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-200 transform absolute top-0 w-full" x-transition:leave-start="translate-x-0 opacity-100" x-transition:leave-end="translate-x-full opacity-0">
+    <div class="mb-6"><h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Buat Akun Baru 🚀</h1><p class="text-xs text-gray-500 mt-1">Daftar sekarang sebagai pembeli atau agen properti.</p></div>
+    <form wire:submit="register" class="space-y-3">
+        @foreach ([['name', 'Nama Lengkap', 'text', 'Contoh: Budi Santoso'], ['email', 'Email', 'email', 'nama@email.com'], ['phone_number', 'Nomor WhatsApp', 'tel', '081234567890'], ['password', 'Password', 'password', 'Minimal 8 karakter']] as [$field, $label, $type, $placeholder])
+            <div><label class="block text-xs font-semibold text-gray-700 mb-1">{{ $label }}</label><input wire:model="{{ $field }}" type="{{ $type }}" required placeholder="{{ $placeholder }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none"><x-input-error :messages="$errors->get($field)" class="mt-1 text-xs" /></div>
+        @endforeach
+        <div><label class="block text-xs font-semibold text-gray-700 mb-1">Konfirmasi Password</label><input wire:model="password_confirmation" type="password" required placeholder="Ulangi password" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none"></div>
+        <div class="pt-3"><button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center"><span class="text-sm">Daftar Akun Baru</span></button></div>
+    </form>
+</div>
