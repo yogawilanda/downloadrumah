@@ -15,7 +15,7 @@
     <div class="grid grid-cols-2 gap-3">
         <div class="bg-white p-3.5 rounded-2xl border border-gray-100 shadow-sm">
             <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Total Properti</p>
-            <p class="text-2xl font-black text-indigo-600 mt-0.5">{{ $activeCount }}</p>
+            <p class="text-2xl font-black text-blue-600 mt-0.5">{{ $activeCount }}</p>
         </div>
         <div class="bg-white p-3.5 rounded-2xl border border-gray-100 shadow-sm">
             <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Status Akun</p>
@@ -58,7 +58,7 @@
                     <!-- Info Properti -->
                     <div class="flex-1 min-w-0">
                         <h3 class="text-xs font-bold text-gray-900 truncate">{{ $estate->title }}</h3>
-                        <p class="text-xs font-black text-indigo-600 mt-0.5">{{ $estate->short_price }}</p>
+                        <p class="text-xs font-black text-blue-600 mt-0.5">{{ $estate->short_price }}</p>
                         <p class="text-[10px] text-gray-400 truncate mt-0.5">{{ $estate->city }}, {{ $estate->district }}</p>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <!-- Action Buttons Mobile -->
                 <div class="grid grid-cols-2 gap-2 pt-1 border-t border-gray-50">
                     <a href="{{ route('estates.edit', $estate->slug) }}"
-                        class="py-2.5 rounded-xl bg-indigo-50 text-indigo-600 text-xs font-bold text-center active:scale-95 transition">
+                        class="py-2.5 rounded-xl bg-blue-50 text-blue-600 text-xs font-bold text-center active:scale-95 transition">
                         Edit
                     </a>
                     <button wire:click="deleteEstate({{ $estate->id }})" wire:confirm="Yakin ingin menghapus properti ini?"

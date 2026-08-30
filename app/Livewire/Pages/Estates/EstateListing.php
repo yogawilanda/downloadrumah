@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Livewire\Pages\Estates;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Estate;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class EstateListing extends Component
 {
@@ -31,11 +32,14 @@ class EstateListing extends Component
         } elseif ($this->tab === 'co_broke') {
             // Persiapan Co-Broke: Properti milik agen LAIN yang open untuk Co-Broke
             $query->where('user_id', '!=', $user->id)
-                  ->where('is_published', true)
-                  ->where('allow_cobroke', true); // kolom boolean fleksibel untuk fitur mendatang
+                ->where('is_published', true)
+                ->where('allow_cobroke', true); // kolom boolean fleksibel untuk fitur mendatang
         }
 
-        $estates = $query->latest()->paginate(10);
+        $estates = $query
+            ->with('primaryImage')
+            ->latest()
+            ->paginate(10);
 
         return view('livewire.pages.estates.estate-listing', [
             'estates' => $estates,

@@ -146,6 +146,14 @@ class EstateFormData extends Form
 
     public function toSqlData(): array
     {
+        $attributes = $this->attributes_list;
+
+        foreach (['is_kpr', 'has_imb', 'has_blueprint', 'agent_cooperation'] as $key) {
+            if (array_key_exists($key, $attributes)) {
+                $attributes[$key] = filter_var($attributes[$key], FILTER_VALIDATE_BOOLEAN);
+            }
+        }
+
         return [
             'title'                 => trim($this->title),
             'transaction_type'      => $this->transaction_type,
@@ -174,7 +182,7 @@ class EstateFormData extends Form
             'furnish_type'          => $this->furnish_type ?: null,
 
             'agent_phone'           => $this->agent_phone ?: null,
-            'attributes'            => $this->attributes_list,
+            'attributes'            => $attributes,
         ];
     }
 }

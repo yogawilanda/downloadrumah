@@ -2,7 +2,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <h1 class="text-base font-bold text-gray-900">Listing Properti Saya</h1>
-        <a href="{{ route('estates.create') }}" class="px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-xl active:scale-95 transition">
+        <a href="{{ route('estates.create') }}" class="px-3 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-xl active:scale-95 transition">
             + Properti
         </a>
     </div>
@@ -10,11 +10,11 @@
     <!-- Navigation Tab -->
     <div class="flex bg-gray-100 p-1 rounded-xl">
         <button wire:click="setTab('my_listings')"
-            class="flex-1 py-1.5 text-xs font-bold rounded-lg transition {{ $tab === 'my_listings' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500' }}">
+            class="flex-1 py-1.5 text-xs font-bold rounded-lg transition {{ $tab === 'my_listings' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500' }}">
             Properti Saya
         </button>
         <button wire:click="setTab('co_broke')"
-            class="flex-1 py-1.5 text-xs font-bold rounded-lg transition {{ $tab === 'co_broke' ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500' }}">
+            class="flex-1 py-1.5 text-xs font-bold rounded-lg transition {{ $tab === 'co_broke' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500' }}">
             Co-Broke (Networking)
         </button>
     </div>
@@ -25,8 +25,8 @@
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-3 space-y-3">
                 <div class="flex gap-3 items-center">
                     <div class="w-20 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 relative">
-                        @if($estate->cover_url)
-                            <img src="{{ $estate->cover_url }}" class="w-full h-full object-cover">
+                        @if($estate->primaryImage?->url)
+                            <img src="{{ $estate->primaryImage->url }}" class="w-full h-full object-cover" alt="{{ $estate->title }}">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-[10px] text-gray-400">No Image</div>
                         @endif
@@ -41,7 +41,7 @@
                                 </span>
                             @endif
                         </div>
-                        <p class="text-xs font-black text-indigo-600 mt-0.5">{{ $estate->short_price }}</p>
+                        <p class="text-xs font-black text-blue-600 mt-0.5">{{ $estate->short_price }}</p>
                         <p class="text-[10px] text-gray-400 truncate mt-0.5">{{ $estate->city }}, {{ $estate->district }}</p>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                 <div class="pt-2 border-t border-gray-50">
                     @if($tab === 'my_listings')
                         <div class="grid grid-cols-2 gap-2">
-                            <a href="{{ route('estates.edit', $estate->slug) }}" class="py-2 bg-indigo-50 text-indigo-600 text-xs font-bold text-center rounded-xl">Edit</a>
+                            <a href="{{ route('estates.edit', $estate->slug) }}" class="py-2 bg-blue-50 text-blue-600 text-xs font-bold text-center rounded-xl">Edit</a>
                             <button wire:click="deleteEstate({{ $estate->id }})" class="py-2 bg-red-50 text-red-600 text-xs font-bold text-center rounded-xl">Hapus</button>
                         </div>
                     @else

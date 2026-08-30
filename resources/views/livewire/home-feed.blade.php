@@ -6,7 +6,7 @@
         <!-- Input Search -->
         <div class="relative mb-2.5">
             <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari lokasi, nama properti..."
-                class="w-full pl-9 pr-4 py-2 bg-gray-100 text-sm rounded-xl border-none focus:ring-2 focus:ring-indigo-500 transition-all text-gray-800 placeholder-gray-400" />
+                class="w-full pl-9 pr-4 py-2 bg-gray-100 text-sm rounded-xl border-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-800 placeholder-gray-400" />
             <svg class="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -18,15 +18,15 @@
         <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1">
             <!-- Filter Tipe Transaksi -->
             <button wire:click="$set('transaction_type', '')"
-                class="px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === '' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600' }}">
+                class="px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === '' ? 'bg-blue-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600' }}">
                 Semua
             </button>
             <button wire:click="$set('transaction_type', 'sale')"
-                class="px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === 'sale' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600' }}">
+                class="px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === 'sale' ? 'bg-blue-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600' }}">
                 Dijual
             </button>
             <button wire:click="$set('transaction_type', 'rent')"
-                class="px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === 'rent' ? 'bg-indigo-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600' }}">
+                class="px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === 'rent' ? 'bg-blue-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600' }}">
                 Disewa
             </button>
 

@@ -22,7 +22,7 @@ class EstateAttachment extends Model
     {
         return Attribute::make(
             get: function () {
-                if (!$this->file_path) {
+                if (! $this->file_path) {
                     return null;
                 }
 
@@ -34,13 +34,13 @@ class EstateAttachment extends Model
                 // Bersihkan prefix 'public/' atau slash di awal
                 $cleanPath = ltrim(str_replace('public/', '', $this->file_path), '/');
 
-                // Jika di environment local (Windows/Laragon), lewat route /media/
-                if (app()->environment('local')) {
-                    return url('media/' . $cleanPath);
+                // Local disks are served through the application route so this works
+                // without requiring a public/storage symlink on the deployment.
+                if (config('filesystems.disks.public.driver') === 'local') {
+                    return url('media/'.$cleanPath);
                 }
 
-                // Jika di Production (Linux VPS), lewat Storage URL native
-                return Storage::url($cleanPath);
+                return Storage::disk('public')->url($cleanPath);
             }
         );
     }

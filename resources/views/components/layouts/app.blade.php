@@ -21,7 +21,7 @@
     <link rel="manifest" href="/site.webmanifest?v=20260830" />
 
     <!-- PWA Web Manifest -->
-    <meta name="theme-color" content="#9333ea">
+    <meta name="theme-color" content="#2563eb">
 
     <!-- 1. Force HTTPS Asset kalau di Production -->
     @if (app()->environment('production'))
@@ -32,7 +32,7 @@
     @livewireStyles
 </head>
 
-<body class="bg-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-gray-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
     <main class="max-w-md mx-auto min-h-screen bg-white shadow-xl relative pb-16">
         {{ $slot }}
     </main>

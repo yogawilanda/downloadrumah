@@ -82,42 +82,57 @@ class EstateForm extends Component
 
     public function save()
     {
-        $this->form->validate();
+        try {
+            $this->form->validate();
 
-        $maxNewPhotos = max(0, 8 - count($this->existingPhotos));
-        $this->validate([
-            'photos'   => "array|max:{$maxNewPhotos}",
-            'photos.*' => 'image|max:3072',
-        ]);
+            $maxNewPhotos = max(0, 8 - count($this->existingPhotos));
+            $this->validate([
+                'photos'   => ['nullable', 'array', "max:{$maxNewPhotos}"],
+                'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:3072'],
+            ]);
 
-        $data = $this->form->toSqlData();
-
-        DB::transaction(function () use ($data) {
-            if ($this->form->isEdit()) {
-                $this->form->estate->update($data);
-                $targetEstate = $this->form->estate;
-                $message      = 'Properti berhasil diperbarui!';
-            } else {
-                $data['user_id'] = Auth::id();
-                $data['slug']    = Str::slug($this->form->title) . '-' . Str::random(5);
-                $data['status']  = 'active';
-
-                $targetEstate = Estate::create($data);
-                $message      = 'Properti berhasil diterbitkan!';
+            if (count($this->existingPhotos) === 0 && empty($this->photos)) {
+                $this->addError('photos', 'Minimal unggah 1 foto listing agar properti bisa diterbitkan.');
+                session()->flash('error', 'Gagal mengirim properti. Unggah minimal 1 foto listing terlebih dahulu.');
+                return;
             }
 
-            foreach ($this->photos as $photo) {
-                $path = $photo->store('estates', 'public');
-                EstateAttachment::create([
-                    'estate_id' => $targetEstate->id,
-                    'file_path' => $path,
-                ]);
-            }
+            $data = $this->form->toSqlData();
 
-            session()->flash('success', $message);
-        });
+            DB::transaction(function () use ($data) {
+                if ($this->form->isEdit()) {
+                    $this->form->estate->update($data);
+                    $targetEstate = $this->form->estate;
+                    $message      = 'Properti berhasil diperbarui!';
+                } else {
+                    $data['user_id'] = Auth::id();
+                    $data['slug']    = Str::slug($this->form->title) . '-' . Str::random(5);
+                    $data['status']  = 'active';
 
-        return redirect()->route('dashboard');
+                    $targetEstate = Estate::create($data);
+                    $message      = 'Properti berhasil diterbitkan!';
+                }
+
+                foreach ($this->photos as $photo) {
+                    $path = $photo->store('estates', 'public');
+                    EstateAttachment::create([
+                        'estate_id' => $targetEstate->id,
+                        'file_path' => $path,
+                    ]);
+                }
+
+                session()->flash('success', $message);
+            });
+
+            return redirect()->route('dashboard');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            report($e);
+            $this->addError('photos', 'Gagal mengirim properti. Periksa kembali foto dan data, lalu coba lagi.');
+            session()->flash('error', 'Gagal mengirim properti. Periksa kembali data Anda dan pastikan file foto valid.');
+            return;
+        }
     }
 
     public function render()

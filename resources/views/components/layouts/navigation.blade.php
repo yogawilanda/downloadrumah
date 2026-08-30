@@ -47,13 +47,13 @@
 
             <!-- Sliding Indicator: Kembalikan ke transition-all dengan left & width murni -->
             <div x-show="activeTab !== '' && indicatorStyle.width !== '0px'"
-                class="absolute top-1.5 bottom-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full shadow-md shadow-purple-200 transition-all duration-300 ease-in-out pointer-events-none"
+                class="absolute top-1.5 bottom-1.5 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full shadow-md shadow-blue-200 transition-all duration-300 ease-in-out pointer-events-none"
                 :style="`left: ${indicatorStyle.left}; width: ${indicatorStyle.width};`" x-cloak>
             </div>
 
             <!-- 1. Home -->
             <a href="{{ route('home') }}" wire:navigate x-ref="home" @click="setTab('home')"
-                :class="activeTab === 'home' ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600'"
+                :class="activeTab === 'home' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
                 class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
                 <x-icons.icons-home class="w-5 h-5 shrink-0" />
                 <span x-show="activeTab === 'home'" class="text-xs font-semibold whitespace-nowrap">Beranda</span>
@@ -61,7 +61,7 @@
 
             <!-- 2. Search / Explore -->
             <a href="#" wire:navigate x-ref="search" @click="setTab('search')"
-                :class="activeTab === 'search' ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600'"
+                :class="activeTab === 'search' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
                 class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
                 <x-icons.icons-search class="w-5 h-5 shrink-0" />
                 <span x-show="activeTab === 'search'" class="text-xs font-semibold whitespace-nowrap">Cari</span>
@@ -69,14 +69,14 @@
 
             <!-- 3. Floating CTA Button -->
             <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                class="relative z-10 flex items-center justify-center p-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full shadow-lg shadow-purple-200 hover:opacity-90 active:scale-95 transition-all shrink-0">
+                class="relative z-10 flex items-center justify-center p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full shadow-lg shadow-blue-200 hover:opacity-90 active:scale-95 transition-all shrink-0">
                 <x-icons.icons-adds class="w-5 h-5" />
             </a>
 
             <!-- 4. Listing Saya -->
             @auth
                 <a href="{{ route('listings.index') }}" wire:navigate x-ref="listings" @click="setTab('listings')"
-                    :class="activeTab === 'listings' ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600'"
+                    :class="activeTab === 'listings' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
                     class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
                     <x-icons.icons-listings class="w-5 h-5 shrink-0" />
                     <span x-show="activeTab === 'listings'" class="text-xs font-semibold whitespace-nowrap">Listing</span>
@@ -91,14 +91,14 @@
             <!-- 5. Menu Lain / Masuk -->
             @auth
                 <button type="button" x-ref="menu" @click="openMenu = true; setTab('menu')"
-                    :class="activeTab === 'menu' ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600'"
+                    :class="activeTab === 'menu' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
                     class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 focus:outline-none">
                     <x-icons.icons-menus class="w-5 h-5 shrink-0" />
                     <span x-show="activeTab === 'menu'" class="text-xs font-semibold whitespace-nowrap">Menu</span>
                 </button>
             @else
                 <a href="{{ route('login') }}" wire:navigate x-ref="menu" @click="setTab('menu')"
-                    :class="activeTab === 'menu' ? 'text-white font-medium' : 'text-gray-500 hover:text-purple-600'"
+                    :class="activeTab === 'menu' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
                     class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
                     <x-icons.icons-login class="w-5 h-5 shrink-0" />
                     <span x-show="activeTab === 'menu'" class="text-xs font-semibold whitespace-nowrap">Masuk</span>
@@ -141,12 +141,12 @@
 
                 <div class="space-y-1">
                     <a href="{{ route('dashboard') }}" wire:navigate @click="openMenu = false"
-                        class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl transition">
+                        class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition">
                         <span class="text-sm font-medium">Dashboard</span>
                     </a>
 
                     <a href="{{ route('profile') }}" wire:navigate @click="openMenu = false"
-                        class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl transition">
+                        class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition">
                         <span class="text-sm font-medium">Ubah Profil</span>
                     </a>
 
