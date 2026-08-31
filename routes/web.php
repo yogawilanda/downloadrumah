@@ -1,38 +1,51 @@
 <?php
 
-use App\Livewire\Pages\Estates\EstateListing;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Response; // <-- TAMBAHKAN INI
-use App\Livewire\HomeFeed;
+use Illuminate\Support\Facades\Response;
+
+// Full Pages
+use App\Livewire\Pages\HomeFeed;
 use App\Livewire\Pages\AgentDashboard;
+use App\Livewire\Pages\Tools\MortgageCalculator;
+
+// Component Based / Estates
 use App\Livewire\Pages\Estates\EstateForm;
 use App\Livewire\Pages\Estates\EstateShow;
+use App\Livewire\Pages\Estates\EstateListing;
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', HomeFeed::class)->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Tools KPR (Perbaikan Typo & Penamaan Route)
+Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
-
+// Public Media Storage Direct Access
 Route::get('/media/{path}', function ($path) {
     $file = storage_path('app/public/' . $path);
     if (!file_exists($file)) abort(404);
     return Response::file($file);
 })->where('path', '.*');
 
-// Auth Routes (Create & Edit)
-Route::middleware(['auth'])->group(function () {
-    Route::get('/estates/create', EstateForm::class)->name('estates.create');
-    Route::get('/dashboard', AgentDashboard::class)->name('dashboard');
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
 
-    // Listings
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', AgentDashboard::class)->name('dashboard');
     Route::get('/listings', EstateListing::class)->name('listings.index');
 
+    Route::get('/estates/create', EstateForm::class)->name('estates.create');
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
+
+    Route::view('profile', 'profile')->name('profile');
 });
 
 Route::post('/logout', function () {
@@ -43,7 +56,12 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-// Halaman Detail Properti (Public / Dynamic Wildcard)
+/*
+|--------------------------------------------------------------------------
+| Dynamic / Wildcard Routes (Selalu di Paling Bawah)
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/estates/{estate:slug}', EstateShow::class)->name('estates.show');
 
 require __DIR__ . '/auth.php';

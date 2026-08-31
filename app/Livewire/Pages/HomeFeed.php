@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Pages;
 
 use App\Models\Estate;
 use Livewire\Component;
@@ -41,7 +41,7 @@ class HomeFeed extends Component
             ->latest()
             ->paginate(10);
 
-        return view('livewire.home-feed', [
+        return view('livewire.pages.home-feed', [
             'estates' => $estates,
         ]);
     }

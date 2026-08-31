@@ -1,5 +1,7 @@
-{{-- loc: resources/views/components/layouts/estate/top-nav.blade.php --}}
-{{-- usage: specific usage top navigation with Material Design 3 style buttons and centered modals --}}
+{{--
+loc: resources/views/components/layouts/estate/top-nav.blade.php
+usage: specific usage top navigation with Material Design 3 style buttons and centered modals
+--}}
 
 @props(['estate'])
 

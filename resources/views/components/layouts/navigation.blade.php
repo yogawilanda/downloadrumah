@@ -1,111 +1,94 @@
-{{-- resources/views/components/layouts/navigation.blade.php --}}
+{{--
+loc: resources/views/components/layouts/navigation.blade.php
+usage: global navigations. regardless authenticated user or not.
+--}}
 <div x-data="{
     openMenu: false,
-    activeTab: '{{ request()->routeIs('home') ? 'home' : (request()->routeIs('search*') ? 'search' : (request()->routeIs('listings*') ? 'listings' : (request()->routeIs('dashboard*') || request()->routeIs('profile*') || request()->routeIs('login') ? 'menu' : ''))) }}',
-    indicatorStyle: { left: '0px', width: '0px' },
+    activeTab: '{{ request()->routeIs('home') ? 'home' : (request()->routeIs('mortgage*') ? 'kpr' : (request()->routeIs('listings*') ? 'listings' : (request()->routeIs('dashboard*') || request()->routeIs('profile*') || request()->routeIs('login') ? 'menu' : ''))) }}',
 
     init() {
-        this.updateIndicator();
         document.addEventListener('livewire:navigated', () => {
             this.updateActiveTabFromRoute();
-            this.updateIndicator();
         });
     },
 
     setTab(tab) {
         this.activeTab = tab;
-        this.updateIndicator();
-    },
-
-    updateIndicator() {
-        this.$nextTick(() => {
-            const activeEl = this.$refs[this.activeTab];
-            if (activeEl) {
-                this.indicatorStyle = {
-                    left: activeEl.offsetLeft + 'px',
-                    width: activeEl.offsetWidth + 'px'
-                };
-            }
-        });
     },
 
     updateActiveTabFromRoute() {
         const path = window.location.pathname;
         if (path === '/' || path.includes('home')) this.activeTab = 'home';
-        else if (path.includes('search')) this.activeTab = 'search';
+        else if (path.includes('mortgage') || path.includes('kpr')) this.activeTab = 'kpr';
         else if (path.includes('listings')) this.activeTab = 'listings';
         else if (path.includes('dashboard') || path.includes('profile') || path.includes('login')) this.activeTab = 'menu';
     }
-}" @resize.window.debounce.100ms="updateIndicator()">
+}">
 
+    <!-- Bottom Navigation Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-lg">
+        <div class="max-w-md mx-auto flex items-center justify-around h-16 px-2">
 
-
-    <!-- Floating Bottom Navigation -->
-    <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-full max-w-md px-4">
-        <nav
-            class="relative flex items-center justify-between bg-white/80 backdrop-blur-xl border border-gray-100 shadow-xl rounded-full p-1.5">
-
-            <!-- Sliding Indicator: Kembalikan ke transition-all dengan left & width murni -->
-            <div x-show="activeTab !== '' && indicatorStyle.width !== '0px'"
-                class="absolute top-1.5 bottom-1.5 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full shadow-md shadow-blue-200 transition-all duration-300 ease-in-out pointer-events-none"
-                :style="`left: ${indicatorStyle.left}; width: ${indicatorStyle.width};`" x-cloak>
-            </div>
-
-            <!-- 1. Home -->
-            <a href="{{ route('home') }}" wire:navigate x-ref="home" @click="setTab('home')"
-                :class="activeTab === 'home' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
-                class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
+            <!-- 1. Beranda -->
+            <a href="{{ route('home') }}" wire:navigate @click="setTab('home')"
+                :class="activeTab === 'home' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
+                class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150">
                 <x-icons.icons-home class="w-5 h-5 shrink-0" />
-                <span x-show="activeTab === 'home'" class="text-xs font-semibold whitespace-nowrap">Beranda</span>
+                <span class="text-[10px] tracking-tight">Beranda</span>
             </a>
 
-            <!-- 2. Search / Explore -->
-            <a href="#" wire:navigate x-ref="search" @click="setTab('search')"
-                :class="activeTab === 'search' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
-                class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
-                <x-icons.icons-search class="w-5 h-5 shrink-0" />
-                <span x-show="activeTab === 'search'" class="text-xs font-semibold whitespace-nowrap">Cari</span>
+            <!-- 2. Kalkulator KPR (Pengganti Cari) -->
+            <a href="{{ route('mortgage.calculator') }}" wire:navigate @click="setTab('kpr')"
+                :class="activeTab === 'kpr' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
+                class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span class="text-[10px] tracking-tight">KPR</span>
             </a>
 
             <!-- 3. Floating CTA Button -->
-            <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                class="relative z-10 flex items-center justify-center p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full shadow-lg shadow-blue-200 hover:opacity-90 active:scale-95 transition-all shrink-0">
-                <x-icons.icons-adds class="w-5 h-5" />
-            </a>
+            <div class="flex items-center justify-center flex-1 h-full">
+                <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
+                    class="flex items-center justify-center w-11 h-11 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full shadow-md shadow-blue-200 hover:opacity-95 active:scale-95 transition-all">
+                    <x-icons.icons-adds class="w-5 h-5" />
+                </a>
+            </div>
 
             <!-- 4. Listing Saya -->
             @auth
-                <a href="{{ route('listings.index') }}" wire:navigate x-ref="listings" @click="setTab('listings')"
-                    :class="activeTab === 'listings' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
-                    class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
+                <a href="{{ route('listings.index') }}" wire:navigate @click="setTab('listings')"
+                    :class="activeTab === 'listings' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
+                    class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150">
                     <x-icons.icons-listings class="w-5 h-5 shrink-0" />
-                    <span x-show="activeTab === 'listings'" class="text-xs font-semibold whitespace-nowrap">Listing</span>
+                    <span class="text-[10px] tracking-tight">Listing</span>
                 </a>
             @else
                 <a href="{{ route('login') }}" wire:navigate
-                    class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 text-gray-400 opacity-60 hover:opacity-100">
+                    class="flex flex-col items-center justify-center flex-1 h-full space-y-1 text-gray-300 hover:text-gray-400 font-medium transition-colors duration-150">
                     <x-icons.icons-listings class="w-5 h-5 shrink-0" />
+                    <span class="text-[10px] tracking-tight">Listing</span>
                 </a>
             @endauth
 
-            <!-- 5. Menu Lain / Masuk -->
+            <!-- 5. Menu / Masuk -->
             @auth
-                <button type="button" x-ref="menu" @click="openMenu = true; setTab('menu')"
-                    :class="activeTab === 'menu' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
-                    class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 focus:outline-none">
+                <button type="button" @click="openMenu = true; setTab('menu')"
+                    :class="activeTab === 'menu' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
+                    class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150 focus:outline-none">
                     <x-icons.icons-menus class="w-5 h-5 shrink-0" />
-                    <span x-show="activeTab === 'menu'" class="text-xs font-semibold whitespace-nowrap">Menu</span>
+                    <span class="text-[10px] tracking-tight">Menu</span>
                 </button>
             @else
-                <a href="{{ route('login') }}" wire:navigate x-ref="menu" @click="setTab('menu')"
-                    :class="activeTab === 'menu' ? 'text-white font-medium' : 'text-gray-500 hover:text-blue-600'"
-                    class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200">
+                <a href="{{ route('login') }}" wire:navigate @click="setTab('menu')"
+                    :class="activeTab === 'menu' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
+                    class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150">
                     <x-icons.icons-login class="w-5 h-5 shrink-0" />
-                    <span x-show="activeTab === 'menu'" class="text-xs font-semibold whitespace-nowrap">Masuk</span>
+                    <span class="text-[10px] tracking-tight">Masuk</span>
                 </a>
             @endauth
 
-        </nav>
+        </div>
     </div>
 
     <!-- Bottom Sheet Modal (Auth Only) -->
