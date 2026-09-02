@@ -2,30 +2,7 @@
 loc: resources/views/components/layouts/navigation.blade.php
 usage: global navigations. regardless authenticated user or not.
 --}}
-<div x-data="{
-    openMenu: false,
-    activeTab: '{{ request()->routeIs('home') ? 'home' : (request()->routeIs('mortgage*') ? 'kpr' : (request()->routeIs('listings*') ? 'listings' : (request()->routeIs('dashboard*') || request()->routeIs('profile*') || request()->routeIs('login') ? 'menu' : ''))) }}',
-
-    init() {
-        document.addEventListener('livewire:navigated', () => {
-            this.updateActiveTabFromRoute();
-        });
-    },
-
-    setTab(tab) {
-        this.activeTab = tab;
-    },
-
-    updateActiveTabFromRoute() {
-        const path = window.location.pathname;
-        if (path === '/' || path.includes('home')) this.activeTab = 'home';
-        else if (path.includes('mortgage') || path.includes('kpr')) this.activeTab = 'kpr';
-        else if (path.includes('listings')) this.activeTab = 'listings';
-        else if (path.includes('dashboard') || path.includes('profile') || path.includes('login')) this.activeTab = 'menu';
-    }
-}">
-
-    <!-- Bottom Navigation Bar -->
+<div x-data="botNavBar('{{ request()->routeIs('home') ? 'home' : '...'  }}')">
     <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-lg">
         <div class="max-w-md mx-auto flex items-center justify-around h-16 px-2">
 
@@ -41,9 +18,7 @@ usage: global navigations. regardless authenticated user or not.
             <a href="{{ route('mortgage.calculator') }}" wire:navigate @click="setTab('kpr')"
                 :class="activeTab === 'kpr' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
                 class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150">
-                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
+                <x-icons.icons-calculator/>
                 <span class="text-[10px] tracking-tight">KPR</span>
             </a>
 
@@ -84,7 +59,7 @@ usage: global navigations. regardless authenticated user or not.
                     :class="activeTab === 'menu' ? 'text-blue-600 font-semibold' : 'text-gray-400 hover:text-gray-600 font-medium'"
                     class="flex flex-col items-center justify-center flex-1 h-full space-y-1 transition-colors duration-150">
                     <x-icons.icons-login class="w-5 h-5 shrink-0" />
-                    <span class="text-[10px] tracking-tight">Masuk</span>
+                    <span class="text-[10px] tracking-tight">{{__('Masuk')}}</span>
                 </a>
             @endauth
 
@@ -94,7 +69,7 @@ usage: global navigations. regardless authenticated user or not.
     <!-- Bottom Sheet Modal (Auth Only) -->
     @auth
         <div x-show="openMenu" x-cloak class="fixed inset-0 z-50 flex items-end justify-center">
-            <!-- Backdrop -->
+            <!-- Backdrop First animation to make flawless animation -->
             <div x-show="openMenu" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                 x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"

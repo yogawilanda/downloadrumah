@@ -58,7 +58,8 @@ Route::post('/logout', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Dynamic / Wildcard Routes (Selalu di Paling Bawah)
+| Dynamic / Wildcard Routes :
+| Must be placed in bottom placement.
 |--------------------------------------------------------------------------
 */
 
