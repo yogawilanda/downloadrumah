@@ -19,8 +19,8 @@ class EstateFormData extends Form
     public string $description = '';
 
     // Lokasi Detail
-    public string $province = '';
-    public string $city = '';
+    public string $province = ''; // provinsi
+    public string $city = ''; //kota 
     public string $district = '';
     public string $address = '';
     public string $block_number = '';
