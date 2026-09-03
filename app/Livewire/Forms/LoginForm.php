@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * <meta_config>
+ * @path : app/Livewire/Forms/LoginForm.php | usage: Livewire Form Object for User Authentication
+ * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : PHP Docblock
+ * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
+ * </meta_config>
+ *
+ * @author yogawilanda <eayogawilanda@gmail.com>
+ */
+
 namespace App\Livewire\Forms;
 
 use Illuminate\Auth\Events\Lockout;
@@ -33,8 +43,12 @@ class LoginForm extends Form
         if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
+            // Reset password state agar tidak bocor di snapshot payload
+            $this->password = '';
+
+            // Wajib gunakan key 'loginForm.email' agar ditangkap Blade <x-input-error>
             throw ValidationException::withMessages([
-                'form.email' => trans('auth.failed'),
+                'loginForm.email' => trans('auth.failed'),
             ]);
         }
 
@@ -54,8 +68,10 @@ class LoginForm extends Form
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
+        $this->password = '';
+
         throw ValidationException::withMessages([
-            'form.email' => trans('auth.throttle', [
+            'loginForm.email' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
