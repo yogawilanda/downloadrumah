@@ -69,8 +69,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('bathroom')->nullable();
             $table->unsignedInteger('building_size')->nullable();
             $table->unsignedInteger('land_size')->nullable();
-            $table->unsignedDecimal('building_width', 8, 2)->nullable();
-            $table->unsignedDecimal('building_length', 8, 2)->nullable();
+            $table->decimal('building_width', 8, 2)->nullable();
+            $table->decimal('building_length', 8, 2)->nullable();
             $table->unsignedSmallInteger('floor_count')->nullable()->default(1);
             $table->unsignedSmallInteger('garage_capacity')->nullable();
             $table->enum('facing', ['north', 'south', 'east', 'west', 'north_east', 'north_west', 'south_east', 'south_west'])->nullable();
