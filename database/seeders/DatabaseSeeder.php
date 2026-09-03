@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         // 2. Akun Testing Utama
         $mainAgent = User::factory()->create([
             'name'         => 'Agen Properti Utama',
-            'email'        => 'agen@downloadrumah.com',
+            'email'        => 'a@a.com',
             'phone_number' => '6281234567890',
-            'password'     => '1sampai3',
+            'password'     => '123',
         ]);
 
         // 3. Listing Properti Agen Utama (+ Attachments)
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * 
+     *
      * Helper privat untuk isolasi logic pembuatan Estate & Attachment
      */
     private function createEstatesWithAttachments(User $user, int $count, int $galleryCount = 0): void
