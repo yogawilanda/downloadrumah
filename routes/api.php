@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 /**
  * Step 1.1: Web-Session Friendly Telemetry Endpoint
- * Memakai middleware 'web' agar session_id & CSRF token teridentifikasi tanpa Sanctum
  */
 Route::middleware(['web'])->prefix('v1')->group(function () {
+    Route::get('/log-activity', [ActivityLogController::class, 'index']);
+    Route::get('/log-activity/{id}', [ActivityLogController::class, 'show']);
     Route::post('/log-activity', [ActivityLogController::class, 'store']);
 });

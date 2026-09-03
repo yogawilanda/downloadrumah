@@ -25,7 +25,7 @@ return new class extends Migration
             /**
              * Step 1.1: Core Telemetry Payload
              * FE & BE Mapping:
-             * - user_id      : Foreign Key ke users (NULL jika Guest, terisi ID jika Login)
+             * - user_id      : Foreign Key ke users (NULL jika Guest, terisi ID jika Login) // user must be masked using uulid/uuid when public, and using user id for admin or certain criteria
              * - module       : Pengelompokan Fitur (contoh: 'traffic', 'estates', 'auth')
              * - event_name   : Akses/Aksi Spesifik (contoh: 'page_view', 'contact_agent_clicked')
              * - payload      : JSON dinamis untuk konteks (URL, filter, session_id, target ID)

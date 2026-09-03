@@ -1,12 +1,14 @@
 /**
  * <meta_config>
- * @path : resources/js/kpr_app.js | usage: Alpine.js KPR Calculator Component & Full Input Debounced Telemetry
+ * @path : resources/js/kpr_app.js | usage: Alpine.js KPR Calculator Component
  * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : JS Docblock
  * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
  * </meta_config>
  *
  * @author yogawilanda <eayogawilanda@gmail.com>
  */
+
+import { trackDebouncedEvent } from './helpers/telemetry';
 
 export default () => ({
     mode: 'buyer',
@@ -17,7 +19,6 @@ export default () => ({
     ],
     buyer: { income: 15000000, jobType: 'swasta', location: '', interest: 7.5, tenure: 15, dp: 50000000 },
     agent: { propertyPrice: 650000000, condition: 'new', dpPercent: 10, interest: 7.5, tenure: 15 },
-    debounceTimer: null,
 
     /**
      * Step 1.1: Buyer Calculation & Full Input Telemetry
@@ -33,18 +34,10 @@ export default () => ({
         const maxPlafon = maxInstallment * ((Math.pow(1 + i, n) - 1) / (i * Math.pow(1 + i, n)));
         const maxPropertyPrice = maxPlafon + (this.buyer.dp || 0);
 
-        /**
-         * Debounce Analytics: Tracks full buyer input context after 1.5s idle
-         */
-        this.trackDebouncedEvent('kpr_buyer_calculated', {
-            mode: 'buyer',
-            income: this.buyer.income,
-            job_type: this.buyer.jobType,
-            interest: this.buyer.interest,
-            tenure_years: this.buyer.tenure,
-            dp_amount: this.buyer.dp,
-            location: this.buyer.location,
-            result_max_price: Math.round(maxPropertyPrice),
+        trackDebouncedEvent('tools', 'kpr_buyer_calculated', {
+            mode: 'buyer', income: this.buyer.income, job_type: this.buyer.jobType,
+            interest: this.buyer.interest, tenure_years: this.buyer.tenure, dp_amount: this.buyer.dp,
+            location: this.buyer.location, result_max_price: Math.round(maxPropertyPrice),
             result_max_installment: Math.round(maxInstallment)
         });
 
@@ -56,7 +49,7 @@ export default () => ({
     },
 
     /**
-     * Step 1.2: Agent Property Estimator & Full Input Telemetry
+     * Step 1.2: Agent Property Estimator & Telemetry
      */
     calculateAgent() {
         const dpAmount = ((this.agent.propertyPrice || 0) * (this.agent.dpPercent || 0)) / 100;
@@ -69,44 +62,22 @@ export default () => ({
 
         const monthlyInstallment = plafon * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
 
-        /**
-         * Debounce Analytics: Tracks full agent input context after 1.5s idle
-         */
-        this.trackDebouncedEvent('kpr_agent_calculated', {
-            mode: 'agent',
-            property_price: this.agent.propertyPrice,
-            condition: this.agent.condition,
-            dp_percent: this.agent.dpPercent,
-            interest: this.agent.interest,
-            tenure_years: this.agent.tenure,
+        trackDebouncedEvent('tools', 'kpr_agent_calculated', {
+            mode: 'agent', property_price: this.agent.propertyPrice, condition: this.agent.condition,
+            dp_percent: this.agent.dpPercent, interest: this.agent.interest, tenure_years: this.agent.tenure,
             result_monthly_installment: Math.round(monthlyInstallment)
         });
 
         return {
-            dpAmount: Math.round(dpAmount),
-            plafon: Math.round(plafon),
+            dpAmount: Math.round(dpAmount), plafon: Math.round(plafon),
             monthlyInstallment: Math.round(monthlyInstallment),
             estimatedLegalFee: Math.round((this.agent.propertyPrice || 0) * feePercent)
         };
     },
 
-    /**
-     * Step 1.3: Centralized Debounce Timer Handler
-     */
-    trackDebouncedEvent(eventName, payloadData) {
-        clearTimeout(this.debounceTimer);
-        this.debounceTimer = setTimeout(() => {
-            if (typeof window.trackEvent === 'function') {
-                window.trackEvent('tools', eventName, payloadData);
-            }
-        }, 1500);
-    },
-
     getSearchUrl() {
         const price = this.calculateBuyer().maxPropertyPrice;
-        let url = `/?max_price=${price}`;
-        if (this.buyer.location) url += `&location=${this.buyer.location}`;
-        return url;
+        return `/?max_price=${price}` + (this.buyer.location ? `&location=${this.buyer.location}` : '');
     },
 
     formatRupiah(number) {
