@@ -27,17 +27,21 @@ class EstateListing extends Component
         $query = Estate::query();
 
         if ($this->tab === 'my_listings') {
-            // Properti yang dibuat oleh agen ini (Draft maupun Published)
+            // Properti yang dibuat oleh agen ini
             $query->where('user_id', $user->id);
         } elseif ($this->tab === 'co_broke') {
-            // Persiapan Co-Broke: Properti milik agen LAIN yang open untuk Co-Broke
+            // Co-Broke: Properti agen lain, status active, & open co-broke via JSON attributes
             $query->where('user_id', '!=', $user->id)
-                ->where('is_published', true)
-                ->where('allow_cobroke', true); // kolom boolean fleksibel untuk fitur mendatang
+                ->active()
+                ->where('attributes->agent_cooperation', true);
+        } elseif ($this->tab === 'drafts') {
+            // Draft milik agen ini
+            $query->where('user_id', $user->id)
+                ->where('status', 'draft');
         }
 
         $estates = $query
-            ->with('primaryImage')
+            ->with(['primaryImage', 'city'])
             ->latest()
             ->paginate(10);
 

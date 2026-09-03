@@ -13,7 +13,8 @@ class EstateShow extends Component
 
     public function mount(Estate $estate): void
     {
-        $this->estate = $estate->load(['user', 'attachments']);
+        // Eager load relasi user, attachments, dan lokasi Laravolt
+        $this->estate = $estate->load(['user', 'attachments', 'city', 'province']);
     }
 
     public function render()

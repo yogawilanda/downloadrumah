@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\Province;
 
 class Estate extends Model
 {
@@ -50,7 +52,7 @@ class Estate extends Model
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'Rp ' . number_format($this->price, 0, ',', '.')
+            get: fn () => 'Rp ' . number_format($this->price ?? 0, 0, ',', '.')
         );
     }
 
@@ -59,7 +61,7 @@ class Estate extends Model
     {
         return Attribute::make(
             get: function () {
-                $price = $this->price;
+                $price = $this->price ?? 0;
                 if ($price >= 1000000000) {
                     $formatted = number_format($price / 1000000000, 1, ',', '.');
                     return rtrim(rtrim($formatted, '0'), ',') . ' M';
@@ -76,18 +78,25 @@ class Estate extends Model
     protected function attr(): Attribute
     {
         return Attribute::make(
-            get: fn () => (object) [
-                'is_kpr'            => $this->attributes['attributes']['is_kpr'] ?? false,
-                'has_imb'           => $this->attributes['attributes']['has_imb'] ?? false,
-                'has_blueprint'     => $this->attributes['attributes']['has_blueprint'] ?? false,
-                'legal_docs'        => $this->attributes['attributes']['legal_docs'] ?? null,
-                'promo_cooperation' => $this->attributes['attributes']['promo_cooperation'] ?? null,
-                'agent_cooperation' => $this->attributes['attributes']['agent_cooperation'] ?? false,
-                'electricity'       => $this->attributes['attributes']['electricity'] ?? null,
-                'water_type'        => $this->attributes['attributes']['water_type'] ?? null,
-                'nearest_places'    => $this->attributes['attributes']['nearest_places'] ?? [],
-                'video_url'         => $this->attributes['attributes']['video_url'] ?? null,
-            ]
+            get: function () {
+                // Decode JSON dari raw attributes jika berupa string, atau gunakan array yang sudah ter-cast
+                $json = is_string($this->attributes['attributes'] ?? null)
+                    ? json_decode($this->attributes['attributes'], true)
+                    : ($this->attributes['attributes'] ?? []);
+
+                return (object) [
+                    'is_kpr'            => $json['is_kpr'] ?? false,
+                    'has_imb'           => $json['has_imb'] ?? false,
+                    'has_blueprint'     => $json['has_blueprint'] ?? false,
+                    'legal_docs'        => $json['legal_docs'] ?? null,
+                    'promo_cooperation' => $json['promo_cooperation'] ?? null,
+                    'agent_cooperation' => $json['agent_cooperation'] ?? false,
+                    'electricity'       => $json['electricity'] ?? null,
+                    'water_type'        => $json['water_type'] ?? null,
+                    'nearest_places'    => $json['nearest_places'] ?? [],
+                    'video_url'         => $json['video_url'] ?? null,
+                ];
+            }
         );
     }
 
@@ -121,6 +130,16 @@ class Estate extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'code');
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
     }
 
     public function attachments(): HasMany

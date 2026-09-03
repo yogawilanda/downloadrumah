@@ -3,8 +3,10 @@
 namespace App\Livewire\Pages\Estates;
 
 use App\Livewire\Forms\EstateFormData;
+use Laravolt\Indonesia\Models\City;
 use App\Models\Estate;
 use App\Models\EstateAttachment;
+use Laravolt\Indonesia\Models\Province;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -18,11 +20,13 @@ class EstateForm extends Component
 {
     use WithFileUploads;
 
-    // Livewire 3 otomatis meng-instansiasi properti ini
     public EstateFormData $form;
 
     public array $existingPhotos = [];
     public array $photos = [];
+
+    // Step untuk form
+    public int $currentStep = 1;
 
     public function mount(?Estate $estate = null): void
     {
@@ -34,6 +38,12 @@ class EstateForm extends Component
             $this->form->setEstate($estate);
             $this->existingPhotos = $estate->attachments->toArray();
         }
+    }
+
+    // Reset pilihan city_id saat province_id berubah
+    public function updatedFormProvinceId(): void
+    {
+        $this->form->city_id = null;
     }
 
     public function updatedPhotos(): void
@@ -83,17 +93,24 @@ class EstateForm extends Component
     public function save()
     {
         try {
+            // Validasi data utama dari form object
             $this->form->validate();
 
-            $maxNewPhotos = max(0, 8 - count($this->existingPhotos));
-            $this->validate([
-                'photos'   => ['nullable', 'array', "max:{$maxNewPhotos}"],
-                'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:3072'],
-            ]);
+            // Hitung sisa kuota upload foto baru
+            $totalExisting = count($this->existingPhotos);
+            $allowedNewPhotos = max(0, 8 - $totalExisting);
 
-            if (count($this->existingPhotos) === 0 && empty($this->photos)) {
-                $this->addError('photos', 'Minimal unggah 1 foto listing agar properti bisa diterbitkan.');
-                session()->flash('error', 'Gagal mengirim properti. Unggah minimal 1 foto listing terlebih dahulu.');
+            if (!empty($this->photos)) {
+                $this->validate([
+                    'photos'   => ['array', "max:{$allowedNewPhotos}"],
+                    'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:3072'],
+                ]);
+            }
+
+            // Minimal 1 foto
+            if ($totalExisting === 0 && empty($this->photos)) {
+                $this->addError('photos', 'Minimal unggah 1 foto listing agar properti bisa disimpan.');
+                session()->flash('error', 'Gagal menyimpan properti. Unggah minimal 1 foto terlebih dahulu.');
                 return;
             }
 
@@ -113,6 +130,7 @@ class EstateForm extends Component
                     $message      = 'Properti berhasil diterbitkan!';
                 }
 
+                // Upload foto baru jika ada
                 foreach ($this->photos as $photo) {
                     $path = $photo->store('estates', 'public');
                     EstateAttachment::create([
@@ -129,23 +147,38 @@ class EstateForm extends Component
             throw $e;
         } catch (\Throwable $e) {
             report($e);
-            $this->addError('photos', 'Gagal mengirim properti. Periksa kembali foto dan data, lalu coba lagi.');
-            session()->flash('error', 'Gagal mengirim properti. Periksa kembali data Anda dan pastikan file foto valid.');
+            $this->addError('photos', 'Gagal mengirim properti. Periksa kembali data Anda.');
+            session()->flash('error', 'Gagal menyimpan data: ' . $e->getMessage());
             return;
         }
     }
 
     public function render()
     {
-        return view('livewire.pages.estates.estate-form');
-    }
+        $provinces = Province::orderBy('name', 'asc')->get();
 
-    // Step untuk form
-    public int $currentStep = 1;
+        // Pencarian kota aman berbasis code/id provinsi Laravolt
+        $cities = collect();
+        if ($this->form->province_id) {
+            $province = Province::where('code', $this->form->province_id)
+                ->orWhere('id', $this->form->province_id)
+                ->first();
+
+            if ($province) {
+                $cities = City::where('province_code', $province->code)
+                    ->orderBy('name', 'asc')
+                    ->get();
+            }
+        }
+
+        return view('livewire.pages.estates.estate-form', [
+            'provinces' => $provinces,
+            'cities'    => $cities,
+        ]);
+    }
 
     public function nextStep()
     {
-        // Opsional: jalankan validasi parsial tiap step di sini kalau mau
         $this->currentStep = min(4, $this->currentStep + 1);
     }
 

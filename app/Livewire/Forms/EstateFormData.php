@@ -13,14 +13,14 @@ class EstateFormData extends Form
     public string $title = '';
     public string $transaction_type = 'sale';
     public string $property_type = 'house';
-    public int $price = 0;
-    public float $commission_percentage = 0.0;
+    public $price = 0;
+    public $commission_percentage = 0.0;
     public string $listing_group = '';
     public string $description = '';
 
-    // Lokasi Detail
-    public string $province = ''; // provinsi
-    public string $city = ''; //kota 
+    // Lokasi Detail (Foreign Keys)
+    public ?string $province_id = null;
+    public ?int $city_id = null;
     public string $district = '';
     public string $address = '';
     public string $block_number = '';
@@ -55,9 +55,6 @@ class EstateFormData extends Form
         'video_url'         => '',
     ];
 
-    /**
-     * Cek status edit secara aman berdasarkan ID estate di database.
-     */
     public function isEdit(): bool
     {
         return ! empty($this->estate?->id);
@@ -72,20 +69,20 @@ class EstateFormData extends Form
 
         $this->estate = $estate;
 
-        $this->title                 = $estate->title;
-        $this->transaction_type      = $estate->transaction_type;
+        $this->title                 = $estate->title ?? '';
+        $this->transaction_type      = $estate->transaction_type ?? 'sale';
         $this->property_type         = $estate->property_type ?? 'house';
         $this->price                 = $estate->price ?? 0;
         $this->commission_percentage = (float) ($estate->commission_percentage ?? 0);
         $this->listing_group         = $estate->listing_group ?? '';
         $this->description           = $estate->description ?? '';
 
-        $this->province              = $estate->province ?? '';
-        $this->city                  = $estate->city;
+        $this->province_id           = $estate->province_id ? (string) $estate->province_id : null;
+        $this->city_id               = $estate->city_id ? (int) $estate->city_id : null;
         $this->district              = $estate->district ?? '';
         $this->address               = $estate->address ?? '';
         $this->block_number          = $estate->block_number ?? '';
-        $this->show_map              = (bool) $estate->show_map;
+        $this->show_map              = (bool) ($estate->show_map ?? true);
 
         $this->bedroom               = $estate->bedroom;
         $this->bathroom              = $estate->bathroom;
@@ -99,7 +96,15 @@ class EstateFormData extends Form
         $this->furnish_type          = $estate->furnish_type ?? '';
 
         $this->agent_phone           = $estate->agent_phone ?? '';
-        $this->attributes_list       = array_merge($this->attributes_list, $estate->attributes ?? []);
+
+        if (is_array($estate->attributes)) {
+            $this->attributes_list   = array_merge($this->attributes_list, $estate->attributes);
+
+            // Garansi casting ke string jika data di DB/Seeder terlanjur int
+            if (isset($this->attributes_list['electricity']) && $this->attributes_list['electricity'] !== null) {
+                $this->attributes_list['electricity'] = (string) $this->attributes_list['electricity'];
+            }
+        }
     }
 
     public function rules(): array
@@ -107,40 +112,41 @@ class EstateFormData extends Form
         return [
             'title'                         => 'required|string|max:255',
             'transaction_type'              => 'required|in:sale,rent',
-            'property_type'                 => 'required|in:house,apartment,land,shophouse,villa,warehouse,office',
+            'property_type'                 => 'required|string',
             'price'                         => 'required|numeric|min:0',
             'commission_percentage'         => 'nullable|numeric|between:0,100',
             'listing_group'                 => 'nullable|string|max:100',
             'description'                   => 'nullable|string',
 
-            'province'                      => 'nullable|string|max:100',
-            'city'                          => 'required|string|max:100',
+            // Validasi wilayah
+            'province_id'                   => 'nullable',
+            'city_id'                       => 'nullable',
+
             'district'                      => 'nullable|string|max:100',
             'address'                       => 'nullable|string',
             'block_number'                  => 'nullable|string|max:50',
             'show_map'                      => 'boolean',
 
-            'bedroom'                       => 'nullable|integer|min:0',
-            'bathroom'                      => 'nullable|integer|min:0',
-            'building_size'                 => 'nullable|integer|min:0',
-            'land_size'                     => 'nullable|integer|min:0',
+            'bedroom'                       => 'nullable|numeric|min:0',
+            'bathroom'                      => 'nullable|numeric|min:0',
+            'building_size'                 => 'nullable|numeric|min:0',
+            'land_size'                     => 'nullable|numeric|min:0',
             'building_width'                => 'nullable|numeric|min:0',
             'building_length'               => 'nullable|numeric|min:0',
-            'floor_count'                   => 'nullable|integer|min:1',
-            'garage_capacity'               => 'nullable|integer|min:0',
-            'facing'                        => 'nullable|in:north,south,east,west,north_east,north_west,south_east,south_west',
-            'furnish_type'                  => 'nullable|in:unfurnished,semi_furnished,full_furnished',
+            'floor_count'                   => 'nullable|numeric|min:1',
+            'garage_capacity'               => 'nullable|numeric|min:0',
+            'facing'                        => 'nullable|string|max:50',
+            'furnish_type'                  => 'nullable|string|max:50',
 
-            'agent_phone'                   => 'nullable|string|max:20',
+            'agent_phone'                   => 'nullable|string|max:30',
 
-            // Validasi bertingkat untuk JSON Attributes
-            'attributes_list.is_kpr'        => 'boolean',
-            'attributes_list.has_imb'       => 'boolean',
-            'attributes_list.has_blueprint' => 'boolean',
+            'attributes_list.is_kpr'        => 'nullable|boolean',
+            'attributes_list.has_imb'       => 'nullable|boolean',
+            'attributes_list.has_blueprint' => 'nullable|boolean',
             'attributes_list.legal_docs'    => 'nullable|string|max:50',
             'attributes_list.electricity'   => 'nullable|string|max:50',
             'attributes_list.water_type'    => 'nullable|string|max:50',
-            'attributes_list.video_url'     => 'nullable|url|max:255',
+            'attributes_list.video_url'     => 'nullable|string|max:500',
         ];
     }
 
@@ -148,27 +154,33 @@ class EstateFormData extends Form
     {
         $attributes = $this->attributes_list;
 
+        // Casting boolean untuk checkbox
         foreach (['is_kpr', 'has_imb', 'has_blueprint', 'agent_cooperation'] as $key) {
             if (array_key_exists($key, $attributes)) {
                 $attributes[$key] = filter_var($attributes[$key], FILTER_VALIDATE_BOOLEAN);
             }
         }
 
+        // Pastikan electricity tersimpan sebagai string
+        if (isset($attributes['electricity']) && $attributes['electricity'] !== '') {
+            $attributes['electricity'] = (string) $attributes['electricity'];
+        }
+
         return [
             'title'                 => trim($this->title),
             'transaction_type'      => $this->transaction_type,
             'property_type'         => $this->property_type,
-            'price'                 => $this->price,
+            'price'                 => is_numeric($this->price) ? (float) $this->price : 0,
             'commission_percentage' => is_numeric($this->commission_percentage) && $this->commission_percentage > 0 ? (float) $this->commission_percentage : null,
             'listing_group'         => $this->listing_group ?: null,
             'description'           => $this->description ?: null,
 
-            'province'              => $this->province ?: null,
-            'city'                  => trim($this->city),
+            'province_id'           => $this->province_id ?: null,
+            'city_id'               => $this->city_id ? (int) $this->city_id : null,
             'district'              => $this->district ?: null,
             'address'               => $this->address ?: null,
             'block_number'          => $this->block_number ?: null,
-            'show_map'              => $this->show_map,
+            'show_map'              => (bool) $this->show_map,
 
             'bedroom'               => is_numeric($this->bedroom) ? (int) $this->bedroom : null,
             'bathroom'              => is_numeric($this->bathroom) ? (int) $this->bathroom : null,

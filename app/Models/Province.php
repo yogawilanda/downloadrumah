@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Laravolt\Indonesia\Models\Province as ModelsProvince;
 
 /**
  * Province model is container and reshaper data from the Provinces migrations.
  */
-class Province extends Model
+class Province extends ModelsProvince
 {
 
 }

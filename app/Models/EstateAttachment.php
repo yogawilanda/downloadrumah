@@ -26,18 +26,26 @@ class EstateAttachment extends Model
                     return null;
                 }
 
-                // Jika sudah berupa URL lengkap (e.g. S3 / Cloudinary)
+                // 1. Jika berupa URL eksternal lengkap (e.g. Unsplash, S3, Cloudinary)
                 if (filter_var($this->file_path, FILTER_VALIDATE_URL)) {
                     return $this->file_path;
                 }
 
-                // Bersihkan prefix 'public/' atau slash di awal
+                // 2. Deteksi jika file_path berupa string temporer Livewire (belum tersimpan permanen)
+                if (str_contains($this->file_path, 'livewire-tmp') || str_contains($this->file_path, '-meta')) {
+                    // Cek ketersediaan file di disk tmp, jika ada ambil temporaryUrl, jika tidak return null/fallback
+                    if (Storage::disk('public')->exists($this->file_path)) {
+                        return Storage::disk('public')->url($this->file_path);
+                    }
+                    return null;
+                }
+
+                // 3. Bersihkan prefix 'public/' atau slash di awal untuk file lokal permanen
                 $cleanPath = ltrim(str_replace('public/', '', $this->file_path), '/');
 
-                // Local disks are served through the application route so this works
-                // without requiring a public/storage symlink on the deployment.
+                // 4. Jika menggunakan custom route media (tanpa symlink storage)
                 if (config('filesystems.disks.public.driver') === 'local') {
-                    return url('media/'.$cleanPath);
+                    return url('media/' . $cleanPath);
                 }
 
                 return Storage::disk('public')->url($cleanPath);
