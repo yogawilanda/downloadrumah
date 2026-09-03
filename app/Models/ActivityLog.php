@@ -21,14 +21,10 @@ class ActivityLog extends Model
 {
     protected $table = 'activity_logs';
 
-    protected $fillable = [
-        'user_id',
-        'module',
-        'event_name',
-        'payload',
-        'ip_address',
-        'user_agent',
-    ];
+    /**
+     * Allow mass assignment for telemetry insert.
+     */
+    protected $guarded = ['id'];
 
     /**
      * Automatic JSON Casting for Payload Attribute
@@ -64,7 +60,11 @@ class ActivityLog extends Model
         return $query
             ->when($filters['module'] ?? null, fn ($q, $m) => $q->where('module', $m))
             ->when($filters['event_name'] ?? null, fn ($q, $e) => $q->where('event_name', $e))
-            ->when($filters['user_id'] ?? null, fn ($q, $u) => $q->where('user_id', $u))
+            ->when($filters['user_id'] ?? null, function ($q, $u) {
+                // Konversi angka ter-mask kembali ke Integer jika dikirim dalam bentuk masked string
+                $realUserId = is_numeric($u) ? $u : ((int) base_convert($u, 36, 10) - 100000);
+                return $q->where('user_id', $realUserId);
+            })
             ->when($filters['date'] ?? null, fn ($q, $d) => $q->whereDate('created_at', $d));
     }
 }

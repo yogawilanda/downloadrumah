@@ -41,13 +41,23 @@ class ActivityLogController extends Controller
     }
 
     /**
-     * Step 1.2: Read Single Log Detail
+     * Step 1.2: Read Single Log Detail with Unmasking Support
      */
-    public function show(ActivityLog $activityLog): JsonResponse
+    public function show(string $id): JsonResponse
     {
-        $activityLog->loadMissing('user:id,name,email');
+        // Decode masked string string ID back to integer if needed
+        $realId = is_numeric($id) ? $id : ((int) base_convert($id, 36, 10) - 100000);
 
-        return response()->json(['status' => 'success', 'data' => new ActivityLogResource($activityLog),]);
+        $log = ActivityLog::with('user:id,name,email')->find($realId);
+
+        if (! $log) {
+            return response()->json(['status' => 'error', 'message' => 'Log not found'], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => new ActivityLogResource($log),
+        ]);
     }
 
     /**
@@ -65,12 +75,12 @@ class ActivityLogController extends Controller
 
         try {
             $log = ActivityLog::create([
-                'user_id'    => Auth::id(),
-                'module'     => $validated['module'],
+                'user_id' => Auth::id(), // Will be null if guest/unauthenticated
+                'module' => $validated['module'],
                 'event_name' => $validated['event_name'],
-                'payload'    => $payload,
+                'payload' => $payload,
                 'ip_address' => $request->ip(),
-                'user_agent' => $this->parseUserAgent($request->userAgent()),
+                'user_agent' => $this->parseUserAgent($request->userAgent() ?? ''),
             ]);
 
             return response()->json([
@@ -78,7 +88,8 @@ class ActivityLogController extends Controller
                 'data' => new ActivityLogResource($log),
             ], 201);
         } catch (\Throwable $e) {
-            Log::error('API Event Logging Failed: ' . $e->getMessage());
+            Log::error('API Event Logging Failed: '.$e->getMessage());
+
             return response()->json(['status' => 'error', 'message' => 'Logging failed'], 500);
         }
     }
