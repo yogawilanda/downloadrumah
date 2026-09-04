@@ -17,3 +17,10 @@ php artisan laravolt:indonesia:seed
 
 Namun, ada cara otomatis supaya tidak perlu, jadi dimasukkan ke DatabaseSeeder
 -->
+php artisan stub:publish
+
+   INFO  Stubs published successfully.
+
+
+<!-- erd generator -->
+composer require recca0120/laravel-erd --dev

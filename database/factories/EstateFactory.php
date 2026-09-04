@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * <meta_config>
+ * @path : database/factories/EstateFactory.php | usage: Estates Core Model Factory
+ * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : PHP Docblock
+ * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
+ * </meta_config>
+ *
+ * @author yogawilanda <eayogawilanda@gmail.com>
+ */
+
 namespace Database\Factories;
 
 use App\Models\Estate;
@@ -12,9 +22,11 @@ class EstateFactory extends Factory
 {
     protected $model = Estate::class;
 
+    /**
+     * Define the model's default state.
+     */
     public function definition(): array
     {
-        // Ambil kota acak dari database Laravolt yang sudah di-seed
         $city = City::inRandomOrder()->first();
 
         $title = fake()->randomElement([
@@ -26,25 +38,36 @@ class EstateFactory extends Factory
         ]) . ' ' . ($city ? $city->name : fake()->city());
 
         return [
+            /**
+             * Core Identity & Pricing
+             */
             'user_id' => User::factory(),
             'title' => $title,
             'slug' => Str::slug($title) . '-' . Str::random(5),
             'transaction_type' => fake()->randomElement(['sale', 'rent']),
             'property_type' => fake()->randomElement(['house', 'apartment', 'land', 'shophouse', 'villa', 'warehouse', 'office']),
-            'price' => fake()->numberBetween(300, 5500) * 1000000, // 300 Jt - 5.5 M
+            'price' => fake()->numberBetween(300, 5500) * 1000000,
+            'is_kpr' => fake()->boolean(80),
+            'certificate_type' => fake()->randomElement(['shm', 'hgb', 'hp', 'girik', 'strata_title']),
             'commission_percentage' => fake()->randomElement([1.00, 2.00, 2.50, 3.00]),
-            'listing_group' => fake()->optional(0.3)->randomElement(['Primary', 'Secondary', 'Exclusive']),
+            'listing_group' => fake()->randomElement(['primary', 'secondary']),
             'description' => fake()->paragraph(3),
 
-            // Lokasi Listing (Mapped ke Laravolt)
+            /**
+             * Regional Location Mapping
+             */
+            'country' => 'Indonesia',
             'province_id' => $city?->province_code,
             'city_id' => $city?->id,
             'district' => fake()->streetName(),
             'address' => fake()->address(),
             'block_number' => 'Blok ' . fake()->bothify('?#'),
+            'map_url' => 'https://maps.google.com/?q=' . fake()->latitude() . ',' . fake()->longitude(),
             'show_map' => true,
 
-            // Detail Specs
+            /**
+             * Specifications & Physical Features
+             */
             'bedroom' => fake()->numberBetween(2, 5),
             'bathroom' => fake()->numberBetween(1, 4),
             'building_size' => fake()->numberBetween(45, 300),
@@ -56,23 +79,11 @@ class EstateFactory extends Factory
             'facing' => fake()->randomElement(['north', 'south', 'east', 'west', 'north_east', 'north_west', 'south_east', 'south_west']),
             'furnish_type' => fake()->randomElement(['unfurnished', 'semi_furnished', 'full_furnished']),
 
-            // Agent Contact
-            'agent_phone' => '628' . fake()->numerify('##########'),
-
-            // JSON Attributes (Sesuai Mapped UI / Model Accessor)
-            'attributes' => [
-                'is_kpr' => fake()->boolean(80),
-                'has_imb' => fake()->boolean(90),
-                'has_blueprint' => fake()->boolean(70),
-                'legal_docs' => fake()->randomElement(['SHM', 'HGB', 'AJB']),
-                'promo_cooperation' => fake()->optional(0.6)->randomElement(['Free BPHTB', 'Bonus AC & Canopy', 'DP 0%']),
-                'agent_cooperation' => fake()->boolean(50),
-                'electricity' => fake()->randomElement(['1300', '2200', '3500', '5500']),
-                'water_type' => fake()->randomElement(['PDAM', 'Sumur Bor']),
-                'nearest_places' => fake()->randomElements(['Akses Tol', 'Mall', 'Rumah Sakit', 'Stasiun', 'Sekolah'], 2),
-                'video_url' => fake()->optional(0.4)->url(),
-            ],
-
+            /**
+             * Owner Contacts & Workflow Status
+             */
+            'owner_phone' => '628' . fake()->numerify('##########'),
+            'show_owner_phone' => fake()->boolean(70),
             'status' => 'active',
         ];
     }

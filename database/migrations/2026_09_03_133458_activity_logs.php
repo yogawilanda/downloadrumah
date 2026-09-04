@@ -32,7 +32,7 @@ return new class extends Migration
              */
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('module', 50)->index();
+            $table->string('module', 50);
             $table->string('event_name', 100)->index();
             $table->json('payload')->nullable();
 

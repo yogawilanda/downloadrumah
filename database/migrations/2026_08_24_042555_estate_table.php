@@ -14,8 +14,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -23,47 +22,36 @@ return new class extends Migration
     {
         Schema::create('estates', function (Blueprint $table) {
             /**
-             * Step 1.1: Core Identity & Pricing
-             * FE Mapping:
-             * - title & slug             : Draft Judul Listing & Auto URL
-             * - transaction & property   : Select Option Tipe Transaksi & Properti
-             * - price & commission       : Input Harga & Persentase Komisi Agent
-             * - listing_group & desc     : Tagging Grup & Textarea Deskripsi
+             * Step 1.1: Core Identity, Legal & Pricing
              */
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->enum('transaction_type', ['sale', 'rent'])->default('sale');
+            $table->enum('transaction_type', ['sale', 'rent', 'jual & sewa'])->default('sale');
+            $table->unsignedBigInteger('price');
+            $table->boolean('is_kpr')->default(true);
+            $table->enum('certificate_type', ['shm', 'hgb', 'hp', 'girik', 'strata_title', 'other'])->nullable();
             $table->enum('property_type', ['house', 'apartment', 'land', 'shophouse', 'villa', 'warehouse', 'office'])->default('house');
-            $table->decimal('price', 15, 2)->unsigned();
-            $table->decimal('commission_percentage', 5, 2)->unsigned()->nullable();
-            $table->string('listing_group')->nullable();
+            $table->decimal('commission_percentage', 5, 2)->nullable();
+            $table->enum('listing_group', ['primary', 'secondary'])->nullable();
             $table->text('description')->nullable();
 
             /**
              * Step 1.2: Regional Location Mapping
-             * FE Mapping:
-             * - province_id & city_id    : Dropdown Wilayah (Laravolt FK RESTRICT)
-             * - district, address, block : Area Kecamatan, Alamat Jalan, Blok/Nomor
-             * - show_map                 : Toggle Switch Tampilkan Peta Posisional
              */
-            $table->string('province_id', 2)->nullable();
+            $table->string('country')->default('Indonesia');
+            $table->char('province_id', 2)->nullable();
             $table->foreign('province_id')->references('code')->on('indonesia_provinces')->onDelete('restrict');
             $table->foreignId('city_id')->nullable()->constrained('indonesia_cities')->onDelete('restrict');
             $table->string('district')->nullable();
             $table->text('address')->nullable();
             $table->string('block_number')->nullable();
+            $table->string('map_url')->nullable();
             $table->boolean('show_map')->default(true);
 
             /**
              * Step 1.3: Specifications & Physical Features
-             * FE Mapping:
-             * - bedroom & bathroom       : Input Counter/Number Kamar
-             * - building & land sizes    : Input Luas (m2) & Dimensi Lebar/Panjang
-             * - floor & garage           : Counter Jumlah Lantai & Kapasitas Mobil
-             * - facing & furnish_type    : Select Arah Hadap & Tipe Furnish
-             * - agent_phone              : Nomor Telepon Agen Penanggung Jawab
              */
             $table->unsignedSmallInteger('bedroom')->nullable();
             $table->unsignedSmallInteger('bathroom')->nullable();
@@ -75,20 +63,17 @@ return new class extends Migration
             $table->unsignedSmallInteger('garage_capacity')->nullable();
             $table->enum('facing', ['north', 'south', 'east', 'west', 'north_east', 'north_west', 'south_east', 'south_west'])->nullable();
             $table->enum('furnish_type', ['unfurnished', 'semi_furnished', 'full_furnished'])->nullable();
-            $table->string('agent_phone', 20)->nullable();
 
             /**
-             * Step 1.4: Dynamic Attributes, Status, & Indexing
-             * FE Mapping:
-             * - attributes (JSON)        : Dynamic Checkbox (KPR, IMB, Blueprint, Legal Docs) & Media (Video URL)
-             * - status                   : Status Workflow Listing (Draft -> Active -> Sold/Rented)
+             * Step 1.4: Owner Contacts & Status Workflow
              */
-            $table->json('attributes')->nullable()->comment('Menampung: KPR, IMB, Blueprint, Legal Docs, Promosi, Utilities, Nearest Places, Video URL');
+            $table->string('owner_phone', 20)->nullable();
+            $table->boolean('show_owner_phone')->default(false);
             $table->enum('status', ['active', 'sold', 'rented', 'draft'])->default('draft');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index(['status', 'transaction_type', 'property_type', 'city_id', 'price'], 'estates_quick_search_idx');
+            $table->index(['status', 'transaction_type', 'property_type', 'city_id', 'price', 'is_kpr'], 'estates_quick_search_idx');
         });
     }
 
