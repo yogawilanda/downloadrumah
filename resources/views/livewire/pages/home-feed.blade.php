@@ -2,10 +2,12 @@
 loc: resources\views\livewire\pages\home-feed.blade.php
 usage: root of homepage content which globally available to accessed by all visitor including non authorized user.
 --}}
-<div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }" @open-search-modal.window="openSearchModal = true">
+<div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }"
+    @open-search-modal.window="openSearchModal = true">
 
     {{-- Frame Container Utama (App-like di Desktop, Full Native di Mobile) --}}
-    <div class="w-full max-w-md bg-white min-h-screen md:min-h-[844px]  md:shadow-xl md:border md:border-gray-200 relative overflow-hidden pb-20">
+    <div
+        class="w-full max-w-md bg-white min-h-screen md:min-h-[844px]  md:shadow-xl md:border md:border-gray-200 relative overflow-hidden pb-20">
 
         <!-- Navigation Bar Top -->
         <x-layouts.home.top-nav :transaction_type="$transaction_type" />
@@ -14,18 +16,36 @@ usage: root of homepage content which globally available to accessed by all visi
         <div class="space-y-5 pt-2">
 
             <!-- 1. Quick Categories Horizontal Scroll -->
-            <x-layouts.home.home-feed-hero/>
+            {{-- sementara dinonaktifkan karena butuh memiliki factory berbagai tipe rumah --}}
+            {{-- <x-layouts.home.home-feed-hero/> --}}
+            {{-- ganti dengan desain atau apapun yang lebih cocok, Opening aplikasi, dapatkan 1 bulan akun gratis atau apapun itu. --}}
+            <div class="px-4">
+                <div class="flex items-center justify-between rounded-2xl  p-4 text-blue shadow-md">
+                    <div class="space-y-0.5">
+                        <p class="text-[14px] font-medium text-slate-800">Punya Properti?</p>
+                        <h3 class="text-xs font-bold text-blue-600">Jual atau Sewakan Propertimu</h3>
+                        <p class="text-[10px] text-slate-600">Pasang iklan gratis hanya dalam 2 menit.</p>
+                    </div>
+                    <a href="{{ route('estates.create') }}"
+                        class="shrink-0 rounded-xl bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm transition active:scale-95 hover:bg-blue-500">
+                        + Pasang Iklan
+                    </a>
+                </div>
+            </div>
 
             <!-- 2. Promo / Highlight Banner Slider -->
-            <x-layouts.home.home-feed-banner/>
+            <x-layouts.home.home-feed-banner />
 
             <!-- 3. Section Header -->
             <div class="px-4 flex items-center justify-between pt-1">
                 <div>
-                    <h2 class="text-sm font-bold text-gray-800">Rekomendasi Properti</h2>
-                    <p class="text-[11px] text-gray-400">Pilihan hunian terbaik berdasarkan pencarianmu</p>
+                    <h2 class="text-base font-bold text-gray-800 leading-tight">Rekomendasi Properti</h2>
+                    <p class="text-xs text-gray-500">Pilihan hunian terbaik berdasarkan pencarianmu</p>
                 </div>
-                <span class="text-xs font-semibold text-blue-600">Lihat Semua</span>
+                <a href="{{ route('listings.index') }}"
+                    class="text-xs font-bold text-blue-600 hover:text-blue-700 active:scale-95 transition-all py-1 px-2 rounded-lg hover:bg-blue-50">
+                    Lihat Semua
+                </a>
             </div>
 
             <!-- 4. Feed Property Cards -->
@@ -36,25 +56,18 @@ usage: root of homepage content which globally available to accessed by all visi
         <!-- Pop-up Search & Filter Sheet -->
         <div x-show="openSearchModal" x-cloak class="absolute inset-0 z-50 flex items-end justify-center">
             <!-- Backdrop -->
-            <div x-show="openSearchModal"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0"
-                 x-transition:enter-end="opacity-100"
-                 x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="opacity-100"
-                 x-transition:leave-end="opacity-0"
-                 @click="openSearchModal = false"
-                 class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+            <div x-show="openSearchModal" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0" @click="openSearchModal = false"
+                class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
             <!-- Sheet Panel -->
-            <div x-show="openSearchModal"
-                 x-transition:enter="transition ease-out duration-300 transform"
-                 x-transition:enter-start="translate-y-full"
-                 x-transition:enter-end="translate-y-0"
-                 x-transition:leave="transition ease-in duration-200 transform"
-                 x-transition:leave-start="translate-y-0"
-                 x-transition:leave-end="translate-y-full"
-                 class="w-full bg-white rounded-t-2xl shadow-2xl z-10 p-5 pb-8 space-y-4">
+            <div x-show="openSearchModal" x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
+                x-transition:leave="transition ease-in duration-200 transform" x-transition:leave-start="translate-y-0"
+                x-transition:leave-end="translate-y-full"
+                class="w-full bg-white rounded-t-2xl shadow-2xl z-10 p-5 pb-8 space-y-4">
 
                 <!-- Drag Handle & Header -->
                 <div class="flex flex-col items-center gap-2">
@@ -63,7 +76,8 @@ usage: root of homepage content which globally available to accessed by all visi
                         <h3 class="text-sm font-bold text-gray-800">Cari & Filter Properti</h3>
                         <button @click="openSearchModal = false" class="text-gray-400 hover:text-gray-600">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
                     </div>
@@ -71,9 +85,11 @@ usage: root of homepage content which globally available to accessed by all visi
 
                 <!-- Input Search -->
                 <div class="relative">
-                    <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari lokasi, nama properti..."
+                    <input wire:model.live.debounce.300ms="search" type="text"
+                        placeholder="Cari lokasi, nama properti..."
                         class="w-full pl-9 pr-4 py-2 bg-gray-100 text-sm rounded-xl border-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-800 placeholder-gray-400" />
-                    <svg class="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -112,7 +128,8 @@ usage: root of homepage content which globally available to accessed by all visi
                 </div>
 
                 <!-- Apply Button -->
-                <button @click="openSearchModal = false" class="w-full py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-md hover:bg-blue-700 transition">
+                <button @click="openSearchModal = false"
+                    class="w-full py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-md hover:bg-blue-700 transition">
                     Tampilkan Hasil
                 </button>
             </div>
