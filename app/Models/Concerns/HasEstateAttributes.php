@@ -60,4 +60,19 @@ trait HasEstateAttributes
     {
         return $query->where('transaction_type', 'rent');
     }
+
+    public function scopeForRentAndSell($query)
+    {
+        return $query->where('transaction_type', 'sale & rent');
+    }
+
+    public function scopeForListingTab($query, string $tab, int $userId)
+    {
+        return match ($tab) {
+            'my_listings' => $query->where('user_id', $userId),
+            'co_broke'    => $query->where('user_id', '!=', $userId)->active(),
+            'drafts'      => $query->where('user_id', $userId)->where('status', 'draft'),
+            default       => $query->where('user_id', $userId),
+        };
+    }
 }

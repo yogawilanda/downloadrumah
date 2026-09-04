@@ -16,7 +16,12 @@ usage: component for home-feed.blade.php
                 <!-- Transaction Badge -->
                 <span
                     class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
-                    {{ $estate->transaction_type === 'sale' ? 'Dijual' : 'Disewa' }}
+                    {{ match ($estate->transaction_type) {
+                        'sale' => 'Dijual',
+                        'rent' => 'Disewakan',
+                        'sale & rent' => 'Dijual & Disewakan',
+                        default => 'Dijual',
+                    } }}
                 </span>
 
                 <!-- Short Price Tag -->
@@ -44,25 +49,25 @@ usage: component for home-feed.blade.php
 
                 <!-- Specs Strip -->
                 <div class="flex items-center space-x-4 pt-3 border-t border-gray-100 text-xs text-gray-600">
-                    @if($estate->bedroom)
+                    @if ($estate->bedroom)
                         <div class="flex items-center space-x-1">
                             <span class="font-bold text-gray-800">{{ $estate->bedroom }}</span>
                             <span class="text-gray-400">KT</span>
                         </div>
                     @endif
-                    @if($estate->bathroom)
+                    @if ($estate->bathroom)
                         <div class="flex items-center space-x-1">
                             <span class="font-bold text-gray-800">{{ $estate->bathroom }}</span>
                             <span class="text-gray-400">KM</span>
                         </div>
                     @endif
-                    @if($estate->building_size)
+                    @if ($estate->building_size)
                         <div class="flex items-center space-x-1">
                             <span class="font-bold text-gray-800">{{ $estate->building_size }}</span>
                             <span class="text-gray-400">m² (LB)</span>
                         </div>
                     @endif
-                    @if($estate->land_size)
+                    @if ($estate->land_size)
                         <div class="flex items-center space-x-1">
                             <span class="font-bold text-gray-800">{{ $estate->land_size }}</span>
                             <span class="text-gray-400">m² (LT)</span>

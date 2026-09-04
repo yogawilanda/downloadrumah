@@ -39,17 +39,19 @@
                             }
                         @endphp
 
-                        @if($imgUrl)
-                            <img src="{{ $imgUrl }}" class="w-full h-full object-cover" alt="{{ $estate->title }}">
+                        @if ($imgUrl)
+                            <img src="{{ $imgUrl }}" class="w-full h-full object-cover"
+                                alt="{{ $estate->title }}">
                         @else
-                            <div class="w-full h-full flex items-center justify-center text-[10px] text-gray-400">No Image</div>
+                            <div class="w-full h-full flex items-center justify-center text-[10px] text-gray-400">No
+                                Image</div>
                         @endif
                     </div>
 
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-1.5">
                             <h3 class="text-xs font-bold text-gray-900 truncate">{{ $estate->title }}</h3>
-                            @if($tab === 'my_listings')
+                            @if ($tab === 'my_listings')
                                 <span
                                     class="px-1.5 py-0.5 text-[9px] rounded font-semibold {{ $estate->status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-600' }}">
                                     {{ $estate->status === 'active' ? 'Aktif' : ucfirst($estate->status) }}
@@ -57,12 +59,16 @@
                             @endif
                         </div>
                         <p class="text-xs font-black text-blue-600 mt-0.5">{{ $estate->short_price }}</p>
+                        {{-- aku test comment begini, untuk case home->listing aman, expectnya hilang dan hilang memang --}}
+                        {{-- aku test dengan alur edit/create->(submit/cancel/langsung listing) justru malah muncul lagi padahal disini udah di comment --}}
 
+
+                            <!-- ✅ GUNAKAN INI (Ambil kolom name-nya saja): -->
                         <p class="text-[10px] text-gray-400 truncate mt-0.5">
-                            {{ implode(', ', array_filter([is_object($estate->city) ? $estate->city->name : null, $estate->district])) }}
+                            {{ implode(', ', array_filter([$estate->city?->name, $estate->district])) ?: 'Lokasi belum diisi' }}
                         </p>
 
-                        @if($tab === 'co_broke' && $estate->commission_percentage)
+                        @if ($tab === 'co_broke' && $estate->commission_percentage)
                             <span class="inline-block text-[10px] text-emerald-600 font-semibold mt-1">
                                 Komisi Agen: {{ $estate->commission_percentage }}%
                             </span>
@@ -72,7 +78,7 @@
 
                 <!-- Action Button Kondisional -->
                 <div class="pt-2 border-t border-gray-50">
-                    @if($tab === 'my_listings')
+                    @if ($tab === 'my_listings')
                         <div class="grid grid-cols-2 gap-2">
                             <a href="{{ route('estates.edit', $estate->slug) }}"
                                 class="py-2 bg-blue-50 text-blue-600 text-xs font-bold text-center rounded-xl">Edit</a>

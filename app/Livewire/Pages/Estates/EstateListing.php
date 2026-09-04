@@ -1,8 +1,19 @@
 <?php
 
+/**
+ * <meta_config>
+ * @path : app/Livewire/Pages/Estates/EstateListing.php | usage: Livewire Component for Estate Listings Tabbed View
+ * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : false | comment style : PHP Docblock
+ * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
+ * </meta_config>
+ *
+ * @author yogawilanda <eayogawilanda@gmail.com>
+ */
+
 namespace App\Livewire\Pages\Estates;
 
 use App\Models\Estate;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,36 +22,44 @@ class EstateListing extends Component
 {
     use WithPagination;
 
-    // Active Tab: 'my_listings' | 'co_broke' | 'drafts'
+    /**
+     * Tab aktif: 'my_listings' | 'co_broke' | 'drafts'
+     */
     public string $tab = 'my_listings';
 
-    public function setTab(string $tabName)
+    /**
+     * Mengubah tab aktif dan me-reset paginasi.
+     */
+    public function setTab(string $tabName): void
     {
         $this->tab = $tabName;
         $this->resetPage();
     }
 
-    public function render()
+    /**
+     * Soft delete properti milik pengguna yang sedang login.
+     */
+    public function deleteEstate(int $id): void
     {
-        $user = Auth::user();
+        $estate = Estate::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
 
-        $query = Estate::query();
-
-        if ($this->tab === 'my_listings') {
-            // Properti yang dibuat oleh agen ini
-            $query->where('user_id', $user->id);
-        } elseif ($this->tab === 'co_broke') {
-            // Co-Broke: Properti agen lain, status active, & open co-broke via JSON attributes
-            $query->where('user_id', '!=', $user->id)
-                ->active()
-                ->where('attributes->agent_cooperation', true);
-        } elseif ($this->tab === 'drafts') {
-            // Draft milik agen ini
-            $query->where('user_id', $user->id)
-                ->where('status', 'draft');
+        if ($estate) {
+            $estate->delete();
+            session()->flash('success', 'Properti berhasil dihapus.');
         }
+    }
 
-        $estates = $query
+    /**
+     * Render komponen listing properti.
+     */
+    public function render(): View
+    {
+        $userId = Auth::id();
+
+        $estates = Estate::query()
+            ->forListingTab($this->tab, $userId)
             ->with(['primaryImage', 'city'])
             ->latest()
             ->paginate(10);

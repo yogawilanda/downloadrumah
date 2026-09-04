@@ -28,7 +28,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->enum('transaction_type', ['sale', 'rent', 'jual & sewa'])->default('sale');
+            $table->enum('transaction_type', ['sale', 'rent', 'sale & rent'])->default('sale');
             $table->unsignedBigInteger('price');
             $table->boolean('is_kpr')->default(true);
             $table->enum('certificate_type', ['shm', 'hgb', 'hp', 'girik', 'strata_title', 'other'])->nullable();
@@ -67,6 +67,7 @@ return new class extends Migration {
             /**
              * Step 1.4: Owner Contacts & Status Workflow
              */
+            $table->string('owner_name')->nullable();
             $table->string('owner_phone', 20)->nullable();
             $table->boolean('show_owner_phone')->default(false);
             $table->enum('status', ['active', 'sold', 'rented', 'draft'])->default('draft');
