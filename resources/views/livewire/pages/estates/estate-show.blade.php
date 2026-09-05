@@ -1,3 +1,34 @@
+@section('has_custom_meta', true)
+
+@push('meta')
+    @php
+        $coverImage = $estate->attachments->first()?->file_path
+            ? asset('storage/' . $estate->attachments->first()->file_path)
+            : asset('images/og-preview.jpg');
+
+        $formattedPrice = 'Rp ' . number_format($estate->price ?? 0, 0, ',', '.');
+        $location = filter_var($estate->city->name ?? '', FILTER_DEFAULT);
+        $ogTitle = "{$estate->title} - {$formattedPrice}";
+        $ogDescription = "Dijual properti di {$location}. " . Str::limit(strip_tags($estate->description ?? ''), 120);
+    @endphp
+
+    <!-- Dynamic Open Graph Meta untuk Estate Detail -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    <meta property="og:image" content="{{ $coverImage }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    <meta name="twitter:image" content="{{ $coverImage }}">
+@endpush
+
 @php($defaultWa = $estate->user->phone_number ?? '')
 <div x-data="{ shareModal: false, waModal: false, toastModal: false, shareTargetNumber: '{{ $defaultWa }}', activeSlide: 0 }" class="max-w-md mx-auto min-h-screen bg-white pb-24 relative font-sans antialiased">
     <x-layouts.estate.top-nav :estate="$estate" />
