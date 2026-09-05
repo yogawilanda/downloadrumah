@@ -1,21 +1,22 @@
 {
     "name": "DownloadRumah",
     "short_name": "DownloadRumah",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#2563eb",
+    "background_color": "#ffffff",
     "icons": [
         {
             "src": "/web-app-manifest-192x192.png?v=20260830",
             "sizes": "192x192",
             "type": "image/png",
-            "purpose": "maskable"
+            "purpose": "any maskable"
         },
         {
             "src": "/web-app-manifest-512x512.png?v=20260830",
             "sizes": "512x512",
             "type": "image/png",
-            "purpose": "maskable"
+            "purpose": "any maskable"
         }
-    ],
-    "theme_color": "#2563eb",
-    "background_color": "#2563eb",
-    "display": "standalone"
+    ]
 }
