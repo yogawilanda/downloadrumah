@@ -6,7 +6,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Download Rumah') }}</title>
 
@@ -20,6 +21,8 @@
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}?v=20260830" />
     <!-- PWA Web Manifest -->
     <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- 1. Force HTTPS Asset kalau di Production -->
     @if (app()->environment('production'))
@@ -30,7 +33,8 @@
     @livewireStyles
 </head>
 
-<body class="bg-gray-100 font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-[#2563eb] font-sans antialiased selection:bg-blue-500 selection:text-white">
+
     <main class="max-w-md mx-auto min-h-screen bg-white shadow-xl relative pb-16">
         {{ $slot }}
     </main>
