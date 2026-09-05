@@ -33,7 +33,7 @@
     <form wire:submit="login" class="space-y-4">
         <div>
             <label class="block text-xs font-semibold text-gray-700 mb-1">Email</label>
-            <input wire:model="loginForm.email" type="email" required placeholder="nama@email.com"
+            <input wire:model="loginForm.email" type="email" required autocomplete="username" placeholder="nama@email.com"
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
             <x-input-error :messages="$errors->get('loginForm.email') ?: $errors->get('email')" class="mt-1 text-xs" />
         </div>
@@ -41,13 +41,11 @@
         <div>
             <div class="flex items-center justify-between mb-1">
                 <label class="block text-xs font-semibold text-gray-700">Password</label>
-
             </div>
-
 
             <div class="relative">
                 <input wire:model="loginForm.password" :type="showPassword ? 'text' : 'password'" required
-                    placeholder="••••••••"
+                    autocomplete="current-password" placeholder="••••••••"
                     class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
                 <button type="button" @click="showPassword = !showPassword"
                     class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition focus:outline-none"
@@ -74,7 +72,6 @@
                         href="{{ route('password.request') }}" wire:navigate>Lupa Password?</a>
                 @endif
             </div>
-
         </div>
 
         <label class="inline-flex items-center cursor-pointer">
