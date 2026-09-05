@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Pages\Profile\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -20,7 +21,7 @@ use App\Livewire\Pages\Estates\EstateListing;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', HomeFeed::class)->middleware('throttle:5,1')->name('home');
+Route::get('/', HomeFeed::class)->middleware('throttle:60,1')->name('home');
 
 // Tools KPR (Perbaikan Typo & Penamaan Route)
 Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
@@ -45,8 +46,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/estates/create', EstateForm::class)->name('estates.create');
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
-
-    Route::view('profile', 'profile')->name('profile');
+    Route::get('/profile', Profile::class)->name('profile');
 });
 
 Route::post('/logout', function () {

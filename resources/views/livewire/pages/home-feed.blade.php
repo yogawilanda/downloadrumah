@@ -1,7 +1,4 @@
-{{--
-loc: resources\views\livewire\pages\home-feed.blade.php
-usage: root of homepage content
---}}
+{{-- loc: resources\views\livewire\pages\home-feed.blade.php --}}
 <div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }"
     @open-search-modal.window="openSearchModal = true">
 
@@ -29,8 +26,10 @@ usage: root of homepage content
                 </div>
             </div>
 
-            <!-- 2. Promo Banner -->
-            <x-layouts.home.home-feed-banner />
+            <!-- 2. Promo Banner (Tambah id="js-promo-banner") -->
+            <div id="js-promo-banner">
+                <x-layouts.home.home-feed-banner />
+            </div>
 
             <x-layouts.home.home-feed-search-chips :max_price="$max_price" :location="$location" :search="$search"
                 :city_id="$city_id" />
@@ -47,8 +46,10 @@ usage: root of homepage content
                 </a>
             </div>
 
-            <!-- 5. Feed Property Cards -->
-            <x-layouts.home.home-feed-listing :estates="$estates" />
+            <!-- 5. Feed Property Cards (Tambah wrapper id="js-listing-container") -->
+            <div id="js-listing-container">
+                <x-layouts.home.home-feed-listing :estates="$estates" />
+            </div>
 
         </div>
 
