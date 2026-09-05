@@ -35,8 +35,10 @@
     @if (!View::hasSection('has_custom_meta'))
         <meta property="og:type" content="website">
         <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:title" content="{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Download Rumah') }}">
-        <meta property="og:description" content="Temukan hunian impian, kalkulasi KPR presisi, dan konsultasi properti cepat & transparan di Download Rumah.">
+        <meta property="og:title"
+            content="{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Download Rumah') }}">
+        <meta property="og:description"
+            content="Temukan hunian impian, kalkulasi KPR presisi, dan konsultasi properti cepat & transparan di Download Rumah.">
         <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260905">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:image" content="{{ asset('favicon.png') }}?v=20260905">
@@ -95,75 +97,83 @@
     @livewireScripts
 
     <script>
-        // Service Worker & PWA Banner Script
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(() => {});
-            });
-        }
-
-        let deferredPrompt;
-        const installBanner = document.getElementById('pwa-install-banner');
-        const installBtn = document.getElementById('pwa-install-btn');
-        const closeBtn = document.getElementById('pwa-close-btn');
-        const dontShowCheckbox = document.getElementById('pwa-dont-show-today');
-
-        function isDismissedToday() {
-            const dismissedTimestamp = localStorage.getItem('pwa_dismissed_time');
-            if (!dismissedTimestamp) return false;
-
-            const now = new Date().getTime();
-            const oneDayInMs = 24 * 60 * 60 * 1000;
-
-            if (now - parseInt(dismissedTimestamp) < oneDayInMs) {
-                return true;
-            } else {
-                localStorage.removeItem('pwa_dismissed_time');
-                return false;
+        (() => {
+            // Service Worker Registration
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
             }
-        }
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
+            // Deklarasi lokal (aman dari bentrokan wire:navigate)
+            let deferredPrompt = null;
+            const installBanner = document.getElementById('pwa-install-banner');
+            const installBtn = document.getElementById('pwa-install-btn');
+            const closeBtn = document.getElementById('pwa-close-btn');
+            const dontShowCheckbox = document.getElementById('pwa-dont-show-today');
 
-            if (installBanner && !isDismissedToday()) {
-                installBanner.classList.remove('hidden');
-                installBanner.classList.add('flex');
-            }
-        });
+            function isDismissedToday() {
+                const dismissedTimestamp = localStorage.getItem('pwa_dismissed_time');
+                if (!dismissedTimestamp) return false;
 
-        if (installBtn) {
-            installBtn.addEventListener('click', async () => {
-                if (!deferredPrompt) return;
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') hideBanner();
-                deferredPrompt = null;
-            });
-        }
+                const now = new Date().getTime();
+                const oneDayInMs = 24 * 60 * 60 * 1000;
 
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                if (dontShowCheckbox && dontShowCheckbox.checked) {
-                    localStorage.setItem('pwa_dismissed_time', new Date().getTime().toString());
+                if (now - parseInt(dismissedTimestamp) < oneDayInMs) {
+                    return true;
+                } else {
+                    localStorage.removeItem('pwa_dismissed_time');
+                    return false;
                 }
+            }
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+
+                if (installBanner && !isDismissedToday()) {
+                    installBanner.classList.remove('hidden');
+                    installBanner.classList.add('flex');
+                }
+            });
+
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    if (!deferredPrompt) return;
+                    deferredPrompt.prompt();
+                    const {
+                        outcome
+                    } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') hideBanner();
+                    deferredPrompt = null;
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    if (dontShowCheckbox && dontShowCheckbox.checked) {
+                        localStorage.setItem('pwa_dismissed_time', new Date().getTime().toString());
+                    }
+                    hideBanner();
+                });
+            }
+
+            function hideBanner() {
+                if (installBanner) {
+                    installBanner.classList.add('hidden');
+                    installBanner.classList.remove('flex');
+                }
+            }
+
+            window.addEventListener('appinstalled', () => {
+                deferredPrompt = null;
                 hideBanner();
             });
-        }
-
-        function hideBanner() {
-            if (installBanner) {
-                installBanner.classList.add('hidden');
-                installBanner.classList.remove('flex');
-            }
-        }
-
-        window.addEventListener('appinstalled', () => {
-            deferredPrompt = null;
-            hideBanner();
-        });
+        })();
     </script>
+</body>
+
+</html>
 </body>
 
 </html>
