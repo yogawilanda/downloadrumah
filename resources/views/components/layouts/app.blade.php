@@ -14,7 +14,7 @@
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}?v=20260830" />
 
     <!-- Meta untuk PWA & Mobile Web App -->
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
