@@ -37,14 +37,25 @@ class DatabaseSeeder extends Seeder
         ]);
 
         /**
-         * Step 2: Akun Testing Utama
+         * Step 2: Akun Testing Utama (Safe First-or-Create)
          */
-        $mainAgent = User::factory()->create([
-            'name' => 'Agen Properti Utama',
-            'email' => 'a@a.com',
-            'phone_number' => '6281234567890',
-            'password' => bcrypt('123'),
-        ]);
+        $mainAgent = User::firstOrCreate(
+            ['email' => 'a@a.com'],
+            [
+                'name' => 'Agen Properti Utama',
+                'phone_number' => '6281234567890',
+                'password' => bcrypt('123'),
+            ]
+        );
+
+        $adminAgent = User::firstOrCreate(
+            ['email' => 'eayogawilanda@gmail.com'],
+            [
+                'name' => 'Yoga Wilanda',
+                'phone_number' => '6281258986696',
+                'password' => bcrypt('hellovoid'),
+            ]
+        );
 
         /**
          * Step 3: Listing Properti Agen Utama (+ Attachments & Facilities)
