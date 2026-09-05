@@ -5,7 +5,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: ["resources/css/app.css", "resources/js/app.js"],
-            refresh: ["resources/views/**", "app/Livewire/**"],
+            refresh: ["resources/views/**", "app/Livewire/**"], // kenapa disini tidak pakai true saja
+            preloadTagConfig: {
+                rel: "stylesheet", // Mengubah rel dari 'preload' menjadi 'stylesheet' dan apa imbasnya?
+            },
         }),
     ],
 });

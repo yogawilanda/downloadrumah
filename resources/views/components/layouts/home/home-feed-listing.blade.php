@@ -3,6 +3,7 @@ loc: resources\views\components\layouts\home\home-feed-listing.blade.php
 usage: component for home-feed.blade.php
 --}}
 @props(['estates'])
+
 <div class="px-4 pt-4 space-y-4">
     @forelse ($estates as $estate)
         <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
@@ -35,7 +36,7 @@ usage: component for home-feed.blade.php
             <div class="p-4">
                 <h2 class="font-bold text-gray-900 text-base line-clamp-1 mb-1">{{ $estate->title }}</h2>
 
-                <!-- Location Display (Fixed: Fetch City Name from Laravolt Relation) -->
+                <!-- Location Display -->
                 <p class="text-xs text-gray-500 flex items-center mb-3">
                     <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
@@ -83,8 +84,9 @@ usage: component for home-feed.blade.php
         </div>
     @endforelse
 
-    <!-- Pagination -->
-    <div class="pt-2">
-        {{ $estates->links() }}
+    <!-- Pagination Wrapper -->
+    <div class="pt-4 pb-6 overflow-x-auto">
+        {{-- {{ $estates->links() }} --}}
+        {{ $estates->links('pagination::simple-tailwind') }}
     </div>
 </div>

@@ -46,3 +46,17 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('kprApp', kprApp);
     Alpine.data('botNavBar', botNavBar);
 });
+
+/**
+ * Step 1.3: Livewire Global Exception & Rate Limit Handler
+ */
+document.addEventListener('livewire:init', () => {
+    Livewire.hook('request', ({ fail }) => {
+        fail(({ status, preventDefault }) => {
+            if (status === 429) {
+                preventDefault();
+                alert('Aksi terlalu cepat. Silakan tunggu beberapa detik.');
+            }
+        });
+    });
+});

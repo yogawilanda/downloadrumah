@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
 // Full Pages
-use App\Livewire\Pages\HomeFeed;
+use App\Livewire\Pages\Home\HomeFeed;
 use App\Livewire\Pages\AgentDashboard;
 use App\Livewire\Pages\Tools\MortgageCalculator;
 
@@ -20,7 +20,7 @@ use App\Livewire\Pages\Estates\EstateListing;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', HomeFeed::class)->name('home');
+Route::get('/', HomeFeed::class)->middleware('throttle:5,1')->name('home');
 
 // Tools KPR (Perbaikan Typo & Penamaan Route)
 Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
@@ -28,7 +28,8 @@ Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
 // Public Media Storage Direct Access
 Route::get('/media/{path}', function ($path) {
     $file = storage_path('app/public/' . $path);
-    if (!file_exists($file)) abort(404);
+    if (!file_exists($file))
+        abort(404);
     return Response::file($file);
 })->where('path', '.*');
 

@@ -1,8 +1,7 @@
 /**
  * <meta_config>
- * @path : resources/js/kpr_app.js | usage: Alpine.js KPR Calculator Component & Full Input Debounced Telemetry
+ * @path : resources/js/kpr_app.js | usage: Alpine.js KPR Calculator Component & Formatted Inputs
  * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : JS Docblock
- * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
  * </meta_config>
  *
  * @author yogawilanda <eayogawilanda@gmail.com>
@@ -10,39 +9,58 @@
 
 export default () => ({
     mode: 'buyer',
-    jobOptions: [
-        { id: 'pns', label: 'PNS / BUMN', dbr: 0.40 },
-        { id: 'swasta', label: 'Karyawan', dbr: 0.35 },
-        { id: 'wiraswasta', label: 'Wiraswasta', dbr: 0.30 }
-    ],
-    buyer: { income: 15000000, jobType: 'swasta', location: '', interest: 7.5, tenure: 15, dp: 50000000 },
+    buyer: { monthlyBudget: 5000000, location: '', interest: 7.5, tenure: 15, dp: 50000000 },
     agent: { propertyPrice: 650000000, condition: 'new', dpPercent: 10, interest: 7.5, tenure: 15 },
     debounceTimer: null,
 
-    /**
-     * Step 1.1: Buyer Calculation & Full Input Telemetry
-     */
-    calculateBuyer() {
-        const dbr = (this.jobOptions.find(j => j.id === this.buyer.jobType) || {}).dbr || 0.30;
-        const maxInstallment = (this.buyer.income || 0) * dbr;
-        const i = ((this.buyer.interest || 0) / 100) / 12;
-        const n = (this.buyer.tenure || 0) * 12;
+    // Format & Parse Helpers untuk Input Live
+    parseNumber(val) {
+        if (!val) return 0;
+        return Number(String(val).replace(/\D/g, '')) || 0;
+    },
 
-        if (i === 0 || n === 0) return { maxMonthlyInstallment: 0, maxPlafon: 0, maxPropertyPrice: 0 };
+    formatInput(e, targetObj, key) {
+        const raw = this.parseNumber(e.target.value);
+        targetObj[key] = raw;
+        e.target.value = raw ? raw.toLocaleString('id-ID') : '';
+    },
+
+    formatTerbilangShort(number) {
+        const num = this.parseNumber(number);
+        if (!num || num <= 0) return '0 Rupiah';
+
+        if (num >= 1000000000) {
+            const val = (num / 1000000000).toFixed(2).replace(/\.00$/, '').replace('.', ',');
+            return `${val} Miliar`;
+        }
+        if (num >= 1000000) {
+            const val = (num / 1000000).toFixed(2).replace(/\.00$/, '').replace('.', ',');
+            return `${val} Juta`;
+        }
+        if (num >= 1000) {
+            const val = (num / 1000).toFixed(0);
+            return `${val} Ribu`;
+        }
+        return `${num} Rupiah`;
+    },
+
+    calculateBuyer() {
+        const maxInstallment = this.parseNumber(this.buyer.monthlyBudget);
+        const i = ((Number(this.buyer.interest) || 0) / 100) / 12;
+        const n = (Number(this.buyer.tenure) || 0) * 12;
+        const dp = this.parseNumber(this.buyer.dp);
+
+        if (i === 0 || n === 0 || maxInstallment <= 0) return { maxMonthlyInstallment: 0, maxPlafon: 0, maxPropertyPrice: 0 };
 
         const maxPlafon = maxInstallment * ((Math.pow(1 + i, n) - 1) / (i * Math.pow(1 + i, n)));
-        const maxPropertyPrice = maxPlafon + (this.buyer.dp || 0);
+        const maxPropertyPrice = maxPlafon + dp;
 
-        /**
-         * Debounce Analytics: Tracks full buyer input context after 1.5s idle
-         */
         this.trackDebouncedEvent('kpr_buyer_calculated', {
             mode: 'buyer',
-            income: this.buyer.income,
-            job_type: this.buyer.jobType,
+            monthly_budget: maxInstallment,
             interest: this.buyer.interest,
             tenure_years: this.buyer.tenure,
-            dp_amount: this.buyer.dp,
+            dp_amount: dp,
             location: this.buyer.location,
             result_max_price: Math.round(maxPropertyPrice),
             result_max_installment: Math.round(maxInstallment)
@@ -55,28 +73,24 @@ export default () => ({
         };
     },
 
-    /**
-     * Step 1.2: Agent Property Estimator & Full Input Telemetry
-     */
     calculateAgent() {
-        const dpAmount = ((this.agent.propertyPrice || 0) * (this.agent.dpPercent || 0)) / 100;
-        const plafon = (this.agent.propertyPrice || 0) - dpAmount;
-        const i = ((this.agent.interest || 0) / 100) / 12;
-        const n = (this.agent.tenure || 0) * 12;
+        const price = this.parseNumber(this.agent.propertyPrice);
+        const dpPercent = Number(this.agent.dpPercent) || 0;
+        const dpAmount = (price * dpPercent) / 100;
+        const plafon = price - dpAmount;
+        const i = ((Number(this.agent.interest) || 0) / 100) / 12;
+        const n = (Number(this.agent.tenure) || 0) * 12;
         const feePercent = this.agent.condition === 'new' ? 0.05 : 0.08;
 
         if (i === 0 || n === 0 || plafon <= 0) return { dpAmount: 0, plafon: 0, monthlyInstallment: 0, estimatedLegalFee: 0 };
 
         const monthlyInstallment = plafon * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
 
-        /**
-         * Debounce Analytics: Tracks full agent input context after 1.5s idle
-         */
         this.trackDebouncedEvent('kpr_agent_calculated', {
             mode: 'agent',
-            property_price: this.agent.propertyPrice,
+            property_price: price,
             condition: this.agent.condition,
-            dp_percent: this.agent.dpPercent,
+            dp_percent: dpPercent,
             interest: this.agent.interest,
             tenure_years: this.agent.tenure,
             result_monthly_installment: Math.round(monthlyInstallment)
@@ -86,13 +100,10 @@ export default () => ({
             dpAmount: Math.round(dpAmount),
             plafon: Math.round(plafon),
             monthlyInstallment: Math.round(monthlyInstallment),
-            estimatedLegalFee: Math.round((this.agent.propertyPrice || 0) * feePercent)
+            estimatedLegalFee: Math.round(price * feePercent)
         };
     },
 
-    /**
-     * Step 1.3: Centralized Debounce Timer Handler
-     */
     trackDebouncedEvent(eventName, payloadData) {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = setTimeout(() => {

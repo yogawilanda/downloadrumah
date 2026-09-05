@@ -12,14 +12,12 @@
 
     <!-- TODO: tambah icon yang benar -->
     {{-- <link rel="icon" type="image/png" href="{{ asset('favicon.jpg') }}"> --}}
-    
-    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png?v=20260830') }}" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260830" />
-    <link rel="shortcut icon" href="/favicon.ico?v=20260830" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20260830" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}?v=20260830" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}?v=20260830" />
+    <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}?v=20260830" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}?v=20260830" />
     <meta name="apple-mobile-web-app-title" content="Download Rumah" />
-    <link rel="manifest" href="/site.webmanifest?v=20260830" />
-
+    <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}?v=20260830" />
     <!-- PWA Web Manifest -->
     <meta name="theme-color" content="#2563eb">
 
