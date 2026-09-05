@@ -1,6 +1,9 @@
 <?php
 
 use App\Livewire\Pages\Profile\Profile;
+use App\Livewire\Pages\Supports\Supports;
+use App\Livewire\Pages\Terms\TermsAndConditions;
+use App\Livewire\PrivacyPolicy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -14,6 +17,8 @@ use App\Livewire\Pages\Tools\MortgageCalculator;
 use App\Livewire\Pages\Estates\EstateForm;
 use App\Livewire\Pages\Estates\EstateShow;
 use App\Livewire\Pages\Estates\EstateListing;
+use App\Livewire\Pages\Supports\SupportCenter;
+use App\Livewire\Pages\Supports\ReleaseNotes;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +38,13 @@ Route::get('/media/{path}', function ($path) {
         abort(404);
     return Response::file($file);
 })->where('path', '.*');
+
+Route::get('/privacy', PrivacyPolicy::class)->name('privacy');
+Route::get('/terms', TermsAndConditions::class)->name('terms');
+
+Route::get('/support', SupportCenter::class)->name('support');
+
+Route::get('/release-notes', ReleaseNotes::class)->name('release-notes');
 
 /*
 |--------------------------------------------------------------------------
