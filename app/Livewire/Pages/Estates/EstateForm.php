@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Province;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -54,6 +55,12 @@ class EstateForm extends Component
     public function updatedFormProvinceId(): void
     {
         $this->form->city_id = null;
+        $this->form->district_id = null;
+    }
+
+    public function updatedFormCityId(): void
+    {
+        $this->form->district_id = null;
     }
 
     /**
@@ -105,13 +112,28 @@ class EstateForm extends Component
      */
     public function render()
     {
+        // Pastikan $cities diambil sesuai province_code
         $cities = $this->form->province_id
             ? City::where('province_code', $this->form->province_id)->orderBy('name')->get()
             : collect();
 
+        // Jika city_id kamu menyimpan 'code' (char), query pakai city_code
+        // Jika city_id menyimpan 'id' (integer), ambil model City dulu untuk dapat code-nya
+        $districts = collect();
+        if ($this->form->city_id) {
+            $cityCode = is_numeric($this->form->city_id) && strlen((string) $this->form->city_id) < 4
+                ? City::find($this->form->city_id)?->code
+                : $this->form->city_id;
+
+            $districts = $cityCode
+                ? District::where('city_code', $cityCode)->orderBy('name')->get()
+                : collect();
+        }
+
         return view('livewire.pages.estates.estate-form', [
             'provinces' => Province::orderBy('name')->get(),
             'cities' => $cities,
+            'districts' => $districts,
             'facilities' => Facility::orderBy('name')->get(),
         ]);
     }

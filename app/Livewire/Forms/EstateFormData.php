@@ -34,6 +34,7 @@ class EstateFormData extends Form
     // Lokasi Detail
     public ?string $province_id = null;
     public ?int $city_id = null;
+    public ?string $district_id = null; // <-- Tambahkan ini untuk ID Kecamatan Laravolt
     public string $district = '';
     public string $address = '';
     public string $block_number = '';
@@ -94,6 +95,7 @@ class EstateFormData extends Form
 
         $this->province_id = $estate->province_id ? (string) $estate->province_id : null;
         $this->city_id = $estate->city_id ? (int) $estate->city_id : null;
+        $this->district_id = $estate->district_id ? (string) $estate->district_id : null;
         $this->district = $estate->district ?? '';
         $this->address = $estate->address ?? '';
         $this->block_number = $estate->block_number ?? '';
