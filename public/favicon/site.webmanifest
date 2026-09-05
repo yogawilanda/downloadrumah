@@ -1,5 +1,5 @@
 {
-    "name": "Download Rumah",
+    "name": "DownloadRumah",
     "short_name": "DownloadRumah",
     "start_url": "/",
     "display": "standalone",
