@@ -1,6 +1,12 @@
 {{--
-loc: resources/views/livewire/pages/tools/mortgage-calculator.blade.php
-usage: View komponen kalkulator KPR (Buyer Budget & Agent Unit Simulation)
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path : resources/views/livewire/pages/tools/mortgage-calculator.blade.php
+| @usage : View component for KPR Mortgage Calculator Tool (Buyer Budget & Agent Unit Simulation)
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
 --}}
 
 <div class="bg-gray-50 pt-6 pb-24 px-4">

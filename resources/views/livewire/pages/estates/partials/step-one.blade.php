@@ -275,14 +275,17 @@
                 <label class="block text-xs font-semibold text-gray-700 mb-1.5">Dokumen Legalitas Utama <span
                         class="text-red-500">*</span></label>
                 <div class="relative">
-                    <select wire:model="form.attributes_list.legal_docs"
+                    <select wire:model="form.certificate_type"
                         style="-webkit-appearance: none; -moz-appearance: none; appearance: none;"
                         class="w-full rounded-xl border border-gray-200 bg-gray-50/50 pl-3.5 pr-9 py-3 text-xs text-gray-800 truncate focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer">
-                        <option value="SHM">Sertifikat Hak Milik (SHM)</option>
-                        <option value="HGB">Hak Guna Bangunan (HGB)</option>
-                        <option value="HP">Hak Pakai (HP)</option>
-                        <option value="Girik">Girik / Petok D</option>
-                        <option value="PPJB">PPJB</option>
+                        <option value="">Pilih Jenis Sertifikat</option>
+                        <option value="shm">Sertifikat Hak Milik (SHM)</option>
+                        <option value="hgb">Hak Guna Bangunan (HGB)</option>
+                        <option value="hp">Hak Pakai (HP)</option>
+                        <option value="girik">Girik / Petok D</option>
+                        <option value="ppjb">PPJB</option>
+                        <option value="strata_title">Strata Title</option>
+                        <option value="other">Lainnya</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

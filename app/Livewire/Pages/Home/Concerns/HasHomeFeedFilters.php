@@ -17,7 +17,10 @@ trait HasHomeFeedFilters
     public string $transaction_type = '';
 
     #[Url(except: '')]
-    public string $city_id = '';
+    public string $city_id = ''; // String code Laravolt (Char 4)
+
+    #[Url(except: '')]
+    public string $district_id = '';
 
     #[Url(except: '')]
     public string $city = '';
@@ -28,15 +31,34 @@ trait HasHomeFeedFilters
     #[Url(except: '')]
     public string $location = '';
 
-    public function updatedSearch(): void { $this->resetPage(); }
-    public function updatedTransactionType(): void { $this->resetPage(); }
-    public function updatedCityId(): void { $this->resetPage(); }
-    public function updatedMaxPrice(): void { $this->resetPage(); }
-    public function updatedLocation(): void { $this->resetPage(); }
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedTransactionType(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedCityId(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedDistrictId(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedMaxPrice(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedLocation(): void
+    {
+        $this->resetPage();
+    }
 
     public function resetFilter(): void
     {
-        $this->reset(['search', 'transaction_type', 'city_id', 'city', 'max_price', 'location']);
+        $this->reset(['search', 'transaction_type', 'city_id', 'district_id', 'city', 'max_price', 'location']);
         $this->resetPage();
     }
 }

@@ -31,20 +31,29 @@ return new class extends Migration {
             $table->enum('transaction_type', ['sale', 'rent', 'sale & rent'])->default('sale');
             $table->unsignedBigInteger('price');
             $table->boolean('is_kpr')->default(true);
-            $table->enum('certificate_type', ['shm', 'hgb', 'hp', 'girik', 'strata_title', 'other'])->nullable();
+            $table->enum('certificate_type', ['shm', 'hgb', 'hp', 'girik', 'ppjb', 'strata_title', 'other'])->nullable();
             $table->enum('property_type', ['house', 'apartment', 'land', 'shophouse', 'villa', 'warehouse', 'office'])->default('house');
             $table->decimal('commission_percentage', 5, 2)->nullable();
             $table->enum('listing_group', ['primary', 'secondary'])->nullable();
             $table->text('description')->nullable();
 
             /**
-             * Step 1.2: Regional Location Mapping
+             * Step 1.2: Regional Location Mapping (Standardized Laravolt Codes)
              */
             $table->string('country')->default('Indonesia');
+
+            // Provinsi (Char 2)
             $table->char('province_id', 2)->nullable();
             $table->foreign('province_id')->references('code')->on('indonesia_provinces')->onDelete('restrict');
-            $table->foreignId('city_id')->nullable()->constrained('indonesia_cities')->onDelete('restrict');
-            $table->string('district')->nullable();
+
+            // Kota / Kabupaten (Char 4)
+            $table->char('city_id', 4)->nullable();
+            $table->foreign('city_id')->references('code')->on('indonesia_cities')->onDelete('restrict');
+
+            // Kecamatan (Char 7)
+            $table->char('district_id', 7)->nullable();
+            $table->foreign('district_id')->references('code')->on('indonesia_districts')->onDelete('restrict');
+
             $table->text('address')->nullable();
             $table->string('block_number')->nullable();
             $table->string('map_url')->nullable();

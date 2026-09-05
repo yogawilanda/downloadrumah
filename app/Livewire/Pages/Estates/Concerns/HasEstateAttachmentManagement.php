@@ -34,7 +34,7 @@ trait HasEstateAttachmentManagement
 
     public function deleteExistingPhoto(int $attachmentId): void
     {
-        if (! $this->form->isEdit() || $this->form->estate?->user_id !== Auth::id()) {
+        if (!$this->form->isEdit() || $this->form->estate?->user_id !== Auth::id()) {
             abort(403);
         }
 
@@ -50,18 +50,22 @@ trait HasEstateAttachmentManagement
 
             $this->existingPhotos = array_values(array_filter(
                 $this->existingPhotos,
-                fn ($photo) => $photo['id'] !== $attachmentId
+                fn($photo) => $photo['id'] !== $attachmentId
             ));
         }
     }
 
     protected function storeUploadedPhotos($targetEstate): void
     {
-        foreach ($this->photos as $photo) {
+        $hasPrimary = $targetEstate->attachments()->where('is_primary', true)->exists();
+
+        foreach ($this->photos as $index => $photo) {
             $path = $photo->store('estates', 'public');
+
             EstateAttachment::create([
                 'estate_id' => $targetEstate->id,
                 'file_path' => $path,
+                'is_primary' => (!$hasPrimary && $index === 0), // 👈 Foto index ke-0 jadi primary
             ]);
         }
     }

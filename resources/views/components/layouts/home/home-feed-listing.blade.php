@@ -45,7 +45,7 @@ usage: component for home-feed.blade.php
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    {{ $estate->city?->name }}{{ $estate->district ? ', ' . $estate->district : '' }}
+                    {{ $estate->short_location_label }}
                 </p>
 
                 <!-- Specs Strip -->
@@ -86,7 +86,6 @@ usage: component for home-feed.blade.php
 
     <!-- Pagination Wrapper -->
     <div class="pt-4 pb-6 overflow-x-auto">
-        {{-- {{ $estates->links() }} --}}
         {{ $estates->links('pagination::simple-tailwind') }}
     </div>
 </div>

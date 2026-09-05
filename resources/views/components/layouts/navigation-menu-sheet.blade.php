@@ -72,25 +72,25 @@ usage: Universal bottom sheet modal menu for navigation
         <div class="pt-2 border-t border-gray-100 space-y-1">
             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-2 mb-1">Informasi Aplikasi</p>
 
-            <a href="{{ route('privacy') }}" @click="openMenu = false"
+            <a href="{{ route('privacy') }}" wire:navigate @click="openMenu = false"
                 class="flex items-center justify-between p-2.5 text-gray-700 hover:bg-gray-50 rounded-xl transition text-xs font-medium">
                 <span>Kebijakan Privasi</span>
                 <span class="text-gray-400 text-[10px]">›</span>
             </a>
 
-            <a href="{{ route('support') }}" @click="openMenu = false"
+            <a href="{{ route('support') }}" wire:navigate @click="openMenu = false"
                 class="flex items-center justify-between p-2.5 text-gray-700 hover:bg-gray-50 rounded-xl transition text-xs font-medium">
                 <span>Bantuan / Konsultasi Aplikasi</span>
                 <span class="text-gray-400 text-[10px]">›</span>
             </a>
 
-            <a href="{{ route('terms') }}" @click="openMenu = false"
+            <a href="{{ route('terms') }}" wire:navigate @click="openMenu = false"
                 class="flex items-center justify-between p-2.5 text-gray-700 hover:bg-gray-50 rounded-xl transition text-xs font-medium">
                 <span>Syarat & Ketentuan</span>
                 <span class="text-gray-400 text-[10px]">›</span>
             </a>
 
-            <a href="{{ route('release-notes') }}" @click="openMenu = false"
+            <a href="{{ route('release-notes') }}" wire:navigate @click="openMenu = false"
                 class="flex items-center justify-between p-2.5 text-gray-700 hover:bg-gray-50 rounded-xl transition text-xs font-medium">
                 <span>Release Notes</span>
                 <span class="text-xs text-blue-600 font-semibold">v0.9.0-alpha</span>

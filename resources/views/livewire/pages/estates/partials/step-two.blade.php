@@ -1,17 +1,9 @@
 {{--
-Forms :
-- Province & City (Laravolt dropdown cascade)
-- District, Address, Block Number
-- Building Specifications
-- Dynamic Facilities Checkbox + Pivot Value Input
---}}
-{{-- 1.ubah menjadi format dibawah --}}
-{{--
 |--------------------------------------------------------------------------
 | Context & Meta Configuration
 |--------------------------------------------------------------------------
-| @path : resources/views/livewire/pages/auth/partials/login-form.blade.php
-| @usage : Partial View for User Login Form with Google-style Transitions
+| @path : resources/views/livewire/pages/estates/partials/step-two-form.blade.php
+| @usage : Partial View Step 2 (Building Specs & Location) for Estate Wizard Form
 | @ruling : max line of code 80%, max doc 20% | max total lines = 100
 | @author : yogawilanda <eayogawilanda@gmail.com>
 |--------------------------------------------------------------------------
@@ -56,18 +48,16 @@ Forms :
             </div>
 
             <!-- 2. Select Kota / Kab -->
-            {{-- 2. Select Kota / Kab --}}
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kota / Kabupaten</label>
                 <div class="relative">
-                    <!-- TAMBAHKAN .live DI SINI -->
                     <select wire:model.live="form.city_id" @disabled(!$form->province_id)
                         class="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50/50 pl-3.5 pr-9 py-2.5 text-xs text-gray-800 truncate focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer">
                         <option value="">
                             {{ $form->province_id ? 'Pilih Kota / Kabupaten' : 'Pilih Provinsi Terlebih Dahulu' }}
                         </option>
                         @foreach ($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            <option value="{{ $city->code }}">{{ $city->name }}</option>
                         @endforeach
                     </select>
 
@@ -91,28 +81,23 @@ Forms :
         </div>
 
         <!-- Detail Alamat -->
-        <!-- Detail Alamat -->
         <div class="space-y-3 pt-1">
-            <!-- Baris 1: Area & No/Blok -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <!-- Select Area / Kecamatan (Laravolt Cascade) -->
+                <!-- Select Kecamatan -->
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1.5">Kecamatan</label>
                     <div class="relative">
-                        <!-- Select Kecamatan -->
                         <select wire:model.live="form.district_id" @disabled(!$form->city_id)
                             class="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50/50 pl-3.5 pr-9 py-2.5 text-xs text-gray-800 truncate focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed cursor-pointer">
                             <option value="">
                                 {{ $form->city_id ? 'Pilih Kecamatan' : 'Pilih Kota / Kabupaten Terlebih Dahulu' }}
                             </option>
                             @foreach ($districts as $district)
-                                <!-- Ganti $district->id menjadi $district->code -->
                                 <option value="{{ $district->code }}">{{ $district->name }}</option>
                             @endforeach
                         </select>
 
-                        <div
-                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
                             <div wire:loading wire:target="form.city_id">
                                 <svg class="animate-spin h-4 w-4 text-blue-600" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 24 24">
@@ -140,7 +125,6 @@ Forms :
                 </div>
             </div>
 
-            <!-- Baris 2: Nama Jalan (Full Width) -->
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1.5">Nama Jalan / Perumahan</label>
                 <input type="text" wire:model="form.address" placeholder="Contoh: Jl. Raya Mulyosari No. 45"
@@ -206,7 +190,6 @@ Forms :
                         <span class="text-xs font-semibold text-gray-800 truncate">{{ $facility->name }}</span>
                     </label>
 
-                    {{-- Input detail hanya muncul jika checkbox dicentang --}}
                     @if ($isChecked)
                         <div class="mt-2 pt-2 border-t border-blue-100/60">
                             <input type="text" wire:model="form.selected_facilities.{{ $facility->id }}.value"

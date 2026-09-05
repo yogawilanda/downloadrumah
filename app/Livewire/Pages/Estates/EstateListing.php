@@ -60,7 +60,7 @@ class EstateListing extends Component
 
         $estates = Estate::query()
             ->forListingTab($this->tab, $userId)
-            ->with(['primaryImage', 'city'])
+            ->with(['primaryImage', 'city', 'district'])
             ->latest()
             ->paginate(10);
 

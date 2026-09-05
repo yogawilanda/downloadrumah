@@ -2,7 +2,10 @@
 loc: resources/views/components/layouts/navigation.blade.php
 usage: Global mobile bottom navigation container
 --}}
-<div x-data="botNavBar('{{ request()->routeIs('home') ? 'home' : (request()->routeIs('mortgage.calculator') ? 'kpr' : (request()->routeIs('listings.*') ? 'listings' : 'menu')) }}')">
+<div x-data="{
+    activeTab: '{{ request()->routeIs('home') ? 'home' : (request()->routeIs('mortgage.calculator') ? 'kpr' : (request()->routeIs('listings.*') ? 'listings' : 'menu')) }}',
+    setTab(tab) { this.activeTab = tab; }
+}">
     <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-lg">
         <div class="max-w-md mx-auto flex items-center justify-around h-16 px-2">
 
@@ -40,7 +43,7 @@ usage: Global mobile bottom navigation container
                 </a>
             @else
                 <a href="{{ route('login') }}" wire:navigate
-                    class="flex flex-col items-center justify-center flex-1 h-full space-y-1 text-gray-300 hover:text-gray-400 font-medium transition-colors duration-150">
+                    class="flex flex-col items-center justify-center flex-1 h-full space-y-1 text-gray-400 hover:text-gray-600 font-medium transition-colors duration-150">
                     <x-icons.icons-listings class="w-5 h-5 shrink-0" />
                     <span class="text-[10px] tracking-tight">Listing</span>
                 </a>

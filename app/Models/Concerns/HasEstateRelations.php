@@ -12,15 +12,16 @@
 
 namespace App\Models\Concerns;
 
+use App\Models\City;
+use App\Models\District;
 use App\Models\EstateAttachment;
 use App\Models\Facility;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Laravolt\Indonesia\Models\City;
-use Laravolt\Indonesia\Models\Province;
 
 trait HasEstateRelations
 {
@@ -36,7 +37,12 @@ trait HasEstateRelations
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class, 'city_id', 'id');
+        return $this->belongsTo(City::class, 'city_id', 'code');
+    }
+
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(District::class, 'district_id', 'code');
     }
 
     public function facilities(): BelongsToMany

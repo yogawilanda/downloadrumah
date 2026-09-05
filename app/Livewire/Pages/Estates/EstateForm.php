@@ -15,14 +15,14 @@ namespace App\Livewire\Pages\Estates;
 use App\Livewire\Forms\EstateFormData;
 use App\Livewire\Pages\Estates\Concerns\HasEstateAttachmentManagement;
 use App\Livewire\Pages\Estates\Concerns\HasFormWizardStep;
+use App\Models\City;
+use App\Models\District;
 use App\Models\Estate;
 use App\Models\Facility;
+use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Laravolt\Indonesia\Models\City;
-use Laravolt\Indonesia\Models\District;
-use Laravolt\Indonesia\Models\Province;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -40,8 +40,9 @@ class EstateForm extends Component
     public function mount(?Estate $estate = null): void
     {
         if ($estate && $estate->exists) {
-            if ($estate->user_id !== Auth::id())
+            if ($estate->user_id !== Auth::id()) {
                 abort(403);
+            }
 
             $estate->load(['attachments', 'facilities']);
             $this->form->setEstate($estate);
@@ -50,7 +51,7 @@ class EstateForm extends Component
     }
 
     /**
-     * Reset selected city when province changes.
+     * Reset selected city & district when province changes.
      */
     public function updatedFormProvinceId(): void
     {
@@ -58,6 +59,9 @@ class EstateForm extends Component
         $this->form->district_id = null;
     }
 
+    /**
+     * Reset selected district when city changes.
+     */
     public function updatedFormCityId(): void
     {
         $this->form->district_id = null;
@@ -103,7 +107,6 @@ class EstateForm extends Component
             session()->flash('success', 'Data properti berhasil disimpan!');
         });
 
-        // Pengalihan resmi standar Livewire 3 (mencegah bounceback & meriset state)
         return $this->redirectRoute('listings.index', navigate: true);
     }
 
@@ -112,23 +115,13 @@ class EstateForm extends Component
      */
     public function render()
     {
-        // Pastikan $cities diambil sesuai province_code
         $cities = $this->form->province_id
             ? City::where('province_code', $this->form->province_id)->orderBy('name')->get()
             : collect();
 
-        // Jika city_id kamu menyimpan 'code' (char), query pakai city_code
-        // Jika city_id menyimpan 'id' (integer), ambil model City dulu untuk dapat code-nya
-        $districts = collect();
-        if ($this->form->city_id) {
-            $cityCode = is_numeric($this->form->city_id) && strlen((string) $this->form->city_id) < 4
-                ? City::find($this->form->city_id)?->code
-                : $this->form->city_id;
-
-            $districts = $cityCode
-                ? District::where('city_code', $cityCode)->orderBy('name')->get()
-                : collect();
-        }
+        $districts = $this->form->city_id
+            ? District::where('city_code', $this->form->city_id)->orderBy('name')->get()
+            : collect();
 
         return view('livewire.pages.estates.estate-form', [
             'provinces' => Province::orderBy('name')->get(),

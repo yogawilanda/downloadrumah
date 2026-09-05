@@ -63,9 +63,8 @@
                         {{-- aku test dengan alur edit/create->(submit/cancel/langsung listing) justru malah muncul lagi padahal disini udah di comment --}}
 
 
-                            <!-- ✅ GUNAKAN INI (Ambil kolom name-nya saja): -->
                         <p class="text-[10px] text-gray-400 truncate mt-0.5">
-                            {{ implode(', ', array_filter([$estate->city?->name, $estate->district])) ?: 'Lokasi belum diisi' }}
+                            {{ implode(', ', array_filter([$estate->city?->name, $estate->districtRelation?->name])) ?: 'Lokasi belum diisi' }}
                         </p>
 
                         @if ($tab === 'co_broke' && $estate->commission_percentage)

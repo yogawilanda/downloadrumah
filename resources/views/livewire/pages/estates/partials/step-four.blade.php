@@ -1,6 +1,12 @@
 {{--
-loc : resources\views\livewire\pages\estates\partials\step-four.blade.php
-usage : summary & review page for estate listing submission
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path : resources/views/livewire/pages/estates/partials/step-four.blade.php
+| @usage : Summary & Review Page for Estate Listing Submission Wizard Step 4
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
 --}}
 
 <div class="space-y-4">
@@ -37,11 +43,12 @@ usage : summary & review page for estate listing submission
             </p>
         </div>
 
-        <!-- Detail Lokasi -->
+        <!-- Detail Lokasi (Pencarian Berdasarkan Code Laravolt) -->
         @php
             $selectedProvince = $provinces->firstWhere('code', $form->province_id)?->name;
-            $selectedCity = $cities->firstWhere('id', $form->city_id)?->name;
-            $fullLocation = implode(', ', array_filter([$form->district, $selectedCity, $selectedProvince]));
+            $selectedCity = $cities->firstWhere('code', $form->city_id)?->name;
+            $selectedDistrict = $districts->firstWhere('code', $form->district_id)?->name;
+            $fullLocation = implode(', ', array_filter([$selectedDistrict, $selectedCity, $selectedProvince]));
         @endphp
 
         <div class="space-y-1 text-xs text-gray-600">
@@ -59,7 +66,7 @@ usage : summary & review page for estate listing submission
             </div>
         </div>
 
-        <!-- Deskripsi (WA Format Friendly) -->
+        <!-- Deskripsi -->
         @if ($form->description)
             <div class="pt-2 border-t border-gray-100">
                 <span class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider block mb-1">Deskripsi</span>
@@ -85,7 +92,7 @@ usage : summary & review page for estate listing submission
             </div>
             <div class="p-2 bg-gray-50 rounded-xl">
                 <span class="block text-[10px] text-gray-400">Legalitas</span>
-                <span class="font-bold text-gray-800">{{ strtoupper($form->attributes_list['legal_docs'] ?? 'SHM') }}</span>
+                <span class="font-bold text-gray-800">{{ strtoupper($form->certificate_type ?: 'SHM') }}</span>
             </div>
         </div>
 

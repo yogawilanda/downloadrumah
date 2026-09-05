@@ -2,14 +2,13 @@
 
 @push('meta')
     @php
-        $coverImage = $estate->attachments->first()?->file_path
-            ? asset('storage/' . $estate->attachments->first()->file_path)
-            : asset('images/og-preview.jpg');
+        $coverImage = $estate->primaryImage?->url
+            ?? ($estate->attachments->first()?->file_path ? asset('storage/' . $estate->attachments->first()->file_path) : asset('images/og-preview.jpg'));
 
-        $formattedPrice = 'Rp ' . number_format($estate->price ?? 0, 0, ',', '.');
-        $location = filter_var($estate->city->name ?? '', FILTER_DEFAULT);
+        $formattedPrice = $estate->short_price;
+        $location = $estate->short_location_label;
         $ogTitle = "{$estate->title} - {$formattedPrice}";
-        $ogDescription = "Dijual properti di {$location}. " . Str::limit(strip_tags($estate->description ?? ''), 120);
+        $ogDescription = "Di{$estate->transaction_type_label} properti di {$location}. " . Str::limit(strip_tags($estate->description ?? ''), 120);
     @endphp
 
     <!-- Dynamic Open Graph Meta untuk Estate Detail -->

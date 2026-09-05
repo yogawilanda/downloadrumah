@@ -22,7 +22,7 @@ trait HasEstateAttributes
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn () => 'Rp ' . number_format($this->price ?? 0, 0, ',', '.')
+            get: fn() => 'Rp ' . number_format($this->price ?? 0, 0, ',', '.')
         );
     }
 
@@ -42,6 +42,59 @@ trait HasEstateAttributes
                     return rtrim(rtrim($formatted, '0'), ',') . ' Jt';
                 }
                 return 'Rp ' . number_format($price, 0, ',', '.');
+            }
+        );
+    }
+
+    /**
+     * Accessor Label Lokasi Gabungan: KOTA SURABAYA, KARANG PILANG
+     */
+    /**
+     * Accessor Label Lokasi Lengkap & Ringkas
+     * Contoh Output: "Gubeng, KOTA SURABAYA, JAWA TIMUR"
+     */
+    protected function locationLabel(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                // Safe navigation ke relasi
+                $districtName = $this->district?->name ?? ($this->districtRelation?->name ?? null);
+                $cityName = $this->city?->name ?? null;
+                $provinceName = $this->province?->name ?? null;
+
+                // Filter null/empty values & gabungkan dengan koma
+                $locationParts = array_filter([
+                    $provinceName,
+                    $cityName,
+                    $districtName,
+                ]);
+
+                return !empty($locationParts)
+                    ? implode(', ', $locationParts)
+                    : 'Lokasi belum ditentukan';
+            }
+        );
+    }
+
+    /**
+     * Accessor Label Lokasi Ringkas (Hanya Kecamatan & Kota)
+     * Contoh Output: "Gubeng, KOTA SURABAYA"
+     */
+    protected function shortLocationLabel(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $districtName = $this->district?->name ?? ($this->districtRelation?->name ?? null);
+                $cityName = $this->city?->name ?? null;
+
+                $locationParts = array_filter([
+                    $districtName,
+                    $cityName,
+                ]);
+
+                return !empty($locationParts)
+                    ? implode(', ', $locationParts)
+                    : 'Lokasi belum ditentukan';
             }
         );
     }
@@ -70,9 +123,9 @@ trait HasEstateAttributes
     {
         return match ($tab) {
             'my_listings' => $query->where('user_id', $userId),
-            'co_broke'    => $query->where('user_id', '!=', $userId)->active(),
-            'drafts'      => $query->where('user_id', $userId)->where('status', 'draft'),
-            default       => $query->where('user_id', $userId),
+            'co_broke' => $query->where('user_id', '!=', $userId)->active(),
+            'drafts' => $query->where('user_id', $userId)->where('status', 'draft'),
+            default => $query->where('user_id', $userId),
         };
     }
 }

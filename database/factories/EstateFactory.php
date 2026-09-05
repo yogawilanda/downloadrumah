@@ -12,11 +12,12 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
+use App\Models\District;
 use App\Models\Estate;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Laravolt\Indonesia\Models\City;
 
 class EstateFactory extends Factory
 {
@@ -27,7 +28,9 @@ class EstateFactory extends Factory
      */
     public function definition(): array
     {
-        $city = City::inRandomOrder()->first();
+        // Ambil random kecamatan agar otomatis dapat city_code & province_code yang valid
+        $district = District::inRandomOrder()->first();
+        $city = $district ? City::where('code', $district->city_code)->first() : null;
 
         $title = fake()->randomElement([
             'Rumah Minimalis Modern Di Pusat Kota',
@@ -54,12 +57,12 @@ class EstateFactory extends Factory
             'description' => fake()->paragraph(3),
 
             /**
-             * Regional Location Mapping
+             * Regional Location Mapping (Standardized to Laravolt Char Codes)
              */
             'country' => 'Indonesia',
-            'province_id' => $city?->province_code,
-            'city_id' => $city?->id,
-            'district' => fake()->streetName(),
+            'province_id' => $district?->province_code ?? '35',    // Char 2
+            'city_id' => $district?->city_code ?? '3578',          // Char 4
+            'district_id' => $district?->code ?? '357801',         // Char 7
             'address' => fake()->address(),
             'block_number' => 'Blok ' . fake()->bothify('?#'),
             'map_url' => 'https://maps.google.com/?q=' . fake()->latitude() . ',' . fake()->longitude(),

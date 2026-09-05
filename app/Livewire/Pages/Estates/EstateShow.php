@@ -35,6 +35,7 @@ class EstateShow extends Component
             'attachments',
             'facilities',
             'city',
+            'district',
             'province'
         ]);
     }

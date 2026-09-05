@@ -28,13 +28,14 @@ class EstateFormData extends Form
     public string $property_type = 'house';
     public $price = 0;
     public $commission_percentage = 0.0;
+    public string $certificate_type = 'shm';
     public string $listing_group = '';
     public string $description = '';
 
     // Lokasi Detail
     public ?string $province_id = null;
-    public ?int $city_id = null;
-    public ?string $district_id = null; // <-- Tambahkan ini untuk ID Kecamatan Laravolt
+    public ?string $city_id = null;
+    public ?string $district_id = null;
     public string $district = '';
     public string $address = '';
     public string $block_number = '';
@@ -90,11 +91,12 @@ class EstateFormData extends Form
         $this->property_type = $estate->property_type ?? 'house';
         $this->price = $estate->price ?? 0;
         $this->commission_percentage = (float) ($estate->commission_percentage ?? 0);
+        $this->certificate_type = $estate->certificate_type ?? 'shm';
         $this->listing_group = $estate->listing_group ?? '';
         $this->description = $estate->description ?? '';
 
         $this->province_id = $estate->province_id ? (string) $estate->province_id : null;
-        $this->city_id = $estate->city_id ? (int) $estate->city_id : null;
+        $this->city_id = $estate->city_id ? (string) $estate->city_id : null;
         $this->district_id = $estate->district_id ? (string) $estate->district_id : null;
         $this->district = $estate->district ?? '';
         $this->address = $estate->address ?? '';
@@ -138,11 +140,12 @@ class EstateFormData extends Form
             'property_type' => 'required|string',
             'price' => 'required|numeric|min:0',
             'commission_percentage' => 'nullable|numeric|between:0,100',
+            'certificate_type' => 'nullable|in:shm,hgb,hp,girik,ppjb,strata_title,other',
             'listing_group' => 'nullable|string|max:100',
             'description' => 'nullable|string',
             'province_id' => 'nullable|string',
-            'city_id' => 'nullable|integer',
-            'district' => 'nullable|string|max:100',
+            'city_id' => 'nullable|string',
+            'district_id' => 'nullable|string',
             'address' => 'nullable|string',
             'block_number' => 'nullable|string|max:50',
             'show_map' => 'boolean',
