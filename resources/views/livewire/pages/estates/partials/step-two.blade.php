@@ -5,6 +5,17 @@ Forms :
 - Building Specifications
 - Dynamic Facilities Checkbox + Pivot Value Input
 --}}
+{{-- 1.ubah menjadi format dibawah --}}
+{{--
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path : resources/views/livewire/pages/auth/partials/login-form.blade.php
+| @usage : Partial View for User Login Form with Google-style Transitions
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
+--}}
 
 <div class="space-y-4">
     <h2 class="text-base font-bold text-center text-gray-900">Detail Properti</h2>

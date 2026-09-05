@@ -1,15 +1,20 @@
 {{--
-loc : resources\views\livewire\pages\estates\partials\step-one.blade.php
-usage : to display form that user fills for estate listing registration to the system
-dependency : Laravel 13, Tailwind CSS, Alpine JS.
-singular deps : photo_uploads.js on the public/js/photo_uploads.js
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path : resources/views/livewire/pages/estates/partials/step-one.blade.php
+| @usage : Partial View for Estate Registration Form (Step 1: General Info)
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
 --}}
 
 <div class="space-y-5">
     <h2 class="text-base font-bold text-center text-gray-900">Info Umum</h2>
 
     <div class="bg-blue-100/70 border border-blue-200 p-4 rounded-2xl text-xs text-blue-900 leading-relaxed">
-        💡 <strong>Tips Listing Menarik:</strong> Unggah foto properti dengan posisi landscape (horizontal) supaya foto tampil penuh dan terlihat rapi.
+        💡 <strong>Tips Listing Menarik:</strong> Unggah foto properti dengan posisi landscape (horizontal) supaya foto
+        tampil penuh dan terlihat rapi.
     </div>
 
     <!-- Foto Listing Section -->
@@ -21,7 +26,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
                         d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
             </span>
-            <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Foto Properti <span class="text-red-500">*</span></h3>
+            <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Foto Properti <span
+                    class="text-red-500">*</span></h3>
         </div>
 
         @error('photos')
@@ -39,7 +45,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
                     <div class="flex flex-col items-center gap-1 p-1 text-center">
                         <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4">
                             </circle>
                             <path class="opacity-75" fill="currentColor"
                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
@@ -92,8 +99,10 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Judul Listing -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Judul Listing <span class="text-red-500">*</span></label>
-            <input type="text" wire:model="form.title" maxlength="70" placeholder="Contoh: RUMAH 2 LANTAI MINIMALIS SIDOARJO"
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Judul Listing <span
+                    class="text-red-500">*</span></label>
+            <input type="text" wire:model="form.title" maxlength="70"
+                placeholder="Contoh: RUMAH 2 LANTAI MINIMALIS SIDOARJO"
                 class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all">
             @error('form.title')
                 <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span>
@@ -102,7 +111,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Deskripsi Listing (Format WA / Emoji Friendly) -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Deskripsi Listing <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Deskripsi Listing <span
+                    class="text-red-500">*</span></label>
             <textarea wire:model="form.description" rows="5"
                 placeholder="Bisa langsung tempel / paste pesan dari WhatsApp...&#10;&#10;Contoh:&#10;🏡 Rumah Siap Huni Asri&#10;📍 Lokasi Strategis Dekat Tol&#10;✨ Bebas Banjir & Keamanan 24 Jam"
                 class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all whitespace-pre-line leading-relaxed font-sans"></textarea>
@@ -113,26 +123,33 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Tipe Transaksi -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-2">Tipe Transaksi <span class="text-red-500">*</span></label>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all">
+            <label class="block text-xs font-semibold text-gray-700 mb-2">Tipe Transaksi <span
+                    class="text-red-500">*</span></label>
+
+            {{-- Flex wrap: Sejajar di layar >= 360px, otomatis turun ke bawah jika < 360px --}}
+            <div class="flex flex-wrap gap-2">
+                <label
+                    class="flex-1 min-w-[100px] flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all select-none">
                     <input type="radio" wire:model="form.transaction_type" value="sale"
-                        class="text-blue-600 focus:ring-blue-500 w-4 h-4">
-                    <span class="text-xs font-semibold text-gray-800">Dijual</span>
+                        class="text-blue-600 focus:ring-blue-500 w-3.5 h-3.5 shrink-0">
+                    <span class="text-[11px] font-semibold text-gray-800 whitespace-nowrap">Dijual</span>
                 </label>
 
-                <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all">
+                <label
+                    class="flex-1 min-w-[100px] flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all select-none">
                     <input type="radio" wire:model="form.transaction_type" value="rent"
-                        class="text-blue-600 focus:ring-blue-500 w-4 h-4">
-                    <span class="text-xs font-semibold text-gray-800">Disewakan</span>
+                        class="text-blue-600 focus:ring-blue-500 w-3.5 h-3.5 shrink-0">
+                    <span class="text-[11px] font-semibold text-gray-800 whitespace-nowrap">Disewakan</span>
                 </label>
 
-                <label class="flex items-center justify-center gap-2 p-3 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all">
+                <label
+                    class="flex-1 min-w-[100px] flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all select-none">
                     <input type="radio" wire:model="form.transaction_type" value="sale & rent"
-                        class="text-blue-600 focus:ring-blue-500 w-4 h-4">
-                    <span class="text-xs font-semibold text-gray-800">Jual & Sewa</span>
+                        class="text-blue-600 focus:ring-blue-500 w-3.5 h-3.5 shrink-0">
+                    <span class="text-[11px] font-semibold text-gray-800 whitespace-nowrap">Jual & Sewa</span>
                 </label>
             </div>
+
             @error('form.transaction_type')
                 <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span>
             @enderror
@@ -140,9 +157,14 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Harga -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Harga Jual / Sewa (Rp) <span class="text-red-500">*</span></label>
-            <input type="number" wire:model="form.price" placeholder="Contoh: 2000000000"
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">
+                Harga Jual / Sewa (Rp) <span class="text-red-500">*</span>
+            </label>
+
+            <input type="text" x-data="currencyInput('form.price')" x-model="displayValue" @input="update($event)"
+                placeholder="Contoh: 2.000.000.000"
                 class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all">
+
             @error('form.price')
                 <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span>
             @enderror
@@ -150,7 +172,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Jenis Listing -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Jenis Listing <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Jenis Listing <span
+                    class="text-red-500">*</span></label>
             <div class="relative">
                 <select wire:model="form.listing_group"
                     style="-webkit-appearance: none; -moz-appearance: none; appearance: none;"
@@ -172,7 +195,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Tipe Properti -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tipe Properti <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tipe Properti <span
+                    class="text-red-500">*</span></label>
             <div class="relative">
                 <select wire:model="form.property_type"
                     style="-webkit-appearance: none; -moz-appearance: none; appearance: none;"
@@ -201,7 +225,7 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
                     style="-webkit-appearance: none; -moz-appearance: none; appearance: none;"
                     class="w-full rounded-xl border border-gray-200 bg-gray-50/50 pl-3.5 pr-9 py-3 text-xs text-gray-800 truncate focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer">
                     <option value="">-- Pilih Kondisi Perabotan --</option>
-                    <option value="unfurnished">Kosongan (Unfurnished)</option>
+                    <option value="unfurnished">Non furnished</option>
                     <option value="semi_furnished">Semi Furnished</option>
                     <option value="full_furnished">Full Furnished</option>
                 </select>
@@ -215,7 +239,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
 
         <!-- Komisi -->
         <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Persentase Komisi (%) <span class="text-red-500">*</span></label>
+            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Persentase Komisi (%) <span
+                    class="text-red-500">*</span></label>
             <input type="number" step="0.1" wire:model="form.commission_percentage" placeholder="Contoh: 2.5"
                 class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all">
         </div>
@@ -224,16 +249,17 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
         <div class="space-y-3 pt-1">
             @foreach ([['is_kpr', 'Bisa KPR?'], ['has_imb', 'IMB / PBG Ada?'], ['has_blueprint', 'Denah / Blueprint Ada?']] as [$field, $label])
                 <div class="flex items-center justify-between p-3 rounded-xl border border-gray-100 bg-gray-50/40">
-                    <span class="text-xs font-semibold text-gray-700">{{ $label }} <span class="text-red-500">*</span></span>
+                    <span class="text-xs font-semibold text-gray-700">{{ $label }} <span
+                            class="text-red-500">*</span></span>
                     <div class="flex items-center gap-4 text-xs">
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                            <input type="radio" wire:model="form.attributes_list.{{ $field }}" value="1"
-                                class="text-blue-600 focus:ring-blue-500 w-4 h-4">
+                            <input type="radio" wire:model="form.attributes_list.{{ $field }}"
+                                value="1" class="text-blue-600 focus:ring-blue-500 w-4 h-4">
                             <span class="font-medium text-gray-700">Ya</span>
                         </label>
                         <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                            <input type="radio" wire:model="form.attributes_list.{{ $field }}" value="0"
-                                class="text-blue-600 focus:ring-blue-500 w-4 h-4">
+                            <input type="radio" wire:model="form.attributes_list.{{ $field }}"
+                                value="0" class="text-blue-600 focus:ring-blue-500 w-4 h-4">
                             <span class="font-medium text-gray-700">Tidak</span>
                         </label>
                     </div>
@@ -246,7 +272,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
             <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider">Promosi & Kerjasama</h3>
 
             <div>
-                <label class="block text-xs font-semibold text-gray-700 mb-1.5">Dokumen Legalitas Utama <span class="text-red-500">*</span></label>
+                <label class="block text-xs font-semibold text-gray-700 mb-1.5">Dokumen Legalitas Utama <span
+                        class="text-red-500">*</span></label>
                 <div class="relative">
                     <select wire:model="form.attributes_list.legal_docs"
                         style="-webkit-appearance: none; -moz-appearance: none; appearance: none;"
@@ -259,7 +286,8 @@ singular deps : photo_uploads.js on the public/js/photo_uploads.js
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </div>
                 </div>

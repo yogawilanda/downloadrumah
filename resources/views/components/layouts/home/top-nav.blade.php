@@ -1,6 +1,11 @@
 {{--
-loc: resources\views\components\layouts\home\top-nav.blade.php
-usage: specific usage top navbar for home view, for all user in the actor use case/PRD
+|--------------------------------------------------------------------------
+| Top Navigation Bar Component (Home View)
+|--------------------------------------------------------------------------
+| @path : resources/views/components/layouts/home/top-nav.blade.php
+| @usage : Global top navbar header for home page across all user roles
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
 --}}
 
 @props(['transaction_type', 'city' => ''])
@@ -22,7 +27,7 @@ usage: specific usage top navbar for home view, for all user in the actor use ca
     {{-- Search Input Bar + Filter Trigger Button --}}
     <div class="flex items-center gap-2">
         <div class="relative flex-1">
-            <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari lokasi, nama properti..."
+            <input wire:model.live.debounce.300ms="search"  type="text" placeholder="Cari lokasi, nama properti..."
                 class="w-full pl-9 pr-4 py-2 bg-gray-100 text-xs rounded-xl border-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-800 placeholder-gray-400 focus:bg-white" />
             <svg class="w-4 h-4 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
