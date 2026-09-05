@@ -37,9 +37,9 @@
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="{{ isset($title) ? $title . ' - ' : '' }}{{ config('app.name', 'Download Rumah') }}">
         <meta property="og:description" content="Temukan hunian impian, kalkulasi KPR presisi, dan konsultasi properti cepat & transparan di Download Rumah.">
-        <meta property="og:image" content="{{ asset('images/og-preview.jpg') }}?v=20260905">
+        <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260905">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="{{ asset('images/og-preview.jpg') }}?v=20260905">
+        <meta name="twitter:image" content="{{ asset('favicon.png') }}?v=20260905">
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])

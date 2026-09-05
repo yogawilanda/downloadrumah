@@ -1,4 +1,20 @@
 {{-- loc: resources\views\livewire\pages\home-feed.blade.php --}}
+
+
+@section('has_custom_meta', true)
+
+@push('meta')
+    <!-- Open Graph Meta Khusus Halaman Beranda / Home -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="DownloadRumah - Cari & Temukan Hunian Impianmu">
+    <meta property="og:description"
+        content="Platform mobile-first pencarian properti, simulasi KPR presisi, dan konsultasi properti cepat & transparan.">
+    <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260905">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+@endpush
+
 <div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }"
     @open-search-modal.window="openSearchModal = true">
 
