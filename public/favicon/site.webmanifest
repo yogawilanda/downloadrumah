@@ -1,16 +1,22 @@
 {
-    "name": "DownloadRumah",
-    "short_name": "DownloadRumah",
+    "name": "Download Rumah",
+    "short_name": "Download Rumah",
     "start_url": "/",
     "display": "standalone",
     "theme_color": "#2563eb",
     "background_color": "#ffffff",
     "icons": [
         {
-            "src": "/web-app-manifest-192x192.png?v=20260830",
+            "src": "/favicon/web-app-manifest-192x192.png?v=20260905",
             "sizes": "192x192",
             "type": "image/png",
-            "purpose": "any maskable"
+            "purpose": "any"
+        },
+        {
+            "src": "/favicon/web-app-manifest-512x512.png?v=20260905",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ]
 }
