@@ -33,7 +33,8 @@
     <form wire:submit="login" class="space-y-4">
         <div>
             <label class="block text-xs font-semibold text-gray-700 mb-1">Email</label>
-            <input wire:model="loginForm.email" type="email" required autocomplete="username" placeholder="nama@email.com"
+            <input wire:model="loginForm.email" type="email" required autocomplete="username"
+                placeholder="nama@email.com"
                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
             <x-input-error :messages="$errors->get('loginForm.email') ?: $errors->get('email')" class="mt-1 text-xs" />
         </div>
@@ -66,7 +67,7 @@
             </div>
             <x-input-error :messages="$errors->get('loginForm.password') ?: $errors->get('password')" class="mt-1 text-xs" />
 
-            <div class="flex items-center justify-between mb-1">
+            <div class="flex items-center justify-between mb-1 mt-2">
                 @if (Route::has('password.request'))
                     <a class="text-xs text-blue-600 font-semibold hover:underline"
                         href="{{ route('password.request') }}" wire:navigate>Lupa Password?</a>
@@ -82,13 +83,18 @@
 
         <div class="pt-2">
             <button type="submit" wire:loading.attr="disabled"
-                class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center disabled:opacity-70">
-                <span wire:loading.remove wire:target="login" class="text-sm">Masuk Sekarang</span>
-                <span wire:loading wire:target="login" x-cloak
-                    class="inline-flex items-center justify-center gap-2 text-sm">
-                    <svg class="animate-spin h-4 w-4 text-white shrink-0" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                            stroke-width="4"></circle>
+                class="relative w-full h-11 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-xs font-bold rounded-xl transition flex items-center justify-center disabled:opacity-80">
+
+                {{-- State Normal --}}
+                <span wire:loading.remove wire:target="login">
+                    Masuk ke Akun
+                </span>
+
+                {{-- State Loading (Dipaksa inline-flex horizontal agar spinner selalu di samping) --}}
+                <span wire:loading.inline-flex wire:target="login" class="items-center justify-center gap-2">
+                    <svg class="animate-spin w-4 h-4 text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor"
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                         </path>
