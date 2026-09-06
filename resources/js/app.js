@@ -1,8 +1,7 @@
 /**
  * <meta_config>
  * @path : resources/js/app.js | usage: Main JavaScript Entry & Global Telemetry Helper
- * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : JS Docblock
- * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
+ * @ruling : max line of code 80%, max doc 20% | max total lines = 100
  * </meta_config>
  *
  * @author yogawilanda <eayogawilanda@gmail.com>
@@ -12,6 +11,7 @@ import photoUploader from './photo_uploads';
 import kprApp from './kpr_app';
 import botNavBar from './bot_nav_bar';
 import currencyInput from './currency_input';
+import pwaInstaller from './pwa_installer';
 
 /**
  * Step 1.1: Global Telemetry Tracker Helper (Fire-and-Forget)
@@ -32,21 +32,21 @@ window.trackEvent = function (module, eventName, payloadData = {}) {
             payload: payloadData
         })
     }).catch(err => {
-        /**
-         * Fail-safe Exception Handling (agar UI/UX tetap berjalan normal)
-         */
         console.warn('[Analytics Telemetry Error]', err);
     });
 };
 
 /**
- * Step 1.2: Alpine Component Registration
+ * Step 1.2: Alpine Component & Global Store Registration
  */
 document.addEventListener('alpine:init', () => {
     Alpine.data('photoUploader', photoUploader);
     Alpine.data('kprApp', kprApp);
     Alpine.data('botNavBar', botNavBar);
     Alpine.data('currencyInput', currencyInput);
+
+    // Register PWA sebagai Global Alpine Store ($store.pwa)
+    Alpine.store('pwa', pwaInstaller());
 });
 
 /**

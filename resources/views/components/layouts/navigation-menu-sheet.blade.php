@@ -2,7 +2,8 @@
 loc: resources/views/components/layouts/navigation-menu-sheet.blade.php
 usage: Universal bottom sheet modal menu for navigation
 --}}
-<div x-show="openMenu" x-cloak class="fixed inset-0 z-50 flex items-end justify-center">
+<div x-show="openMenu" x-cloak class="fixed inset-0 z-50 flex items-end justify-center" style="display: none;">
+
     <!-- Backdrop -->
     <div x-show="openMenu" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
@@ -67,6 +68,28 @@ usage: Universal bottom sheet modal menu for navigation
                 </a>
             </div>
         @endauth
+
+        <!-- Tombol Dynamic PWA Install -->
+        <div x-show="$store.pwa && $store.pwa.canInstall">
+            <button @click="$store.pwa.installApp(); openMenu = false" type="button"
+                class="w-full flex items-center justify-between p-3 text-blue-700 bg-blue-50/80 hover:bg-blue-100 rounded-xl transition text-left group">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14a2 2 0 002-2v-3M3 16v3a2 2 0 002 2" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-gray-900">Simpan Aplikasi di HP</p>
+                        <p class="text-[10px] text-gray-500">Akses lebih cepat tanpa buka browser</p>
+                    </div>
+                </div>
+                <span class="text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md uppercase">Gratis</span>
+            </button>
+        </div>
 
         <!-- Informasi Umum & Hukum -->
         <div class="pt-2 border-t border-gray-100 space-y-1">

@@ -96,7 +96,8 @@ class EstateForm extends Component
             } else {
                 $data['user_id'] = Auth::id();
                 $data['slug'] = Str::slug($this->form->title) . '-' . Str::random(5);
-                $data['status'] = 'active';
+                $data['publicity_status'] = 'published';
+                $data['transaction_status'] = 'available';
 
                 $targetEstate = Estate::create($data);
             }

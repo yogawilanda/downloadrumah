@@ -31,6 +31,8 @@ class EstateFormData extends Form
     public string $certificate_type = 'shm';
     public string $listing_group = '';
     public string $description = '';
+    public string $publicity_status = 'draft';
+    public string $transaction_status = 'available';
 
     // Lokasi Detail
     public ?string $province_id = null;
@@ -94,6 +96,8 @@ class EstateFormData extends Form
         $this->certificate_type = $estate->certificate_type ?? 'shm';
         $this->listing_group = $estate->listing_group ?? '';
         $this->description = $estate->description ?? '';
+        $this->publicity_status = $estate->publicity_status ?? 'draft';
+        $this->transaction_status = $estate->transaction_status ?? 'available';
 
         $this->province_id = $estate->province_id ? (string) $estate->province_id : null;
         $this->city_id = $estate->city_id ? (string) $estate->city_id : null;
@@ -143,6 +147,8 @@ class EstateFormData extends Form
             'certificate_type' => 'nullable|in:shm,hgb,hp,girik,ppjb,strata_title,other',
             'listing_group' => 'nullable|string|max:100',
             'description' => 'nullable|string',
+            'publicity_status' => 'required|in:draft,published,archived',
+            'transaction_status' => 'required|in:available,sold,rented',
             'province_id' => 'nullable|string',
             'city_id' => 'nullable|string',
             'district_id' => 'nullable|string',

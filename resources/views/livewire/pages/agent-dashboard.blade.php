@@ -8,7 +8,6 @@
 | @author : yogawilanda <eayogawilanda@gmail.com>
 |--------------------------------------------------------------------------
 --}}
-
 <div class="w-full pb-32 pt-4 px-4 max-w-lg mx-auto space-y-4">
     <!-- 1. Header & Quick Action -->
     <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">

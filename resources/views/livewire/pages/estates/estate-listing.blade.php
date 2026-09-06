@@ -1,3 +1,4 @@
+{{-- disini juga butuh listing_status, aku belum mikir apa aja, tapi availibity status juga kepake disini --}}
 <div class="w-full pb-32 pt-4 px-4 max-w-lg mx-auto space-y-4">
     <!-- Header -->
     <div class="flex items-center justify-between">
@@ -52,9 +53,20 @@
                         <div class="flex items-center gap-1.5">
                             <h3 class="text-xs font-bold text-gray-900 truncate">{{ $estate->title }}</h3>
                             @if ($tab === 'my_listings')
+                                @php
+                                    $statusLabel = match ($estate->publicity_status) {
+                                        'published' => 'Aktif',
+                                        'draft' => 'Draft',
+                                        'archived' => 'Diarsipkan',
+                                        default => ucfirst($estate->publicity_status ?? 'Concept'),
+                                    };
+                                    $statusClass = $estate->publicity_status === 'published'
+                                        ? 'bg-emerald-100 text-emerald-700'
+                                        : 'bg-gray-100 text-gray-600';
+                                @endphp
                                 <span
-                                    class="px-1.5 py-0.5 text-[9px] rounded font-semibold {{ $estate->status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-600' }}">
-                                    {{ $estate->status === 'active' ? 'Aktif' : ucfirst($estate->status) }}
+                                    class="px-1.5 py-0.5 text-[9px] rounded font-semibold {{ $statusClass }}">
+                                    {{ $statusLabel }} · {{ ucfirst($estate->transaction_status ?? 'available') }}
                                 </span>
                             @endif
                         </div>

@@ -1,6 +1,5 @@
 <div class="space-y-4">
     <h2 class="text-base font-bold text-center text-gray-900">Info Tambahan</h2>
-
     <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
         <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
             <span class="p-1.5 bg-blue-50 text-blue-600 rounded-lg">

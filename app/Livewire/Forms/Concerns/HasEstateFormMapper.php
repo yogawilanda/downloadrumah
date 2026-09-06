@@ -14,6 +14,7 @@ namespace App\Livewire\Forms\Concerns;
 
 trait HasEstateFormMapper
 {
+
     /**
      * Transformasi data form ke struktur kolom tabel SQL.
      */
@@ -40,6 +41,8 @@ trait HasEstateFormMapper
             'certificate_type' => $this->certificate_type ?: null,
             'listing_group' => $this->listing_group ?: null,
             'description' => $this->description ?: null,
+            'publicity_status' => $this->publicity_status,
+            'transaction_status' => $this->transaction_status,
             'province_id' => $this->province_id ?: null,
             'city_id' => $this->city_id ?: null,
             'district_id' => $this->district_id ?: null,

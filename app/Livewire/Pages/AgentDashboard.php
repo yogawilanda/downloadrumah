@@ -12,7 +12,6 @@ use Livewire\WithPagination;
 class AgentDashboard extends Component
 {
     use WithPagination;
-
     public function deleteEstate(int $id): void
     {
         $estate = Estate::where('id', $id)
@@ -37,8 +36,7 @@ class AgentDashboard extends Component
 
         return view('livewire.pages.agent-dashboard', [
             'estates' => $userEstates,
-            // 2. Gunakan scope active()
-            'activeCount' => Estate::where('user_id', $userId)->active()->count(),
+            'activeCount' => Estate::where('user_id', $userId)->published()->available()->count(),
         ]);
     }
 }

@@ -9,6 +9,7 @@
 |--------------------------------------------------------------------------
 --}}
 
+{{-- disini juga butuh untuk listing_statusnya --}}
 <div class="space-y-4">
     <h2 class="text-base font-bold text-center text-gray-900">Konfirmasi Listing</h2>
 

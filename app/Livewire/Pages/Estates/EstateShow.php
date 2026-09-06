@@ -30,6 +30,7 @@ class EstateShow extends Component
      */
     public function mount(Estate $estate): void
     {
+        // availability_status sama ini juga kepake sih.
         $this->estate = $estate->load([
             'user',
             'attachments',

@@ -18,9 +18,9 @@ class HomeFeed extends Component
     public function render()
     {
         $estates = Estate::query()
-            // 1. Bersihkan eager loading ke 'district'
             ->with(['primaryImage', 'city', 'district', 'province'])
-            ->active()
+            ->published()
+            ->available()
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('title', 'like', '%' . $this->search . '%')

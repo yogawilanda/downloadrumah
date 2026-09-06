@@ -79,11 +79,18 @@ return new class extends Migration {
             $table->string('owner_name')->nullable();
             $table->string('owner_phone', 20)->nullable();
             $table->boolean('show_owner_phone')->default(false);
-            $table->enum('status', ['active', 'sold', 'rented', 'draft'])->default('draft');
+
+            // DEPRECATED: Old single status column
+            // $table->enum('status', ['active', 'sold', 'rented', 'draft'])->default('draft');
+
+            // NEW: Separated Publicity & Transaction Status
+            $table->enum('publicity_status', ['draft', 'published', 'archived'])->default('draft');
+            $table->enum('transaction_status', ['available', 'sold', 'rented'])->default('available');
+
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index(['status', 'transaction_type', 'property_type', 'city_id', 'price', 'is_kpr'], 'estates_quick_search_idx');
+            $table->index(['publicity_status', 'transaction_status', 'transaction_type', 'city_id', 'price'], 'estates_quick_search_idx');
         });
     }
 

@@ -87,7 +87,8 @@ class EstateFactory extends Factory
              */
             'owner_phone' => '628' . fake()->numerify('##########'),
             'show_owner_phone' => fake()->boolean(70),
-            'status' => 'active',
+            'publicity_status' => 'published',
+            'transaction_status' => 'available',
         ];
     }
 }

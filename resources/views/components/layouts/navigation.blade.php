@@ -3,6 +3,7 @@ loc: resources/views/components/layouts/navigation.blade.php
 usage: Global mobile bottom navigation container
 --}}
 <div x-data="{
+    openMenu: false,
     activeTab: '{{ request()->routeIs('home') ? 'home' : (request()->routeIs('mortgage.calculator') ? 'kpr' : (request()->routeIs('listings.*') ? 'listings' : 'menu')) }}',
     setTab(tab) { this.activeTab = tab; }
 }">

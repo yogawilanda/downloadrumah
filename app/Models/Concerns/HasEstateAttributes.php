@@ -99,9 +99,19 @@ trait HasEstateAttributes
         );
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('publicity_status', 'published');
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('transaction_status', 'available');
+    }
+
     public function scopeActive($query)
     {
-        return $query->where('status', 'active');
+        return $query->published()->available();
     }
 
     public function scopeForSale($query)
@@ -124,7 +134,7 @@ trait HasEstateAttributes
         return match ($tab) {
             'my_listings' => $query->where('user_id', $userId),
             'co_broke' => $query->where('user_id', '!=', $userId)->active(),
-            'drafts' => $query->where('user_id', $userId)->where('status', 'draft'),
+            'drafts' => $query->where('user_id', $userId)->where('publicity_status', 'draft'),
             default => $query->where('user_id', $userId),
         };
     }
