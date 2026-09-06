@@ -27,13 +27,13 @@
              x-transition:enter-end="opacity-100 translate-x-0"
              class="space-y-2">
             <span class="inline-block bg-amber-400/20 border border-amber-400/30 text-amber-300 text-xs font-bold tracking-wide px-2.5 py-0.5 rounded-full">
-                🔥 Enggak Perlu Panas-Panasan
+                Lihat-lihat dari rumah
             </span>
             <h3 class="text-base font-bold leading-snug tracking-tight text-white">
-                Cek Properti Lengkap Cukup dari HP
+                Temukan pilihan hunian dengan lebih tenang
             </h3>
             <p class="text-xs md:text-sm text-slate-200 leading-relaxed">
-                Lihat-lihat dulu aja! Temukan pilihan hunian dengan harga yang paling pas sebelum survey lokasi.
+                Bandingkan pilihan dan simpan gambaran kebutuhanmu sebelum memutuskan survey lokasi.
             </p>
         </div>
 
