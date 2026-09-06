@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CitiesSeeder::class,
             DistrictsSeeder::class,
             FacilitySeeder::class,
+            SettingsSeeder::class,
         ]);
 
         /**
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Agen Properti Utama',
                 'phone_number' => '6281234567890',
                 'password' => bcrypt('123'),
+                'is_super_admin' => true,
             ]
         );
 
@@ -56,6 +58,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Yoga Wilanda',
                 'phone_number' => '6281258986696',
                 'password' => bcrypt('hellovoid'),
+                'is_super_admin' => true,
             ]
         );
 

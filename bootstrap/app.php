@@ -10,6 +10,8 @@
  * @author yogawilanda <eayogawilanda@gmail.com>
  */
 
+use App\Http\Middleware\DynamicThrottle;
+use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\LogPageView;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -34,6 +36,14 @@ return Application::configure(basePath: dirname(__DIR__))
          */
         $middleware->web(append: [
             LogPageView::class,
+        ]);
+
+        /**
+         * Step 1.3: Register Super Admin Middleware Alias
+         */
+        $middleware->alias([
+            'super_admin' => EnsureSuperAdmin::class,
+            'dynamic_throttle' => DynamicThrottle::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

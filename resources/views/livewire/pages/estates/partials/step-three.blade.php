@@ -37,12 +37,38 @@
         <div class="flex items-center justify-between pt-3 border-t border-gray-100 gap-4">
             <div>
                 <span class="block text-xs font-semibold text-gray-800">Tampilkan No. HP Pemilik Publik?</span>
-                <span class="block text-[10px] text-gray-400">Jika aktif, pengunjung dapat menghubungi pemilik secara langsung.</span>
+                <span class="block text-[10px] text-gray-400">Jika aktif, pengunjung dapat menghubungi pemilik secara
+                    langsung.</span>
             </div>
             <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
                 <input type="checkbox" wire:model="form.show_owner_phone" class="sr-only peer">
-                <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                <div
+                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600">
+                </div>
             </label>
+        </div>
+
+        <!-- Toggle Status Publisitas -->
+        <div class="flex items-center justify-between pt-3 border-t border-gray-100 gap-4">
+            <div>
+                <span class="block text-xs font-semibold text-gray-800">Status Publisitas Properti</span>
+                <span class="block text-[10px] text-gray-400">Gunakan toggle untuk mengatur visibilitas properti: Draft
+                    atau Published.</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <span class="text-[10px] font-medium text-gray-600 w-16">
+                    {{ $form->publicity_status === 'published' ? 'Published' : 'Draft' }}
+                </span>
+
+                <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+                    <input type="checkbox" wire:click="updatePublicityStatus" class="sr-only peer"
+                        {{ $form->publicity_status === 'published' ? 'checked' : '' }}>
+                    <div
+                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600">
+                    </div>
+                </label>
+            </div>
         </div>
     </div>
 </div>

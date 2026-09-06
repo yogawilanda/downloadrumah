@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'phone_number'])]
+#[Fillable(['name', 'email', 'password', 'phone_number', 'is_super_admin'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -26,6 +26,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_super_admin' => 'boolean',
         ];
     }
 
@@ -33,5 +34,19 @@ class User extends Authenticatable
     public function estates()
     {
         return $this->hasMany(Estate::class);
+    }
+
+    /**
+     * Check if the user has the super admin role flag.
+     */
+    public function isSuperAdmin(): bool
+    {
+        if ((bool) $this->is_super_admin) {
+            return true;
+        }
+
+        // Fallback: SUPER_ADMIN_IDS env (comma separated user IDs) for bootstrap.
+        $ids = array_filter(array_map('intval', explode(',', (string) env('SUPER_ADMIN_IDS', ''))));
+        return !empty($ids) && in_array((int) $this->id, $ids, true);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use App\Livewire\Pages\Profile\Profile;
-use App\Livewire\Pages\Supports\Supports;
 use App\Livewire\Pages\Terms\TermsAndConditions;
 use App\Livewire\PrivacyPolicy;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +25,9 @@ use App\Livewire\Pages\Supports\ReleaseNotes;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', HomeFeed::class)->middleware('throttle:60,1')->name('home');
+Route::get('/', HomeFeed::class)
+    ->middleware('dynamic_throttle:throttle.home_feed,1')
+    ->name('home');
 
 // Tools KPR (Perbaikan Typo & Penamaan Route)
 Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
@@ -59,6 +60,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/estates/create', EstateForm::class)->name('estates.create');
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
     Route::get('/profile', Profile::class)->name('profile');
+
+    // Super Admin Routes
+    Route::middleware('super_admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/settings', \App\Livewire\Pages\Admin\Settings\Index::class)->name('settings.index');
+    });
 });
 
 Route::post('/logout', function () {

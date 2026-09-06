@@ -76,9 +76,12 @@ class EstateForm extends Component
         $totalExisting = count($this->existingPhotos);
 
         if (!empty($this->photos)) {
+            $maxPhotos = (int) setting('max_photos_per_listing', 8);
+            $maxPhotoKb = (int) setting('max_photo_size_kb', 3072);
+
             $this->validate([
-                'photos' => ['array', 'max:' . max(0, 8 - $totalExisting)],
-                'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:3072'],
+                'photos' => ['array', 'max:' . max(0, $maxPhotos - $totalExisting)],
+                'photos.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:' . $maxPhotoKb],
             ]);
         }
 
@@ -109,6 +112,19 @@ class EstateForm extends Component
         });
 
         return $this->redirectRoute('listings.index', navigate: true);
+    }
+
+    /**
+     * Update the publicity status based on toggle.
+     */
+    public function updatePublicityStatus(): void
+    {
+        // Archived listings are system-controlled; user cannot flip them back.
+        if ($this->form->publicity_status === 'archived') {
+            return;
+        }
+
+        $this->form->publicity_status = $this->form->publicity_status === 'published' ? 'draft' : 'published';
     }
 
     /**
