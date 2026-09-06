@@ -15,9 +15,8 @@
     <!-- Open Graph Meta Khusus Halaman Beranda / Home -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="DownloadRumah - Cari & Temukan Hunian Impianmu">
-    <meta property="og:description"
-        content="Platform mobile-first pencarian properti, simulasi KPR presisi, dan konsultasi properti cepat & transparan.">
+    <meta property="og:title" content="{{ $search ? $search . ' - ' : '' }}{{ $city ? 'Properti di ' . $city . ' - ' : '' }}DownloadRumah">
+    <meta property="og:description" content="Cari properti {{ $city ? 'di ' . $city : '' }}{{ $max_price ? ' hingga Rp' . number_format((float) $max_price, 0, ',', '.') : '' }} di DownloadRumah.">
     <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260905">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -33,8 +32,11 @@
         <x-layouts.home.top-nav
             :transaction_type="$transaction_type"
             :search="$search"
+            :city="$city"
+            :max_price="$max_price"
             :city_id="$city_id"
-            :cities="$cities ?? []" />
+            :cities="$cities"
+            :suggestions="$suggestions" />
 
         <!-- Main Feed Content Area -->
         <div class="space-y-5 pt-2">
@@ -67,29 +69,17 @@
                 :city_id="$city_id"
                 :district_id="$district_id ?? ''" />
 
-            <!-- 4. Section Header -->
-            <div class="px-4 flex items-center justify-between pt-1">
-                <div>
-                    <h2 class="text-base font-bold text-gray-800 leading-tight">Rekomendasi Properti</h2>
-                    <p class="text-xs text-gray-500">Pilihan hunian terbaik berdasarkan pencarianmu</p>
-                </div>
-                <a href="{{ route('listings.index') }}" wire:navigate
-                    class="text-xs font-bold text-blue-600 hover:text-blue-700 active:scale-95 transition-all py-1 px-2 rounded-lg hover:bg-blue-50">
-                    Lihat Semua
-                </a>
-            </div>
-
-            <!-- 5. Feed Property Cards -->
-            <div id="js-listing-container">
-                <x-layouts.home.home-feed-listing :estates="$estates" />
-            </div>
+            <x-layouts.home.feed-section title="Properti Terbaru"
+                subtitle="Listing aktif yang baru masuk" :estates="$recentEstates" />
+            <x-layouts.home.feed-section title="Rekomendasi"
+                subtitle="Pilihan hunian untuk pencarianmu" :estates="$recommendedEstates" />
 
         </div>
 
         <!-- 6. Advanced Filter Modal (Passing parameter lokasi) -->
         <x-layouts.home.home-feed-search-advanced
             :transaction_type="$transaction_type"
-            :cities="$cities ?? []"
+            :cities="$cities"
             :districts="$districts ?? []" />
 
     </div>

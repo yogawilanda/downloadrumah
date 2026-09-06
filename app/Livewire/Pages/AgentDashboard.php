@@ -29,14 +29,13 @@ class AgentDashboard extends Component
         $userId = Auth::id();
 
         $userEstates = Estate::where('user_id', $userId)
-            // 1. Tambahkan eager loading lokasi (city & district)
             ->with(['primaryImage', 'attachments', 'city', 'district'])
             ->latest()
             ->paginate(5);
 
         return view('livewire.pages.agent-dashboard', [
             'estates' => $userEstates,
-            'activeCount' => Estate::where('user_id', $userId)->published()->available()->count(),
+            'listingCount' => Estate::where('user_id', $userId)->count(),
         ]);
     }
 }

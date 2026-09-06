@@ -78,14 +78,13 @@ usage: component for home-feed.blade.php
             </div>
         </a>
     @empty
-        <div class="text-center py-12 bg-white rounded-2xl border border-gray-100">
-            <p class="text-sm font-medium text-gray-500">Properti tidak ditemukan.</p>
-            <p class="text-xs text-gray-400 mt-1">Coba ubah kata kunci atau filter pencarianmu.</p>
-        </div>
+        <x-layouts.home.empty-state :show-reset="true" />
     @endforelse
 
     <!-- Pagination Wrapper -->
-    <div class="pt-4 pb-6 overflow-x-auto">
-        {{ $estates->links('pagination::simple-tailwind') }}
-    </div>
+    @if (method_exists($estates, 'links'))
+        <div class="pt-4 pb-6 overflow-x-auto">
+            {{ $estates->links('pagination::simple-tailwind') }}
+        </div>
+    @endif
 </div>

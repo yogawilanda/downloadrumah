@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Home\Concerns;
 
+use Laravolt\Indonesia\Models\City;
 use Livewire\Attributes\Url;
 
 /**
@@ -16,8 +17,7 @@ trait HasHomeFeedFilters
     #[Url(except: '')]
     public string $transaction_type = '';
 
-    #[Url(except: '')]
-    public string $city_id = ''; // String code Laravolt (Char 4)
+    public string $city_id = '';
 
     #[Url(except: '')]
     public string $district_id = '';
@@ -41,6 +41,8 @@ trait HasHomeFeedFilters
     }
     public function updatedCityId(): void
     {
+        $this->city = City::where('code', $this->city_id)->value('name') ?? '';
+        $this->district_id = '';
         $this->resetPage();
     }
     public function updatedDistrictId(): void
@@ -61,4 +63,5 @@ trait HasHomeFeedFilters
         $this->reset(['search', 'transaction_type', 'city_id', 'district_id', 'city', 'max_price', 'location']);
         $this->resetPage();
     }
+
 }

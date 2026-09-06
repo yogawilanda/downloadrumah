@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use App\Livewire\Pages\Home\HomeFeed;
 use App\Livewire\Pages\AgentDashboard;
 use App\Livewire\Pages\Tools\MortgageCalculator;
+use App\Livewire\Pages\Estates\PublicListing;
 
 // Component Based / Estates
 use App\Livewire\Pages\Estates\EstateForm;
@@ -31,6 +32,8 @@ Route::get('/', HomeFeed::class)
 
 // Tools KPR (Perbaikan Typo & Penamaan Route)
 Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
+
+Route::get('/listings', PublicListing::class)->name('listings.index');
 
 // Public Media Storage Direct Access
 Route::get('/media/{path}', function ($path) {
@@ -55,7 +58,7 @@ Route::get('/release-notes', ReleaseNotes::class)->name('release-notes');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', AgentDashboard::class)->name('dashboard');
-    Route::get('/listings', EstateListing::class)->name('listings.index');
+    Route::get('/dashboard/estates', EstateListing::class)->name('dashboard.estates');
 
     Route::get('/estates/create', EstateForm::class)->name('estates.create');
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');

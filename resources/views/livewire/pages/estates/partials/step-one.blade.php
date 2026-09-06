@@ -34,7 +34,7 @@
             <span class="text-xs text-red-500 block mb-1">{{ $message }}</span>
         @enderror
 
-        <div class="grid grid-cols-4 gap-2.5">
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {{-- Hide after reach max limits --}}
             <label x-show="(existingCount + currentUploadedCount) < maxPhotos"
                 class="aspect-square border-2 border-dashed border-blue-300 bg-blue-50/40 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-blue-100/50 transition-all">
@@ -69,7 +69,7 @@
                 <div class="relative aspect-square rounded-xl overflow-hidden border border-gray-200">
                     <img src="{{ $photoUrl }}" class="w-full h-full object-cover">
                     <button type="button" wire:click="deleteExistingPhoto({{ $photoId }})"
-                        class="absolute top-1.5 right-1.5 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow hover:bg-red-600 transition">✕</button>
+                        class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-sm text-white shadow hover:bg-red-600 transition">✕</button>
                 </div>
             @endforeach
 
@@ -78,7 +78,7 @@
                     <div class="relative aspect-square rounded-xl overflow-hidden border border-gray-200">
                         <img src="{{ $photo->temporaryUrl() }}" class="w-full h-full object-cover">
                         <button type="button" wire:click="removePhoto({{ $index }})"
-                            class="absolute top-1.5 right-1.5 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow hover:bg-red-600 transition">✕</button>
+                            class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-sm text-white shadow hover:bg-red-600 transition">✕</button>
                     </div>
                 @endforeach
             @endif

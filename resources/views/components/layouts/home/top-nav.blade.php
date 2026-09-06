@@ -8,9 +8,10 @@
 |--------------------------------------------------------------------------
 --}}
 
-@props(['transaction_type', 'city_id' => '', 'cities' => []])
+@props(['transaction_type', 'search' => '', 'city' => '', 'max_price' => '', 'city_id' => '', 'cities' => [], 'suggestions' => ['cities' => [], 'estates' => []]])
 
-<div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm space-y-3">
+<div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm space-y-3"
+    x-data="{ searchOpen: false }">
     {{-- Header Title --}}
     <div class="flex items-center justify-start">
         <div class="flex items-center gap-2">
@@ -26,14 +27,20 @@
 
     {{-- Search Input Bar + Filter Trigger Button --}}
     <div class="flex items-center gap-2">
-        <div class="relative flex-1">
-            <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari lokasi, nama properti..."
+        <div class="relative flex-1" @click.outside="searchOpen = false">
+            <input wire:model.live.debounce.300ms="search" @focus="searchOpen = true" type="text"
+                placeholder="Cari lokasi, nama properti..."
                 class="w-full pl-9 pr-4 py-2 bg-gray-100 text-xs rounded-xl border-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-800 placeholder-gray-400 focus:bg-white" />
             <svg class="w-4 h-4 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
+            <span wire:loading.delay.longest wire:target="search" class="absolute right-3 top-2.5 h-3 w-3 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600"></span>
+            @if (strlen(trim($search ?? '')) >= 2)
+                <x-layouts.home.search-suggestions :suggestions="$suggestions" :search="$search"
+                    :city="$city" :transaction_type="$transaction_type" :max_price="$max_price" />
+            @endif
         </div>
 
         {{-- Tombol Buka Modal Filter Lengkap --}}

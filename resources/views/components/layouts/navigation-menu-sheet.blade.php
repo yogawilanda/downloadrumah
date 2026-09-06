@@ -60,7 +60,7 @@ usage: Universal bottom sheet modal menu for navigation
             <div class="space-y-1 pt-1">
                 <a href="{{ route('dashboard') }}" wire:navigate @click="openMenu = false"
                     class="flex items-center space-x-3 p-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition text-xs font-medium">
-                    <span>Dashboard Agen</span>
+                    <span>Dashboard</span>
                 </a>
                 <a href="{{ route('profile') }}" wire:navigate @click="openMenu = false"
                     class="flex items-center space-x-3 p-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition text-xs font-medium">

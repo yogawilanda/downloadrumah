@@ -81,7 +81,7 @@
 
             <!-- 4. Listing Saya -->
             @auth
-                <a href="{{ route('listings.index') }}" wire:navigate
+                    <a href="{{ route('dashboard.estates') }}" wire:navigate
                    x-ref="listings"
                    @click="activeTab = 'listings'; updateIndicator()"
                    class="relative z-10 flex items-center space-x-2 px-3.5 py-2 rounded-full transition-colors duration-200 {{ request()->routeIs('listings*') ? 'text-white font-medium' : 'text-gray-400 hover:text-purple-600' }}">

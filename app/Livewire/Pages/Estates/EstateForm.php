@@ -34,6 +34,34 @@ class EstateForm extends Component
 
     public EstateFormData $form;
 
+    protected function validateStep(int $step): void
+    {
+        $rules = match ($step) {
+            1 => [
+                'title' => 'required|string|max:255',
+                'transaction_type' => 'required|in:sale,rent,sale & rent',
+                'property_type' => 'required|string',
+                'price' => 'required|numeric|min:0',
+                'description' => 'required|string',
+            ],
+            2 => [
+                'province_id' => 'required|string',
+                'city_id' => 'required|string',
+                'district_id' => 'required|string',
+                'address' => 'required|string',
+            ],
+            3 => [
+                'owner_name' => 'required|string|max:60',
+                'owner_phone' => 'required|string|max:30',
+            ],
+            default => [],
+        };
+
+        if ($rules) {
+            $this->form->validate($rules);
+        }
+    }
+
     /**
      * Mount component state for create/edit mode.
      */
@@ -73,9 +101,27 @@ class EstateForm extends Component
     public function save()
     {
         $this->form->validate();
+        return $this->persist(false);
+    }
+
+    public function saveDraft(): void
+    {
+        $this->form->validate([
+            'title' => 'required|string|max:255',
+            'transaction_type' => 'required|in:sale,rent,sale & rent',
+            'property_type' => 'required|string',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $this->persist(true);
+    }
+
+    protected function persist(bool $draft): void
+    {
+        $this->form->publicity_status = $draft ? 'draft' : 'published';
         $totalExisting = count($this->existingPhotos);
 
-        if (!empty($this->photos)) {
+        if (!$draft && !empty($this->photos)) {
             $maxPhotos = (int) setting('max_photos_per_listing', 8);
             $maxPhotoKb = (int) setting('max_photo_size_kb', 3072);
 
@@ -85,7 +131,7 @@ class EstateForm extends Component
             ]);
         }
 
-        if ($totalExisting === 0 && empty($this->photos)) {
+        if (!$draft && $totalExisting === 0 && empty($this->photos)) {
             $this->addError('photos', 'Minimal unggah 1 foto listing.');
             return;
         }
@@ -99,7 +145,6 @@ class EstateForm extends Component
             } else {
                 $data['user_id'] = Auth::id();
                 $data['slug'] = Str::slug($this->form->title) . '-' . Str::random(5);
-                $data['publicity_status'] = 'published';
                 $data['transaction_status'] = 'available';
 
                 $targetEstate = Estate::create($data);
@@ -111,7 +156,8 @@ class EstateForm extends Component
             session()->flash('success', 'Data properti berhasil disimpan!');
         });
 
-        return $this->redirectRoute('listings.index', navigate: true);
+        $this->dispatch('estate-form-saved');
+        $this->redirectRoute('dashboard', navigate: true);
     }
 
     /**
