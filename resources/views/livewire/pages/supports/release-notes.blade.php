@@ -2,101 +2,138 @@
     <div class="max-w-md mx-auto bg-white min-h-screen shadow-sm px-4 py-6">
 
         {{-- Header --}}
-        <div class="mb-6 flex items-center gap-3">
+        <div class="mb-5 flex items-center gap-3 border-b border-gray-100 pb-4">
             <a href="{{ route('home') }}" wire:navigate class="p-2 bg-gray-100 rounded-xl text-gray-600 hover:bg-gray-200 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </a>
-            <h1 class="text-xl font-bold text-gray-900">Catatan Rilis</h1>
+            <div>
+                <h1 class="text-lg font-bold text-gray-900">Catatan Rilis</h1>
+                <p class="text-[10px] text-gray-400 font-medium">DownloadRumah Changelog History</p>
+            </div>
         </div>
 
-        {{-- Timeline List --}}
-        <div class="relative border-s-2 border-gray-100 ms-3 space-y-6">
+        {{-- ListTile Container --}}
+        <div class="space-y-3">
 
-            {{-- Timeline 3: Status Sekarang (Internal Alpha/Testing) --}}
-            <div class="mb-6 ms-6">
-                <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-4 ring-white">
-                    <svg class="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
-                </span>
-
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="bg-blue-600 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">v0.9.0-alpha</span>
-                    <span class="text-[11px] font-medium text-gray-400">9 September 2026</span>
+            {{-- Tile 1: Photo Engine (Latest) --}}
+            <div class="p-3.5 bg-blue-50/40 border border-blue-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-blue-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full">v1.1.0-rc</span>
+                        <span class="text-[10px] font-semibold text-gray-400">07 Sept 2026 • 22:34 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-blue-100/80 text-blue-700 px-1.5 py-0.5 rounded-md font-bold">e0b9af5</span>
                 </div>
-
-                <h3 class="text-sm font-bold text-gray-900 mb-2">Internal Testing & PWA Optimization</h3>
-
-                <ul class="bg-gray-50 p-3.5 rounded-2xl border border-gray-100 space-y-2 text-xs text-gray-600">
-                    <li class="flex items-start gap-2">
-                        <span class="text-blue-600 font-bold">•</span>
-                        <span>Implementasi install prompt PWA custom dengan banner & opsi "Ingatkan Nanti".</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-blue-600 font-bold">•</span>
-                        <span>Penyempurnaan splash screen Android, status bar, dan eliminasi efek flicker/double splash.</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-blue-600 font-bold">•</span>
-                        <span>Penyediaan halaman legalitas publik (Kebijakan Privasi, ToS, & Support Center).</span>
-                    </li>
-                </ul>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Photo Engine & Cover Selector</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Refactor photo picker, instant primary cover selector (is_primary), client-side quota guard via Alpine, & fix photo duplication bug pada wizard.
+                    </p>
+                </div>
             </div>
 
-            {{-- Timeline 2: Fase Development Core Features --}}
-            <div class="mb-6 ms-6">
-                <span class="absolute flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full -start-3 ring-4 ring-white">
-                    <div class="w-2.5 h-2.5 bg-gray-400 rounded-full"></div>
-                </span>
-
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="bg-gray-200 text-gray-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">v0.5.0-dev</span>
-                    <span class="text-[11px] font-medium text-gray-400">30 Agustus 2026</span>
+            {{-- Tile 2: Admin Telemetry --}}
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v1.0.2</span>
+                        <span class="text-[10px] font-semibold text-gray-400">07 Sept 2026 • 12:14 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-gray-200/60 text-gray-600 px-1.5 py-0.5 rounded-md">1209759</span>
                 </div>
-
-                <h3 class="text-sm font-bold text-gray-900 mb-2">Pengembangan Fitur Utama & Auth</h3>
-
-                <ul class="bg-gray-50 p-3.5 rounded-2xl border border-gray-100 space-y-2 text-xs text-gray-600">
-                    <li class="flex items-start gap-2">
-                        <span class="text-gray-400 font-bold">•</span>
-                        <span>Pembangunan modul Autentikasi (Login & Register) dengan UI transition bawaan Alpine.js.</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-gray-400 font-bold">•</span>
-                        <span>Inisialisasi Service Worker dan konfigurasinya dengan `site.webmanifest`.</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-gray-400 font-bold">•</span>
-                        <span>Penataan layout mobile-first container beserta bottom navigation bar.</span>
-                    </li>
-                </ul>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Admin Telemetry & User Insights</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Dashboard admin insight, activity log telemetry, auto-save draft wizard step, & refinement UI accessibility agen.
+                    </p>
+                </div>
             </div>
 
-            {{-- Timeline 1: Inisiasi Proyek --}}
-            <div class="mb-6 ms-6">
-                <span class="absolute flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full -start-3 ring-4 ring-white">
-                    <div class="w-2.5 h-2.5 bg-gray-400 rounded-full"></div>
-                </span>
-
-                <div class="flex items-center gap-2 mb-1">
-                    <span class="bg-gray-200 text-gray-700 text-[10px] font-extrabold px-2 py-0.5 rounded-full">v0.1.0-init</span>
-                    <span class="text-[11px] font-medium text-gray-400">20 Agustus 2026</span>
+            {{-- Tile 3: Publicity Schema --}}
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v1.0.0</span>
+                        <span class="text-[10px] font-semibold text-gray-400">06 Sept 2026 • 19:26 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-gray-200/60 text-gray-600 px-1.5 py-0.5 rounded-md">b129951</span>
                 </div>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Publicity Schema & Throttling</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Pemisahan publicity_status & transaction_status, dynamic admin throttling settings, & indexing search optimization.
+                    </p>
+                </div>
+            </div>
 
-                <h3 class="text-sm font-bold text-gray-900 mb-2">Inisiasi Proyek & Arsitektur</h3>
+            {{-- Tile 4: Regional Data --}}
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.9.0</span>
+                        <span class="text-[10px] font-semibold text-gray-400">05 Sept 2026 • 12:24 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-gray-200/60 text-gray-600 px-1.5 py-0.5 rounded-md">80ff104</span>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Regional Data & PWA Splashscreen</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Standarisasi skema lokasi Laravolt (District/Kecamatan), perbaikan PWA splashscreen, & halaman legalitas publik.
+                    </p>
+                </div>
+            </div>
 
-                <ul class="bg-gray-50 p-3.5 rounded-2xl border border-gray-100 space-y-2 text-xs text-gray-600">
-                    <li class="flex items-start gap-2">
-                        <span class="text-gray-400 font-bold">•</span>
-                        <span>Setup ekosistem awal Laravel 11, Livewire 3, Tailwind CSS, dan Vite.</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-gray-400 font-bold">•</span>
-                        <span>Perancangan struktur basis data, aset favicon, dan panduan arsitektur modular.</span>
-                    </li>
-                </ul>
+            {{-- Tile 5: Indonesian Regional --}}
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.5.0</span>
+                        <span class="text-[10px] font-semibold text-gray-400">03 Sept 2026 • 12:38 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-gray-200/60 text-gray-600 px-1.5 py-0.5 rounded-md">f236fb6</span>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Indonesian Regional Auto-Generation</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Generator otomatis provinsi/kota Indonesia, API obfuscation, sistem logging user, dan penanganan modal Auth.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Tile 6: Form Stepper --}}
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.3.0</span>
+                        <span class="text-[10px] font-semibold text-gray-400">30 Ags 2026 • 18:33 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-gray-200/60 text-gray-600 px-1.5 py-0.5 rounded-md">7cf86d4</span>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Form Stepper & Basic KPR Calc</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Wizard Form Properti bertahap (pengurang user fatigue), kompresi upload foto, dan kalkulator KPR awal.
+                    </p>
+                </div>
+            </div>
+
+            {{-- Tile 7: Init --}}
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.1.0</span>
+                        <span class="text-[10px] font-semibold text-gray-400">24 Ags 2026 • 11:23 WIB</span>
+                    </div>
+                    <span class="font-mono text-[9px] bg-gray-200/60 text-gray-600 px-1.5 py-0.5 rounded-md">385e81d</span>
+                </div>
+                <div>
+                    <h3 class="text-xs font-bold text-gray-900">Inisialisasi Project & Core Engine</h3>
+                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed">
+                        Setup Laravel 11, Livewire 3, Tailwind, migrasi MVP, timezone setting, homefeed, estate show page, & hosting proxies.
+                    </p>
+                </div>
             </div>
 
         </div>
