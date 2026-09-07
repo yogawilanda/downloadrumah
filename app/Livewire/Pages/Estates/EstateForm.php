@@ -161,6 +161,36 @@ class EstateForm extends Component
     }
 
     /**
+     * Auto-save draft tanpa redirect saat navigasi wizard step.
+     */
+    public function autoSaveDraft(): void
+    {
+        $this->form->publicity_status = 'draft';
+        $data = $this->form->toSqlData();
+
+        DB::transaction(function () use ($data) {
+            if ($this->form->isEdit()) {
+                $this->form->estate->update($data);
+                $targetEstate = $this->form->estate;
+            } else {
+                $data['user_id'] = Auth::id();
+                $data['slug'] = Str::slug($this->form->title) . '-' . Str::random(5);
+                $data['transaction_status'] = 'available';
+
+                $targetEstate = Estate::create($data);
+
+                // Bind instance yang baru dibuat agar step selanjutnya otomatis bertindak sebagai 'Edit'
+                $this->form->estate = $targetEstate;
+            }
+
+            $this->storeUploadedPhotos($targetEstate);
+            $targetEstate->facilities()->sync($this->form->toSyncFacilitiesData());
+        });
+
+        $this->dispatch('estate-form-saved');
+    }
+
+    /**
      * Update the publicity status based on toggle.
      */
     public function updatePublicityStatus(): void

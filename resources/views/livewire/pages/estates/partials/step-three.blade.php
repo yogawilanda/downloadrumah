@@ -55,17 +55,16 @@
                 <span class="block text-[10px] text-gray-400">Gunakan toggle untuk mengatur visibilitas properti: Draft
                     atau Published.</span>
             </div>
-
             <div class="flex items-center gap-3">
                 <span class="text-[10px] font-medium text-gray-600 w-16">
                     {{ $form->publicity_status === 'published' ? 'Published' : 'Draft' }}
                 </span>
 
                 <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
-                    <input type="checkbox" wire:click="updatePublicityStatus" class="sr-only peer"
-                        {{ $form->publicity_status === 'published' ? 'checked' : '' }}>
+                    <input type="checkbox" wire:change="updatePublicityStatus" @checked($form->publicity_status === 'published')
+                        class="sr-only peer" @disabled($form->publicity_status === 'archived')>
                     <div
-                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600">
+                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed">
                     </div>
                 </label>
             </div>

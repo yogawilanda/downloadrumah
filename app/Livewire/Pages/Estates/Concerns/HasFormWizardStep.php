@@ -11,6 +11,12 @@ trait HasFormWizardStep
     public function nextStep(): void
     {
         $this->validateCurrentStep();
+
+        // Panggil auto save khusus tanpa redirect jika methodnya ada
+        if (method_exists($this, 'autoSaveDraft')) {
+            $this->autoSaveDraft();
+        }
+
         $this->currentStep = min(4, $this->currentStep + 1);
     }
 
@@ -26,6 +32,10 @@ trait HasFormWizardStep
         if ($targetStep > $this->currentStep) {
             for ($stepNumber = $this->currentStep; $stepNumber < $targetStep; $stepNumber++) {
                 $this->validateCurrentStep($stepNumber);
+            }
+
+            if (method_exists($this, 'autoSaveDraft')) {
+                $this->autoSaveDraft();
             }
         }
 
