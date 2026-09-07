@@ -30,7 +30,7 @@ Route::get('/', HomeFeed::class)
     ->middleware('dynamic_throttle:throttle.home_feed,1')
     ->name('home');
 
-// Tools KPR (Perbaikan Typo & Penamaan Route)
+// Tools KPR
 Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
 
 Route::get('/listings', PublicListing::class)->name('listings.index');
@@ -64,9 +64,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
     Route::get('/profile', Profile::class)->name('profile');
 
-    // Super Admin Routes
+    // Super Admin Routes (Internal / Protected)
     Route::middleware('super_admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/settings', \App\Livewire\Pages\Admin\Settings\Index::class)->name('settings.index');
+        Route::get('/insights', \App\Livewire\Pages\Admin\Insights\Index::class)->name('insights.index');
     });
 });
 
@@ -80,7 +81,7 @@ Route::post('/logout', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Dynamic / Wildcard Routes :
+| Dynamic / Wildcard Routes
 | Must be placed in bottom placement.
 |--------------------------------------------------------------------------
 */
