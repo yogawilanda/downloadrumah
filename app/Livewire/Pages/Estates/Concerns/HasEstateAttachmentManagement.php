@@ -32,6 +32,29 @@ trait HasEstateAttachmentManagement
         $this->resetErrorBag('photos');
     }
 
+    public function setPrimaryPhoto(int $attachmentId): void
+    {
+        if (!$this->form->isEdit() || $this->form->estate?->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        DB::transaction(function () use ($attachmentId) {
+            // Reset semua foto estate ini jadi false
+            EstateAttachment::where('estate_id', $this->form->estate->id)
+                ->update(['is_primary' => false]);
+
+            // Set foto terpilih jadi primary
+            EstateAttachment::where('id', $attachmentId)
+                ->where('estate_id', $this->form->estate->id)
+                ->update(['is_primary' => true]);
+        });
+
+        // Sync ulang state array di memory
+        foreach ($this->existingPhotos as &$photo) {
+            $photo['is_primary'] = ($photo['id'] === $attachmentId);
+        }
+    }
+
     public function deleteExistingPhoto(int $attachmentId): void
     {
         if (!$this->form->isEdit() || $this->form->estate?->user_id !== Auth::id()) {
@@ -43,6 +66,8 @@ trait HasEstateAttachmentManagement
             ->first();
 
         if ($attachment) {
+            $wasPrimary = $attachment->is_primary;
+
             DB::transaction(function () use ($attachment) {
                 Storage::disk('public')->delete($attachment->file_path);
                 $attachment->delete();
@@ -52,6 +77,12 @@ trait HasEstateAttachmentManagement
                 $this->existingPhotos,
                 fn($photo) => $photo['id'] !== $attachmentId
             ));
+
+            // Jika foto utama dihapus, pindahkan primary ke foto pertama yang tersisa
+            if ($wasPrimary && !empty($this->existingPhotos)) {
+                $nextPrimaryId = $this->existingPhotos[0]['id'];
+                $this->setPrimaryPhoto($nextPrimaryId);
+            }
         }
     }
 
@@ -72,7 +103,6 @@ trait HasEstateAttachmentManagement
                 'is_primary' => (!$hasPrimary && $index === 0),
             ]);
 
-            // Sinkronkan ke existingPhotos agar UI langsung mengenali sebagai foto tersimpan
             $this->existingPhotos[] = $attachment->toArray();
 
             if (!$hasPrimary && $index === 0) {
@@ -80,7 +110,6 @@ trait HasEstateAttachmentManagement
             }
         }
 
-        // KRUSIAL: Reset temporary array setelah seluruh file sukses di-store
         $this->photos = [];
         $this->resetErrorBag('photos');
     }

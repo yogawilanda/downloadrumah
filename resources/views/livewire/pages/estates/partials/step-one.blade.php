@@ -63,13 +63,24 @@
                 @php
                     $filePath = is_array($photo) ? $photo['file_path'] : $photo->file_path;
                     $photoId = is_array($photo) ? $photo['id'] : $photo->id;
+                    $isPrimary = is_array($photo) ? $photo['is_primary'] ?? false : $photo->is_primary;
                     $cleanPath = ltrim(str_replace('public/', '', $filePath), '/');
                     $photoUrl = is_array($photo) && !empty($photo['url']) ? $photo['url'] : url('media/' . $cleanPath);
                 @endphp
-                <div class="relative aspect-square rounded-xl overflow-hidden border border-gray-200">
-                    <img src="{{ $photoUrl }}" class="w-full h-full object-cover">
-                    <button type="button" wire:click="deleteExistingPhoto({{ $photoId }})"
-                        class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-sm text-white shadow hover:bg-red-600 transition">✕</button>
+                <div
+                    class="flex flex-col rounded-xl overflow-hidden border {{ $isPrimary ? 'border-2 border-blue-600 ring-2 ring-blue-100' : 'border-gray-200' }}">
+                    <div class="relative aspect-square">
+                        <img src="{{ $photoUrl }}" class="w-full h-full object-cover">
+                        <button type="button" wire:click="deleteExistingPhoto({{ $photoId }})"
+                            class="absolute right-1.5 top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-red-500/80 text-white text-xs shadow hover:bg-red-600 transition">✕</button>
+                    </div>
+
+                    <!-- Action Bar di Bawah Foto -->
+                    <button type="button"
+                        @if (!$isPrimary) wire:click="setPrimaryPhoto({{ $photoId }})" @endif
+                        class="w-full py-1.5 text-[10px] font-bold text-center transition {{ $isPrimary ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                        {{ $isPrimary ? '★ Foto Utama' : 'Jadikan Utama' }}
+                    </button>
                 </div>
             @endforeach
 

@@ -84,7 +84,7 @@
             <div class="mx-auto flex max-w-md gap-2">
                 <button type="button" wire:click="saveDraft" wire:loading.attr="disabled" wire:target="saveDraft"
                     class="min-h-11 flex-1 rounded-xl border border-gray-300 bg-white px-3 text-xs font-bold text-gray-700 disabled:opacity-50">
-                    <span wire:loading.remove wire:target="saveDraft">Simpan Draft</span>
+                    <span wire:loading.remove wire:target="saveDraft">Simpan Sebagai Draft</span>
                     <span wire:loading wire:target="saveDraft">Menyimpan...</span>
                 </button>
             @if ($currentStep > 1)
