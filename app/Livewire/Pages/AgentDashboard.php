@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 class AgentDashboard extends Component
 {
     use WithPagination;
+
     public function deleteEstate(int $id): void
     {
         $estate = Estate::where('id', $id)
@@ -33,9 +34,16 @@ class AgentDashboard extends Component
             ->latest()
             ->paginate(5);
 
+        // Agregasi status langsung via Eloquent query
+        $listingCount = Estate::where('user_id', $userId)->count();
+        $publishedListingCount = Estate::where('user_id', $userId)
+            ->where('publicity_status', 'published')
+            ->count();
+
         return view('livewire.pages.agent-dashboard', [
             'estates' => $userEstates,
-            'listingCount' => Estate::where('user_id', $userId)->count(),
+            'listingCount' => $listingCount,
+            'publishedListingCount' => $publishedListingCount,
         ]);
     }
 }
