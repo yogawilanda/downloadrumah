@@ -2,7 +2,7 @@
 
 /**
  * <meta_config>
- * @path : app/Http/Middleware/EnsureSuperAdmin.php | usage: Gate the super admin surface
+ * @path : app/Http/Middleware/EnsureSuperAdmin.php | usage: Gate the super admin surface with automatic redirects
  * @ruling : max line of code 80%, max doc 20% | max total lines = 100
  * @author : yogawilanda <eayogawilanda@gmail.com>
  * </meta_config>
@@ -23,17 +23,19 @@ class EnsureSuperAdmin
     {
         $user = $request->user();
 
+        // 1. Jika belum login, redirect ke halaman login
         if (!$user) {
-            abort(401, 'Anda harus login terlebih dahulu.');
+            return redirect()->route('login');
         }
 
-        // Use a "is_super_admin" boolean flag on the users table (fallback to env).
+        // 2. Cek privilese via method isSuperAdmin() di model User
         $isSuperAdmin = method_exists($user, 'isSuperAdmin')
             ? $user->isSuperAdmin()
-            : ($user->is_super_admin ?? false) || (bool) env('SUPER_ADMIN_IDS', false) && in_array($user->id, (array) env('SUPER_ADMIN_IDS', []));
+            : (bool) ($user->is_super_admin ?? false);
 
+        // 3. Jika BUKAN Super Admin, pura-pura halaman tidak ada (404)
         if (!$isSuperAdmin) {
-            abort(403, 'Akses ditolak. Hanya super admin yang dapat membuka halaman ini.');
+            abort(404);
         }
 
         return $next($request);

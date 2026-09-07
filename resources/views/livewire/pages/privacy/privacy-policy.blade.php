@@ -22,21 +22,28 @@
             </section>
 
             <section class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                <h2 class="font-bold text-gray-900 text-sm mb-1.5">2. Penggunaan Data</h2>
+                <h2 class="font-bold text-gray-900 text-sm mb-1.5">2. Data Teknis & Telemetry</h2>
                 <p>
-                    Data Anda digunakan untuk memproses pengajuan atau informasi properti, memverifikasi akun, dan memberikan pengalaman penggunaan aplikasi PWA yang lebih optimal.
+                    Untuk keperluan keamanan sistem, analisis performa, dan peningkatan pengalaman pengguna, aplikasi mencatat informasi teknis non-sensitif secara otomatis meliputi alamat IP, tipe peramban (user agent), halaman yang dikunjungi, serta nilai simulasi kalkulator KPR anonim.
                 </p>
             </section>
 
             <section class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                <h2 class="font-bold text-gray-900 text-sm mb-1.5">3. Keamanan Informasi</h2>
+                <h2 class="font-bold text-gray-900 text-sm mb-1.5">3. Penggunaan Data</h2>
                 <p>
-                    Kami menerapkan standar keamanan enkripsi SSL/HTTPS serta perlindungan data sesuai ketentuan hukum yang berlaku di Indonesia untuk menjaga data pribadi Anda tetap aman.
+                    Data Anda digunakan untuk memproses pengajuan atau informasi properti, memverifikasi akun, mendeteksi potensi serangan siber, serta memberikan pengalaman penggunaan aplikasi PWA yang lebih optimal.
                 </p>
             </section>
 
             <section class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                <h2 class="font-bold text-gray-900 text-sm mb-1.5">4. Hubungi Kami</h2>
+                <h2 class="font-bold text-gray-900 text-sm mb-1.5">4. Keamanan & Retensi Informasi</h2>
+                <p>
+                    Kami menerapkan standar enkripsi SSL/HTTPS serta perlindungan data sesuai ketentuan UU No. 27 Tahun 2022 tentang Perlindungan Data Pribadi (UU PDP). Data aktivitas teknis disimpan secara berkala dan diakses secara terbatas oleh tim internal yang berwenang.
+                </p>
+            </section>
+
+            <section class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                <h2 class="font-bold text-gray-900 text-sm mb-1.5">5. Hubungi Kami</h2>
                 <p>
                     Jika ada pertanyaan seputar kebijakan privasi ini, Anda dapat menghubungi tim support DownloadRumah melalui kanal komunikasi resmi kami.
                 </p>

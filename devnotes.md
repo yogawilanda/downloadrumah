@@ -24,3 +24,6 @@ php artisan stub:publish
 
 <!-- erd generator -->
 composer require recca0120/laravel-erd --dev
+
+<!-- publish laravel errors route -->
+php artisan vendor:publish --tag=laravel-errors
