@@ -17,6 +17,7 @@ use App\Models\EstateAttachment;
 use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 use Laravolt\Indonesia\Seeds\CitiesSeeder;
 use Laravolt\Indonesia\Seeds\DistrictsSeeder;
 use Laravolt\Indonesia\Seeds\ProvincesSeeder;
@@ -29,7 +30,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         /**
-         * Step 1: Seed Wilayah Indonesia & Master Fasilitas
+         * Step 1: Seed Master Data & System Config (Required in Production)
          */
         $this->call([
             ProvincesSeeder::class,
@@ -40,39 +41,26 @@ class DatabaseSeeder extends Seeder
         ]);
 
         /**
-         * Step 2: Akun Testing Utama (Safe First-or-Create)
+         * Step 2: Seed Dummy Data & Test Accounts (Local / Staging Only)
          */
-        $mainAgent = User::firstOrCreate(
-            ['email' => 'a@a.com'],
-            [
-                'name' => 'Agen Properti Utama',
-                'phone_number' => '6281234567890',
-                'password' => bcrypt('123'),
-                'is_super_admin' => true,
-            ]
-        );
+        if (App::environment(['local', 'staging', 'testing'])) {
+            $mainAgent = User::firstOrCreate(
+                ['email' => 'eayogawilanda@gmail.com'],
+                User::factory()->raw([
+                    'name' => 'Yoga Wilanda',
+                    'phone_number' => '6281258986696',
+                    'is_super_admin' => true,
+                ])
+            );
 
-        $adminAgent = User::firstOrCreate(
-            ['email' => 'eayogawilanda@gmail.com'],
-            [
-                'name' => 'Yoga Wilanda',
-                'phone_number' => '6281258986696',
-                'password' => bcrypt('hellovoid'),
-                'is_super_admin' => true,
-            ]
-        );
+            // Listing Properti Agen Utama (+ Attachments & Facilities)
+            $this->createEstatesWithAttachments($mainAgent, count: 10, galleryCount: 2);
 
-        /**
-         * Step 3: Listing Properti Agen Utama (+ Attachments & Facilities)
-         */
-        $this->createEstatesWithAttachments($mainAgent, count: 10, galleryCount: 2);
-
-        /**
-         * Step 4: Agen Dummy Tambahan & Listing-nya
-         */
-        User::factory(3)->create()->each(function (User $agent) {
-            $this->createEstatesWithAttachments($agent, count: 3, galleryCount: 0);
-        });
+            // Agen Dummy Tambahan & Listing-nya
+            User::factory(3)->create()->each(function (User $agent) {
+                $this->createEstatesWithAttachments($agent, count: 3, galleryCount: 0);
+            });
+        }
     }
 
     /**
@@ -87,7 +75,7 @@ class DatabaseSeeder extends Seeder
             ->each(function (Estate $estate) use ($galleryCount, $facilities) {
                 // Attach random facilities ke pivot table
                 if ($facilities->isNotEmpty()) {
-                    $randomFacilities = $facilities->random(rand(2, 5));
+                    $randomFacilities = $facilities->random(rand(2, min(5, $facilities->count())));
                     foreach ($randomFacilities as $facility) {
                         $estate->facilities()->attach($facility->id, [
                             'value' => $facility->category === 'utility' ? '2200 Watt' : null,
@@ -104,7 +92,8 @@ class DatabaseSeeder extends Seeder
 
                 // Additional Gallery Attachments
                 if ($galleryCount > 0) {
-                    EstateAttachment::factory($galleryCount)->create([
+                    $estateAttachmentFactory = EstateAttachment::factory($galleryCount);
+                    $estateAttachmentFactory->create([
                         'estate_id' => $estate->id,
                         'is_primary' => false,
                     ]);
