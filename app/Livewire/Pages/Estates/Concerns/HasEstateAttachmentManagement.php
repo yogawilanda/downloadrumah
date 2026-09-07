@@ -57,16 +57,31 @@ trait HasEstateAttachmentManagement
 
     protected function storeUploadedPhotos($targetEstate): void
     {
+        if (empty($this->photos)) {
+            return;
+        }
+
         $hasPrimary = $targetEstate->attachments()->where('is_primary', true)->exists();
 
         foreach ($this->photos as $index => $photo) {
             $path = $photo->store('estates', 'public');
 
-            EstateAttachment::create([
+            $attachment = EstateAttachment::create([
                 'estate_id' => $targetEstate->id,
                 'file_path' => $path,
-                'is_primary' => (!$hasPrimary && $index === 0), // 👈 Foto index ke-0 jadi primary
+                'is_primary' => (!$hasPrimary && $index === 0),
             ]);
+
+            // Sinkronkan ke existingPhotos agar UI langsung mengenali sebagai foto tersimpan
+            $this->existingPhotos[] = $attachment->toArray();
+
+            if (!$hasPrimary && $index === 0) {
+                $hasPrimary = true;
+            }
         }
+
+        // KRUSIAL: Reset temporary array setelah seluruh file sukses di-store
+        $this->photos = [];
+        $this->resetErrorBag('photos');
     }
 }
