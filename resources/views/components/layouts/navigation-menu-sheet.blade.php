@@ -67,6 +67,20 @@ usage: Universal bottom sheet modal menu for navigation
                     <span>Pengaturan Akun</span>
                 </a>
             </div>
+            {{-- Khusus Super Admin --}}
+            @if (auth()->user()->isSuperAdmin())
+                <a href="{{ route('admin.insights.index') }}" wire:navigate @click="openMenu = false"
+                    class="flex items-center justify-between p-2.5 text-blue-700 bg-blue-50/70 hover:bg-blue-100 rounded-xl transition text-xs font-semibold">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        <span>User Insights & Telemetry</span>
+                    </div>
+                    <span class="text-[10px] bg-blue-600 text-white font-bold px-1.5 py-0.5 rounded uppercase">Admin</span>
+                </a>
+            @endif
         @endauth
 
         <!-- Tombol Dynamic PWA Install -->
@@ -87,7 +101,8 @@ usage: Universal bottom sheet modal menu for navigation
                         <p class="text-[10px] text-gray-500">Akses lebih cepat tanpa buka browser</p>
                     </div>
                 </div>
-                <span class="text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md uppercase">Gratis</span>
+                <span
+                    class="text-[10px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-md uppercase">Gratis</span>
             </button>
         </div>
 
