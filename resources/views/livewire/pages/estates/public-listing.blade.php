@@ -10,10 +10,9 @@
 @endpush
 <div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }"
     @open-search-modal.window="openSearchModal = true">
-    <div class="w-full max-w-md min-h-screen bg-white relative pb-24">
-        <x-layouts.home.top-nav :transaction_type="$transaction_type" :search="$search" :city="$city"
-            :max_price="$max_price" :city_id="$city_id" :cities="$cities"
-            :suggestions="$suggestions" />
+    <div class="w-full max-w-md min-h-screen bg-white relative pb-2">
+        <x-layouts.home.top-nav :transaction_type="$transaction_type" :search="$search" :city="$city" :max_price="$max_price"
+            :city_id="$city_id" :cities="$cities" :suggestions="$suggestions" />
 
         <header class="px-4 pt-5 pb-2">
             <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Temukan hunian</p>
@@ -22,8 +21,8 @@
         </header>
 
         <div class="px-4">
-            <x-layouts.home.home-feed-search-chips :max_price="$max_price" :location="$location"
-                :search="$search" :city_id="$city_id" :district_id="$district_id" />
+            <x-layouts.home.home-feed-search-chips :max_price="$max_price" :location="$location" :search="$search"
+                :city_id="$city_id" :district_id="$district_id" />
         </div>
 
         <div class="px-4 pt-4 flex items-center justify-between">
@@ -33,8 +32,7 @@
             @endif
         </div>
 
-        <x-layouts.home.home-feed-listing :estates="$estates" />
-        <x-layouts.home.home-feed-search-advanced :transaction_type="$transaction_type" :cities="$cities"
-            :districts="[]" />
+        <x-layouts.home.home-feed-listing :estates="$estates" variant="vertical" />
+        <x-layouts.home.home-feed-search-advanced :transaction_type="$transaction_type" :cities="$cities" :districts="[]" />
     </div>
 </div>

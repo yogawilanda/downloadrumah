@@ -52,7 +52,7 @@
     @livewireStyles
 </head>
 
-<body class="bg-white font-sans antialiased selection:bg-blue-500 selection:text-white" x-data="pwaInstaller()">
+<body class="bg-blue-600 font-sans antialiased selection:bg-blue-500 selection:text-white" x-data="pwaInstaller()">
 
     <main class="max-w-md mx-auto min-h-screen bg-white relative pb-16">
         {{ $slot }}
