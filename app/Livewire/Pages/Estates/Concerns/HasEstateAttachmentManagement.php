@@ -12,6 +12,10 @@ trait HasEstateAttachmentManagement
     public array $existingPhotos = [];
     public array $photos = [];
 
+    // State penanda primary photo ('existing' / 'new')
+    public string $primaryPhotoType = 'existing';
+    public int|string $primaryPhotoIndex = 0;
+
     public function updatedPhotos(): void
     {
         $totalExisting = count($this->existingPhotos);
@@ -30,28 +34,46 @@ trait HasEstateAttachmentManagement
     {
         array_splice($this->photos, $index, 1);
         $this->resetErrorBag('photos');
+
+        // Jika foto temporary utama dihapus, reset pilihan primary ke foto eksisting pertama
+        if ($this->primaryPhotoType === 'new' && $this->primaryPhotoIndex === $index) {
+            $this->primaryPhotoType = 'existing';
+            if (!empty($this->existingPhotos)) {
+                $this->setPrimaryPhoto('existing', $this->existingPhotos[0]['id']);
+            }
+        }
     }
 
-    public function setPrimaryPhoto(int $attachmentId): void
+    /**
+     * Set foto utama dari foto tersimpan (DB) maupun foto temporary (Upload Baru).
+     * Usage: setPrimaryPhoto('existing', $photoId) ATAU setPrimaryPhoto('new', $index)
+     */
+    public function setPrimaryPhoto(string $type, int|string $targetKey): void
     {
-        if (!$this->form->isEdit() || $this->form->estate?->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->primaryPhotoType = $type;
+        $this->primaryPhotoIndex = $targetKey;
 
-        DB::transaction(function () use ($attachmentId) {
-            // Reset semua foto estate ini jadi false
-            EstateAttachment::where('estate_id', $this->form->estate->id)
-                ->update(['is_primary' => false]);
+        // Jika tipe 'existing', reset semua foto di state memori & DB
+        if ($type === 'existing') {
+            foreach ($this->existingPhotos as &$photo) {
+                $photo['is_primary'] = ($photo['id'] == $targetKey);
+            }
 
-            // Set foto terpilih jadi primary
-            EstateAttachment::where('id', $attachmentId)
-                ->where('estate_id', $this->form->estate->id)
-                ->update(['is_primary' => true]);
-        });
+            if ($this->form->isEdit() && $this->form->estate?->user_id === Auth::id()) {
+                DB::transaction(function () use ($targetKey) {
+                    EstateAttachment::where('estate_id', $this->form->estate->id)
+                        ->update(['is_primary' => false]);
 
-        // Sync ulang state array di memory
-        foreach ($this->existingPhotos as &$photo) {
-            $photo['is_primary'] = ($photo['id'] === $attachmentId);
+                    EstateAttachment::where('id', $targetKey)
+                        ->where('estate_id', $this->form->estate->id)
+                        ->update(['is_primary' => true]);
+                });
+            }
+        } else {
+            // Jika tipe 'new', hilangkan semua tanda is_primary di existingPhotos
+            foreach ($this->existingPhotos as &$photo) {
+                $photo['is_primary'] = false;
+            }
         }
     }
 
@@ -78,10 +100,10 @@ trait HasEstateAttachmentManagement
                 fn($photo) => $photo['id'] !== $attachmentId
             ));
 
-            // Jika foto utama dihapus, pindahkan primary ke foto pertama yang tersisa
+            // Jika foto utama yang di-delete, pindahkan primary ke foto pertama tersisa
             if ($wasPrimary && !empty($this->existingPhotos)) {
                 $nextPrimaryId = $this->existingPhotos[0]['id'];
-                $this->setPrimaryPhoto($nextPrimaryId);
+                $this->setPrimaryPhoto('existing', $nextPrimaryId);
             }
         }
     }
@@ -97,20 +119,34 @@ trait HasEstateAttachmentManagement
         foreach ($this->photos as $index => $photo) {
             $path = $photo->store('estates', 'public');
 
+            // Logika penentuan foto utama saat upload permanen
+            $isThisPrimary = ($this->primaryPhotoType === 'new' && $this->primaryPhotoIndex == $index)
+                || (!$hasPrimary && $index === 0 && $this->primaryPhotoType !== 'existing');
+
+            if ($isThisPrimary) {
+                // Unset primary lama di DB jika foto baru terpilih jadi primary
+                $targetEstate->attachments()->update(['is_primary' => false]);
+                foreach ($this->existingPhotos as &$ex) {
+                    $ex['is_primary'] = false;
+                }
+            }
+
             $attachment = EstateAttachment::create([
                 'estate_id' => $targetEstate->id,
                 'file_path' => $path,
-                'is_primary' => (!$hasPrimary && $index === 0),
+                'is_primary' => $isThisPrimary,
             ]);
 
             $this->existingPhotos[] = $attachment->toArray();
 
-            if (!$hasPrimary && $index === 0) {
+            if ($isThisPrimary) {
                 $hasPrimary = true;
             }
         }
 
+        // Reset state temporary
         $this->photos = [];
+        $this->primaryPhotoType = 'existing';
         $this->resetErrorBag('photos');
     }
 }

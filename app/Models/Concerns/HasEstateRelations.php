@@ -51,17 +51,23 @@ trait HasEstateRelations
             ->withPivot('value')
             ->withTimestamps();
     }
-
+    /**
+     * Relasi semua foto lampiran (Utamakan foto primary di urutan paling atas).
+     */
     public function attachments(): HasMany
     {
-        return $this->hasMany(EstateAttachment::class);
+        return $this->hasMany(EstateAttachment::class)
+            ->orderByDesc('is_primary')
+            ->orderBy('id');
     }
 
+    /**
+     * Relasi satu foto utama untuk Cover/Thumbnail di Katalog Card.
+     */
     public function primaryImage(): HasOne
     {
-        return $this->hasOne(EstateAttachment::class)->ofMany([
-            'is_primary' => 'max',
-            'id' => 'max',
-        ]);
+        return $this->hasOne(EstateAttachment::class)
+            ->orderByDesc('is_primary')
+            ->orderBy('id');
     }
 }

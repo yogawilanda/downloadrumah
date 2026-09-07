@@ -1,10 +1,11 @@
-// Loc: resources\js\photo_uploads.js
+// Loc: resources/js/photo_uploads.js
 // usage: Regulate front-end file uploads (compression, batching, quota enforcement)
 
 export default (config = {}) => ({
     uploading: false,
     progressText: 'Proses...',
     maxPhotos: config.maxPhotos || 8,
+    toast: { show: false, message: '' }, 
 
     get existingCount() {
         const existing = this.$wire.existingPhotos || [];
@@ -16,22 +17,30 @@ export default (config = {}) => ({
         return Array.isArray(uploaded) ? uploaded.length : Object.keys(uploaded).length;
     },
 
+    showToastMessage(msg) {
+        this.toast.message = msg;
+        this.toast.show = true;
+        setTimeout(() => { this.toast.show = false; }, 3500);
+    },
+
     compressAndUpload(event) {
-        const files = Array.from(event.target.files);
+        let files = Array.from(event.target.files);
         if (!files.length) return;
 
         const currentTotal = this.existingCount + this.currentUploadedCount;
-        const totalPhotos = currentTotal + files.length;
+        const availableSlots = this.maxPhotos - currentTotal;
 
-        if (totalPhotos > this.maxPhotos) {
-            const sisaKuota = this.maxPhotos - currentTotal;
-            if (sisaKuota <= 0) {
-                alert(`Batas maksimal ${this.maxPhotos} foto sudah tercapai.`);
-            } else {
-                alert(`Kamu hanya bisa menambah ${sisaKuota} foto lagi (Maksimal ${this.maxPhotos} foto).`);
-            }
+        // 1. Jika kuota sudah habis total
+        if (availableSlots <= 0) {
+            this.showToastMessage(`Batas maksimal ${this.maxPhotos} foto sudah tercapai.`);
             event.target.value = '';
             return;
+        }
+
+        // 2. Jika file yang dipilih melebihi sisa kuota, POTONG array filenya
+        if (files.length > availableSlots) {
+            this.showToastMessage(`Maksimal ${this.maxPhotos} foto. Hanya ${availableSlots} foto pertama yang diproses.`);
+            files = files.slice(0, availableSlots); // 👈 Ambil secukupnya saja
         }
 
         this.uploading = true;
@@ -40,10 +49,8 @@ export default (config = {}) => ({
         const dt = new DataTransfer();
         let processed = 0;
 
-        // BUG FIX #1: Gunakan Promise.all untuk menangani async FileReader secara akurat
         const processFile = (file) => {
             return new Promise((resolve) => {
-                // Skip jika ukuran < 500KB atau BUKAN file gambar (PDF/dokumen aman dari canvas crash)
                 if (file.size < 500 * 1024 || !file.type.startsWith('image/')) {
                     dt.items.add(file);
                     processed++;
@@ -55,9 +62,8 @@ export default (config = {}) => ({
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
 
-                // BUG FIX #2: Event onError untuk cegah freeze jika file korup
                 reader.onerror = () => {
-                    dt.items.add(file); // Fallback ke file asli jika reader gagal
+                    dt.items.add(file);
                     processed++;
                     this.updateProgress(processed, files.length);
                     resolve();
@@ -105,7 +111,7 @@ export default (config = {}) => ({
                                 });
                                 dt.items.add(compressedFile);
                             } else {
-                                dt.items.add(file); // Fallback ke file asli jika blob null
+                                dt.items.add(file);
                             }
                             processed++;
                             this.updateProgress(processed, files.length);
@@ -116,7 +122,6 @@ export default (config = {}) => ({
             });
         };
 
-        // Jalankan semua async prosessing, baru trigger uploadLivewire sekali jalan
         Promise.all(files.map(file => processFile(file))).then(() => {
             this.startLivewireUpload(dt, event);
         });
@@ -132,12 +137,12 @@ export default (config = {}) => ({
         this.$wire.uploadMultiple('photos', dt.files,
             () => {
                 this.uploading = false;
-                event.target.value = ''; // BUG FIX #3: Reset input file setelah upload selesai
+                event.target.value = '';
             },
             () => {
                 this.uploading = false;
                 event.target.value = '';
-                alert('Gagal mengunggah foto.');
+                this.showToastMessage('Gagal mengunggah foto.');
             },
             (e) => {
                 this.progressText = `Upload ${e.detail.progress}%`;
