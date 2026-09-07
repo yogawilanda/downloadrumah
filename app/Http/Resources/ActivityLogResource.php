@@ -22,23 +22,23 @@ class ActivityLogResource extends JsonResource
      */
     private function maskId(int|string|null $id): ?string
     {
-        return $id ? base_convert((string) ($id + 100000), 10, 36) : null;
+        return $id ? base_convert((string) ((int) $id + 100000), 10, 36) : null;
     }
 
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->maskId($this->id),
             'module' => $this->module,
             'event_name' => $this->event_name,
             'payload' => $this->payload,
             'ip_address' => $this->ip_address,
             'user_agent' => $this->user_agent,
-            'user' => $this->whenLoaded('user', fn () => [
+            'user' => $this->whenLoaded('user', fn () => $this->user ? [
                 'id' => $this->maskId($this->user->id),
                 'name' => $this->user->name,
                 'email' => $this->user->email ?? null,
-            ]),
+            ] : null),
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
         ];
     }

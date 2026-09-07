@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ActivityLogController extends Controller
 {
@@ -45,7 +46,6 @@ class ActivityLogController extends Controller
      */
     public function show(string $id): JsonResponse
     {
-        // Decode masked string string ID back to integer if needed
         $realId = is_numeric($id) ? $id : ((int) base_convert($id, 36, 10) - 100000);
 
         $log = ActivityLog::with('user:id,name,email')->find($realId);
@@ -65,19 +65,19 @@ class ActivityLogController extends Controller
      */
     public function store(StoreActivityLogRequest $request): JsonResponse
     {
-        $validated = $request->validated();
-
-        $payload = $validated['payload'] ?? [];
-        if (! isset($payload['session_id']) && $request->hasSession()) {
-            $payload['session_id'] = $request->session()->getId();
-        }
-        $payload['date_logged'] = now()->toDateString();
-
         try {
+            $validated = $request->validated();
+
+            $payload = $validated['payload'] ?? [];
+            if (! isset($payload['session_id']) && $request->hasSession()) {
+                $payload['session_id'] = $request->session()->getId();
+            }
+            $payload['date_logged'] = now()->toDateString();
+
             $log = ActivityLog::create([
-                'user_id' => Auth::id(), // Will be null if guest/unauthenticated
-                'module' => $validated['module'],
-                'event_name' => $validated['event_name'],
+                'user_id' => Auth::id(),
+                'module' => $validated['module'] ?? 'traffic',
+                'event_name' => $validated['event_name'] ?? 'page_view',
                 'payload' => $payload,
                 'ip_address' => $request->ip(),
                 'user_agent' => $this->parseUserAgent($request->userAgent() ?? ''),
@@ -87,10 +87,13 @@ class ActivityLogController extends Controller
                 'status' => 'success',
                 'data' => new ActivityLogResource($log),
             ], 201);
-        } catch (\Throwable $e) {
-            Log::error('API Event Logging Failed: '.$e->getMessage());
+        } catch (Throwable $e) {
+            Log::warning('API Event Logging Warning: '.$e->getMessage());
 
-            return response()->json(['status' => 'error', 'message' => 'Logging failed'], 500);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Logging bypassed',
+            ], 200);
         }
     }
 }
