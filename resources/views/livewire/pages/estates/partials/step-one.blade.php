@@ -37,12 +37,7 @@
         </div>
 
         <!-- Judul Listing -->
-        <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Judul Listing <span class="text-red-500">*</span></label>
-            <input type="text" wire:model="form.title" maxlength="70" placeholder="Contoh: RUMAH 2 LANTAI MINIMALIS SIDOARJO"
-                class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all">
-            @error('form.title') <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span> @enderror
-        </div>
+       @include('livewire.pages.estates.partials.estate-forms.title-form')
 
         <!-- Deskripsi Listing -->
         <div>
@@ -54,52 +49,13 @@
         </div>
 
         <!-- Tipe Transaksi -->
-        <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-2">Tipe Transaksi <span class="text-red-500">*</span></label>
-            <div class="flex flex-wrap gap-2">
-                @foreach (['sale' => 'Dijual', 'rent' => 'Disewakan', 'sale & rent' => 'Jual & Sewa'] as $val => $txt)
-                    <label class="flex-1 min-w-[100px] flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-gray-200 bg-gray-50/50 cursor-pointer hover:bg-white transition-all select-none">
-                        <input type="radio" wire:model="form.transaction_type" value="{{ $val }}" class="text-blue-600 focus:ring-blue-500 w-3.5 h-3.5 shrink-0">
-                        <span class="text-[11px] font-semibold text-gray-800 whitespace-nowrap">{{ $txt }}</span>
-                    </label>
-                @endforeach
-            </div>
-            @error('form.transaction_type') <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span> @enderror
-        </div>
+        @include('livewire.pages.estates.partials.estate-forms.transaction-type')
 
         <!-- Harga -->
-        <div>
-            <label class="block text-xs font-semibold text-gray-700 mb-1.5">Harga Jual / Sewa (Rp) <span class="text-red-500">*</span></label>
-            <input type="text" x-data="currencyInput('form.price')" x-model="displayValue" @input="update($event)" placeholder="Contoh: 2.000.000.000"
-                class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all">
-            @error('form.price') <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span> @enderror
-        </div>
+        @include('livewire.pages.estates.partials.estate_forms.price')
 
         <!-- Select Fields: Jenis Listing & Tipe Properti -->
-        <div class="space-y-4">
-            <div>
-                <label class="block text-xs font-semibold text-gray-700 mb-1.5">Jenis Listing <span class="text-red-500">*</span></label>
-                <select wire:model="form.listing_group" class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 transition-all cursor-pointer">
-                    <option value="">-- Pilih Jenis Listing --</option>
-                    <option value="primary">Primary (Developer / Baru)</option>
-                    <option value="secondary">Secondary (Bekas / Second)</option>
-                </select>
-                @error('form.listing_group') <span class="text-[11px] text-red-500 mt-1 block">{{ $message }}</span> @enderror
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-gray-700 mb-1.5">Tipe Properti <span class="text-red-500">*</span></label>
-                <select wire:model="form.property_type" class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 focus:bg-white focus:border-blue-500 transition-all cursor-pointer">
-                    <option value="house">Rumah</option>
-                    <option value="apartment">Apartemen</option>
-                    <option value="land">Tanah</option>
-                    <option value="shophouse">Ruko</option>
-                    <option value="villa">Villa</option>
-                    <option value="warehouse">Gudang</option>
-                    <option value="office">Kantor</option>
-                </select>
-            </div>
-        </div>
+        @include('livewire.pages.estates.partials.estate_forms.listing-and-property-type')
 
         <!-- Komisi & Radio Legalitas Ringkas -->
         <div class="space-y-3">
