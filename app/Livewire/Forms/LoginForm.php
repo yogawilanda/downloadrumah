@@ -4,7 +4,6 @@
  * <meta_config>
  * @path : app/Livewire/Forms/LoginForm.php | usage: Livewire Form Object for User Authentication
  * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : PHP Docblock
- * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
  * </meta_config>
  *
  * @author yogawilanda <eayogawilanda@gmail.com>
@@ -12,6 +11,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Concerns\WithSanitization;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -22,6 +22,8 @@ use Livewire\Form;
 
 class LoginForm extends Form
 {
+    use WithSanitization;
+
     #[Validate('required|string|email')]
     public string $email = '';
 
@@ -38,12 +40,15 @@ class LoginForm extends Form
      */
     public function authenticate(): void
     {
+        // Sanitasi email sebelum validasi & auth attempt
+        $this->email = $this->sanitizeEmail($this->email);
+
+        $this->validate();
         $this->ensureIsNotRateLimited();
 
         if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
-            // Reset password state agar tidak bocor di snapshot payload
             $this->password = '';
 
             // Wajib gunakan key 'loginForm.email' agar ditangkap Blade <x-input-error>
@@ -67,7 +72,6 @@ class LoginForm extends Form
         event(new Lockout(request()));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
-
         $this->password = '';
 
         throw ValidationException::withMessages([
@@ -78,9 +82,6 @@ class LoginForm extends Form
         ]);
     }
 
-    /**
-     * Get the authentication rate limiting throttle key.
-     */
     protected function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->email).'|'.request()->ip());

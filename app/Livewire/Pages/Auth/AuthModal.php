@@ -7,7 +7,7 @@
  * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
  * </meta_config>
  *
- * @author yogawilanda <eayogawilanda@gmail.com>
+ * @author : yogawilanda <eayogawilanda@gmail.com>
  */
 
 namespace App\Livewire\Pages\Auth;

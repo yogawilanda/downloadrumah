@@ -12,25 +12,21 @@
 
 namespace App\Livewire\Forms;
 
+use App\Concerns\WithSanitization;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Attributes\Validate;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Form;
 
 class RegisterForm extends Form
 {
-    #[Validate('required|string|max:255')]
+    use WithSanitization;
+
     public string $name = '';
-
-    #[Validate('required|string|lowercase|email|max:255|unique:users,email')]
     public string $email = '';
-
-    #[Validate('required|string|max:20')]
     public string $phone_number = '';
-
-    #[Validate('required|string|min:8|confirmed')]
     public string $password = '';
 
     public string $password_confirmation = '';
@@ -40,11 +36,24 @@ class RegisterForm extends Form
      */
     public function store(): User
     {
-        $this->validate();
+        // Sanitasi seluruh input di baris pertama
+        $this->name = $this->sanitizeText($this->name);
+        $this->email = $this->sanitizeEmail($this->email);
+        $this->phone_number = $this->sanitizePhone($this->phone_number);
+
+        $validated = $this->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone_number' => ['required', 'string', 'max:20'],
+            'password' => [
+                'required', 'string', 'confirmed',
+                Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(),
+            ],
+        ]);
 
         $user = User::create([
             'name' => $this->name,
-            'email' => strtolower(trim($this->email)),
+            'email' => $this->email,
             'phone_number' => $this->phone_number,
             'password' => Hash::make($this->password),
         ]);

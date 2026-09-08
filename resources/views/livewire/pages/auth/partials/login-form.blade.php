@@ -4,6 +4,7 @@
 |--------------------------------------------------------------------------
 | @path : resources/views/livewire/pages/auth/partials/login-form.blade.php
 | @usage : Partial View for User Login Form with Google-style Transitions
+| @parent : resources/views/livewire/pages/auth/auth-modal.blade.php
 | @ruling : max line of code 80%, max doc 20% | max total lines = 100
 | @author : yogawilanda <eayogawilanda@gmail.com>
 |--------------------------------------------------------------------------
