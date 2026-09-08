@@ -8,8 +8,16 @@
     height: 0;
 }
 
-/* Sembunyikan scrollbar untuk Firefox & IE/Edge lama */
+/* Mencegah layout repaint berlebihan saat scroll di HP */
 html, body {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-tap-highlight-color: transparent; /* Mencegah flash highlight saat tap */
+    touch-action: manipulation; /* Menghilangkan delay tap 300ms di mobile */
+}
+
+/* Biarkan GPU menangani scroll container jika ada div overflow */
+.scroll-container {
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
 }

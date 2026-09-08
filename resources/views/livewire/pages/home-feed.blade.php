@@ -31,26 +31,34 @@
         class="w-full max-w-md bg-white min-h-screen md:min-h-[844px] md:shadow-xl md:border md:border-gray-200 relative overflow-hidden pb-6">
 
         <!-- Navigation Bar Top -->
-        <x-layouts.home.top-nav :transaction_type="$transaction_type" :search="$search" :city="$city" :max_price="$max_price"
-            :city_id="$city_id" :cities="$cities" :suggestions="$suggestions" />
+        <div wire:key="top-nav-wrapper">
+            <x-layouts.home.top-nav :transaction_type="$transaction_type" :search="$search" :city="$city" :max_price="$max_price"
+                :city_id="$city_id" :cities="$cities" :suggestions="$suggestions" />
+        </div>
 
         <!-- Main Feed Content Area -->
         <div class="space-y-5 pt-2">
 
             <x-layouts.home.discovery-intent />
 
-            <!-- Active Search Chips -->
-            <x-layouts.home.home-feed-search-chips :max_price="$max_price" :location="$location" :search="$search"
-                :city_id="$city_id" :district_id="$district_id ?? ''" />
+            <!-- Active Search Chips (Isolated with wire:key) -->
+            <div wire:key="home-chips-{{ md5($search . $city_id . $max_price . ($district_id ?? '')) }}">
+                <x-layouts.home.home-feed-search-chips :max_price="$max_price" :location="$location" :search="$search"
+                    :city_id="$city_id" :district_id="$district_id ?? ''" />
+            </div>
 
             <!-- Carousel Sections -->
-            <x-layouts.home.home-feed-section title="Properti Terbaru" subtitle="Listing aktif yang baru masuk"
-                :estates="$recentEstates" />
+            <div wire:key="recent-estates-wrapper">
+                <x-layouts.home.home-feed-section title="Properti Terbaru" subtitle="Listing aktif yang baru masuk"
+                    :estates="$recentEstates" />
+            </div>
 
-            <x-layouts.home.home-feed-section title="Rekomendasi" subtitle="Pilihan hunian untuk pencarianmu"
-                :estates="$recommendedEstates" />
+            <div wire:key="recommended-estates-wrapper">
+                <x-layouts.home.home-feed-section title="Rekomendasi" subtitle="Pilihan hunian untuk pencarianmu"
+                    :estates="$recommendedEstates" />
+            </div>
 
-            <div id="js-promo-banner">
+            <div id="js-promo-banner" wire:key="promo-banner-wrapper">
                 <x-layouts.home.home-feed-banner />
             </div>
 
@@ -59,7 +67,9 @@
         </div>
 
         <!-- Advanced Filter Modal -->
-        <x-layouts.home.home-feed-search-advanced :transaction_type="$transaction_type" :cities="$cities" :districts="$districts ?? []" />
+        <div wire:key="search-advanced-modal-wrapper">
+            <x-layouts.home.home-feed-search-advanced :transaction_type="$transaction_type" :cities="$cities" :districts="$districts ?? []" />
+        </div>
 
     </div>
 </div>
