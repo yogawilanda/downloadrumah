@@ -1,61 +1,86 @@
+{{--
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path : resources/views/livewire/pages/auth/forgot-password.blade.php
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
+--}}
+
 <?php
 
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
-new #[Layout('layouts.guest')] class extends Component
+new #[Layout('components.layouts.app')] class extends Component
 {
+    #[Validate(['required', 'string', 'email'])]
     public string $email = '';
 
-    /**
-     * Send a password reset link to the provided email address.
-     */
     public function sendPasswordResetLink(): void
     {
-        $this->validate([
-            'email' => ['required', 'string', 'email'],
-        ]);
+        $this->validate();
 
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $this->only('email')
-        );
+        $status = Password::sendResetLink($this->only('email'));
 
-        if ($status != Password::RESET_LINK_SENT) {
+        if ($status !== Password::RESET_LINK_SENT) {
             $this->addError('email', __($status));
-
             return;
         }
 
         $this->reset('email');
-
         session()->flash('status', __($status));
     }
 }; ?>
 
-<div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<div class="w-full max-w-md mx-auto p-6 bg-white rounded-xl shadow-md border border-slate-100">
+    <div class="mb-6 text-center">
+        <h2 class="text-xl font-semibold text-slate-800">Lupa Kata Sandi?</h2>
+        <p class="mt-2 text-sm text-slate-600">
+            Masukkan email yang terdaftar. Kami akan mengirimkan tautan reset kata sandi ke email kamu.
+        </p>
     </div>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    @if (session('status'))
+        <div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg">
+            {{ session('status') }}
+        </div>
+    @endif
 
-    <form wire:submit="sendPasswordResetLink">
-        <!-- Email Address -->
+    <form wire:submit="sendPasswordResetLink" class="space-y-4">
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1">
+                Alamat Email
+            </label>
+            <input
+                wire:model="email"
+                id="email"
+                type="email"
+                name="email"
+                required
+                autofocus
+                placeholder="nama@email.com"
+                class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none @error('email') border-red-500 @else border-slate-300 @enderror"
+            />
+            @error('email')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
+        <button
+            type="submit"
+            wire:loading.attr="disabled"
+            class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition duration-150 disabled:opacity-50"
+        >
+            <span wire:loading.remove wire:target="sendPasswordResetLink">
+                Kirim Tautan Reset
+            </span>
+            <span wire:loading wire:target="sendPasswordResetLink">
+                Mengirim...
+            </span>
+        </button>
     </form>
 </div>
