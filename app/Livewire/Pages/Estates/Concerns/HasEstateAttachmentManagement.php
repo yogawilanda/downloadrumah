@@ -6,24 +6,46 @@ use App\Models\EstateAttachment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait HasEstateAttachmentManagement
 {
     public array $existingPhotos = [];
+
+    /** @var TemporaryUploadedFile[] Landing area batch baru dari Livewire upload */
     public array $photos = [];
+
+    /** @var TemporaryUploadedFile[] Penampung akumulasi semua file temporary */
+    public array $tempPhotos = [];
 
     // State penanda primary photo ('existing' / 'new')
     public string $primaryPhotoType = 'existing';
     public int|string $primaryPhotoIndex = 0;
 
+    /**
+     * Hook dipanggil setiap kali ada batch upload baru masuk ke $photos
+     */
     public function updatedPhotos(): void
     {
-        $totalExisting = count($this->existingPhotos);
-        $totalNew = count($this->photos);
+        if (empty($this->photos)) {
+            return;
+        }
 
-        if (($totalExisting + $totalNew) > 8) {
+        // 1. Pindahkan & gabungkan batch baru dari $photos ke $tempPhotos
+        foreach ($this->photos as $newPhoto) {
+            $this->tempPhotos[] = $newPhoto;
+        }
+
+        // 2. Kosongkan landing area agar siap terima batch berikutnya
+        $this->photos = [];
+
+        // 3. Validasi kuota maks 8 foto (Existing + Temp)
+        $totalExisting = count($this->existingPhotos);
+        $totalTemp = count($this->tempPhotos);
+
+        if (($totalExisting + $totalTemp) > 8) {
             $allowedCount = max(0, 8 - $totalExisting);
-            $this->photos = array_slice($this->photos, 0, $allowedCount);
+            $this->tempPhotos = array_slice($this->tempPhotos, 0, $allowedCount);
             $this->addError('photos', 'Total foto maksimal 8. Foto berlebih telah dipotong.');
         } else {
             $this->resetErrorBag('photos');
@@ -32,28 +54,30 @@ trait HasEstateAttachmentManagement
 
     public function removePhoto(int $index): void
     {
-        array_splice($this->photos, $index, 1);
+        if (isset($this->tempPhotos[$index])) {
+            array_splice($this->tempPhotos, $index, 1);
+            $this->tempPhotos = array_values($this->tempPhotos);
+        }
+
         $this->resetErrorBag('photos');
 
-        // Jika foto temporary utama dihapus, reset pilihan primary ke foto eksisting pertama
-        if ($this->primaryPhotoType === 'new' && $this->primaryPhotoIndex === $index) {
-            $this->primaryPhotoType = 'existing';
-            if (!empty($this->existingPhotos)) {
-                $this->setPrimaryPhoto('existing', $this->existingPhotos[0]['id']);
+        if ($this->primaryPhotoType === 'new') {
+            if ($this->primaryPhotoIndex == $index) {
+                $this->primaryPhotoType = 'existing';
+                if (!empty($this->existingPhotos)) {
+                    $this->setPrimaryPhoto('existing', $this->existingPhotos[0]['id']);
+                }
+            } elseif ($this->primaryPhotoIndex > $index) {
+                $this->primaryPhotoIndex = (int) $this->primaryPhotoIndex - 1;
             }
         }
     }
 
-    /**
-     * Set foto utama dari foto tersimpan (DB) maupun foto temporary (Upload Baru).
-     * Usage: setPrimaryPhoto('existing', $photoId) ATAU setPrimaryPhoto('new', $index)
-     */
     public function setPrimaryPhoto(string $type, int|string $targetKey): void
     {
         $this->primaryPhotoType = $type;
         $this->primaryPhotoIndex = $targetKey;
 
-        // Jika tipe 'existing', reset semua foto di state memori & DB
         if ($type === 'existing') {
             foreach ($this->existingPhotos as &$photo) {
                 $photo['is_primary'] = ($photo['id'] == $targetKey);
@@ -70,7 +94,6 @@ trait HasEstateAttachmentManagement
                 });
             }
         } else {
-            // Jika tipe 'new', hilangkan semua tanda is_primary di existingPhotos
             foreach ($this->existingPhotos as &$photo) {
                 $photo['is_primary'] = false;
             }
@@ -100,7 +123,6 @@ trait HasEstateAttachmentManagement
                 fn($photo) => $photo['id'] !== $attachmentId
             ));
 
-            // Jika foto utama yang di-delete, pindahkan primary ke foto pertama tersisa
             if ($wasPrimary && !empty($this->existingPhotos)) {
                 $nextPrimaryId = $this->existingPhotos[0]['id'];
                 $this->setPrimaryPhoto('existing', $nextPrimaryId);
@@ -110,21 +132,19 @@ trait HasEstateAttachmentManagement
 
     protected function storeUploadedPhotos($targetEstate): void
     {
-        if (empty($this->photos)) {
+        if (empty($this->tempPhotos)) {
             return;
         }
 
         $hasPrimary = $targetEstate->attachments()->where('is_primary', true)->exists();
 
-        foreach ($this->photos as $index => $photo) {
+        foreach ($this->tempPhotos as $index => $photo) {
             $path = $photo->store('estates', 'public');
 
-            // Logika penentuan foto utama saat upload permanen
             $isThisPrimary = ($this->primaryPhotoType === 'new' && $this->primaryPhotoIndex == $index)
                 || (!$hasPrimary && $index === 0 && $this->primaryPhotoType !== 'existing');
 
             if ($isThisPrimary) {
-                // Unset primary lama di DB jika foto baru terpilih jadi primary
                 $targetEstate->attachments()->update(['is_primary' => false]);
                 foreach ($this->existingPhotos as &$ex) {
                     $ex['is_primary'] = false;
@@ -144,8 +164,8 @@ trait HasEstateAttachmentManagement
             }
         }
 
-        // Reset state temporary
-        $this->photos = [];
+        // Reset akumulator temporary setelah berhasil di-commit ke DB
+        $this->tempPhotos = [];
         $this->primaryPhotoType = 'existing';
         $this->resetErrorBag('photos');
     }

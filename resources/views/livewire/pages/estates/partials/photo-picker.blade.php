@@ -12,6 +12,7 @@
 @php
     $primaryPhotoType = $primaryPhotoType ?? 'existing';
     $primaryPhotoIndex = $primaryPhotoIndex ?? 0;
+    $tempPhotos = $tempPhotos ?? [];
 @endphp
 
 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4 relative" x-data="photoUploader({ maxPhotos: 8 })">
@@ -77,9 +78,9 @@
             </div>
         @endforeach
 
-        {{-- Photos Temporary (Upload Baru) --}}
-        @if ($photos)
-            @foreach ($photos as $index => $photo)
+        {{-- Photos Temporary (Upload Baru dari Accumulator) --}}
+        @if ($tempPhotos)
+            @foreach ($tempPhotos as $index => $photo)
                 @php $isPrimaryTemp = ($primaryPhotoType === 'new' && $primaryPhotoIndex == $index); @endphp
                 <div class="flex flex-col rounded-xl overflow-hidden border {{ $isPrimaryTemp ? 'border-2 border-blue-600 ring-2 ring-blue-100' : 'border-gray-200' }}">
                     <div class="relative aspect-square">
