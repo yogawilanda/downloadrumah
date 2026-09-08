@@ -24,11 +24,12 @@
     <meta property="og:image:height" content="630">
 @endpush
 
-<div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }"
+<div class="min-h-screen bg-gray-100 flex justify-center items-center md:py-6" x-data="{ openSearchModal: false }"
     @open-search-modal.window="openSearchModal = true">
 
+    {{-- Frame Container Mobile vs Desktop Container --}}
     <div
-        class="w-full max-w-md bg-white min-h-screen md:min-h-[844px] md:shadow-xl md:border md:border-gray-200 relative overflow-hidden pb-6">
+        class="w-full max-w-md bg-white min-h-screen md:min-h-[844px] md:max-h-[90vh] md:rounded-2xl md:shadow-2xl md:border md:border-gray-200 relative overflow-y-auto pb-6">
 
         <!-- Navigation Bar Top -->
         <div wire:key="top-nav-wrapper">
