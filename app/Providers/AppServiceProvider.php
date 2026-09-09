@@ -12,6 +12,7 @@
 
 namespace App\Providers;
 
+use App\Actions\Seo\ConfigureSeoDefaults;
 use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
@@ -32,8 +33,10 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot(ConfigureSeoDefaults $configureSeoDefaults): void
     {
+        $configureSeoDefaults();
+
         /**
          * Step 1.1: Storage Symlink Replacement Route
          * Fallback image delivery for restricted hosting environments.

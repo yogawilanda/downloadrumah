@@ -1,32 +1,15 @@
-@section('has_custom_meta', true)
-
-@push('meta')
-    @php
-        $coverImage = $estate->primaryImage?->url
-            ?? ($estate->attachments->first()?->file_path ? asset('storage/' . $estate->attachments->first()->file_path) : asset('images/og-preview.jpg'));
-
-        $formattedPrice = $estate->short_price;
-        $location = $estate->short_location_label;
-        $ogTitle = "{$estate->title} - {$formattedPrice}";
-        $ogDescription = "Di{$estate->transaction_type_label} properti di {$location}. " . Str::limit(strip_tags($estate->description ?? ''), 120);
-    @endphp
-
-    <!-- Dynamic Open Graph Meta untuk Estate Detail -->
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $ogTitle }}">
-    <meta property="og:description" content="{{ $ogDescription }}">
-    <meta property="og:image" content="{{ $coverImage }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="{{ url()->current() }}">
-    <meta name="twitter:title" content="{{ $ogTitle }}">
-    <meta name="twitter:description" content="{{ $ogDescription }}">
-    <meta name="twitter:image" content="{{ $coverImage }}">
-@endpush
+{{--
+|--------------------------------------------------------------------------
+| <Context & Meta Configuration>
+|--------------------------------------------------------------------------
+| @path : resources/views/livewire/pages/estates/estate-show.blade.php
+| @usage : component to show estate object to end user
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
+| <Context & Meta Configuration/>
+|--------------------------------------------------------------------------
+--}}
 
 @php($defaultWa = $estate->user->phone_number ?? '')
 @php($isOwner = auth()->check() && auth()->id() === $estate->user_id)

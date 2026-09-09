@@ -9,21 +9,6 @@
 |--------------------------------------------------------------------------
 --}}
 
-@section('has_custom_meta', true)
-
-@push('meta')
-    <!-- Open Graph Meta Khusus Halaman Beranda / Home -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title"
-        content="{{ $search ? $search . ' - ' : '' }}{{ $city ? 'Properti di ' . $city . ' - ' : '' }}DownloadRumah">
-    <meta property="og:description"
-        content="Cari properti {{ $city ? 'di ' . $city : '' }}{{ $max_price ? ' hingga Rp' . number_format((float) $max_price, 0, ',', '.') : '' }} di DownloadRumah.">
-    <meta property="og:image" content="{{ asset('favicon.png') }}?v=20260905">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-@endpush
-
 <div class="min-h-screen bg-gray-100 flex justify-center items-center md:py-6" x-data="{ openSearchModal: false }"
     @open-search-modal.window="openSearchModal = true">
 

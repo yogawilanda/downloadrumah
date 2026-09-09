@@ -12,6 +12,7 @@
 
 namespace App\Livewire\Pages\Estates;
 
+use App\Actions\Seo\ConfigureEstateSeo;
 use App\Models\Estate;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
@@ -26,11 +27,10 @@ class EstateShow extends Component
     public Estate $estate;
 
     /**
-     * Inisialisasi data properti dan eager-load relasi utama.
+     * Inisialisasi data properti, eager-load relasi, dan konfigurasi SEO Runtime.
      */
-    public function mount(Estate $estate): void
+    public function mount(Estate $estate, ConfigureEstateSeo $configureEstateSeo): void
     {
-        // availability_status sama ini juga kepake sih.
         $this->estate = $estate->load([
             'user',
             'attachments',
@@ -39,6 +39,8 @@ class EstateShow extends Component
             'district',
             'province'
         ]);
+
+        $configureEstateSeo($this->estate);
     }
 
     /**

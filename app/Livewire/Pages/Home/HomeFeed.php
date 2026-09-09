@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Home;
 
+use App\Actions\Seo\ConfigureHomeFeedSeo;
 use App\Livewire\Pages\Home\Concerns\HasHomeFeedFilters;
 use App\Livewire\Pages\Home\Concerns\HasPublicEstateSearch;
 use App\Models\Estate;
@@ -17,8 +18,15 @@ class HomeFeed extends Component
 {
     use WithPagination, HasHomeFeedFilters, HasPublicEstateSearch;
 
-    public function render()
+    public function render(ConfigureHomeFeedSeo $configureSeo)
     {
+        // Inject SEO dinamis sesuai state filter saat ini
+        $configureSeo(
+            search: $this->search ?? null,
+            city: $this->city ?? null,
+            maxPrice: $this->max_price ?? null
+        );
+
         $query = Estate::query()
             ->with(['primaryImage', 'city', 'district', 'province'])
             ->published()->available();
