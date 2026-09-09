@@ -8,14 +8,14 @@
 |--------------------------------------------------------------------------
 --}}
 
-{{-- dan untuk ini tampilannya ketika tablet harus ngikutin juga aga mengecil dong? jadi ga ngikutin spacingnya si desktop --}}
-{{-- Ganti baris pertama wrapper --}}
-<div class="w-full max-w-md md:max-w-3xl lg:max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-2 space-y-2.5" x-data="{ searchOpen: false }">
+{{-- Wrapper max-width & padding disesuaikan ramping untuk tablet (md:max-w-2xl lg:max-w-6xl) --}}
+<div class="w-full max-w-md md:max-w-2xl lg:max-w-6xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 space-y-2"
+    x-data="{ searchOpen: false }">
 
-    {{-- BARIS 1: Logo & Notifikasi / CTA (Selalu Sejajar di Atas) --}}
+    {{-- BARIS 1: Logo & Notifikasi / CTA --}}
     <div class="flex items-center justify-between gap-3 h-9">
 
-        {{-- Logo & Brand (Slim & Compact) --}}
+        {{-- Logo & Brand --}}
         <a href="{{ route('home') }}" wire:navigate class="flex items-center gap-1.5 shrink-0 py-1">
             <div class="flex items-center justify-center text-blue-600">
                 <x-icons.header-logo class="w-5 h-5" />
@@ -25,17 +25,14 @@
             </h1>
         </a>
 
-        {{-- Aksi Kanan (Tablet & Desktop: CTA + Notif | Mobile: Notif Only) --}}
+        {{-- Aksi Kanan --}}
         <div class="flex items-center gap-2 shrink-0">
-            {{-- Tombol Pasang Iklan (Desktop & Tablet Only) --}}
-            {{-- saya perbarui karena anda lupa ini harus ngecek usernya dulu apakah sudah login atau belum, ntah kenapa jadi lebih cepat aksesnya --}}
             <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                class="hidden md:flex px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-sm shadow-sm transition active:scale-95 items-center gap-1.5">
+                class="hidden md:flex px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm transition active:scale-95 items-center gap-1.5">
                 <x-icons.icons-adds class="w-3.5 h-3.5 fill-current" />
                 <span>Pasang Iklan</span>
             </a>
 
-            {{-- Icon Notifikasi Global (Semua Breakpoint) --}}
             <button type="button"
                 class="p-2 bg-gray-100 hover:bg-gray-200 text-slate-600 rounded-xl transition flex items-center justify-center relative active:scale-95"
                 title="Notifikasi">
@@ -43,14 +40,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
-                {{-- Indicator Dot --}}
                 <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
             </button>
         </div>
 
     </div>
 
-    {{-- BARIS 2: MOBILE ONLY (< 768px) - Search Bar Turun ke Bawah Logo --}}
+    {{-- BARIS 2: MOBILE ONLY (< 768px) - Search Bar & Dropdown Suggestions --}}
     <div class="flex md:hidden items-center gap-2 pt-0.5">
         <div class="relative flex-1" @click.outside="searchOpen = false">
             <form wire:submit.prevent="submitSearch">
@@ -63,12 +59,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <span wire:loading.delay wire:target="search"
-                class="absolute right-2.5 top-2.5 h-3 w-3 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600"></span>
 
-            @if (strlen(trim($search)) >= 2)
-                <x-layouts.home.search-suggestions :suggestions="$suggestions" :search="$search" />
-            @endif
+            {{-- Panggil komponen terpusat yang sudah menghandle skeleton & state di dalamnya --}}
+            <x-layouts.home.search-suggestions :suggestions="$suggestions" :popularCities="$popularCities" :search="$search" />
         </div>
 
         <button @click="$dispatch('open-search-modal')"

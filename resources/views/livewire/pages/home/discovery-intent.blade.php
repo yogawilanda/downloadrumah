@@ -22,18 +22,18 @@
     <form wire:submit.prevent="submitSearch"
         class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-white p-2.5 rounded-2xl text-gray-800 shadow-md relative overflow-visible">
 
-        {{-- Input Search (Beri z-30) --}}
+        {{-- Input Search --}}
         <div class="md:col-span-5 relative z-30" @click.outside="searchOpen = false">
-            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 pt-1">Lokasi /
-                Properti</label>
+            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider px-3 pt-1">
+                Lokasi / Properti
+            </label>
+
             <input wire:model.live.debounce.300ms="search" @focus="searchOpen = true" type="text"
                 placeholder="Cari lokasi, nama properti..."
                 class="w-full px-3 pb-1 pt-0 text-xs font-semibold text-gray-800 border-none focus:ring-0 placeholder-gray-400 bg-transparent" />
 
-            {{-- Dropdown Autocomplete Melayang Mulus --}}
-            @if (strlen(trim($search)) >= 2)
-                <x-layouts.home.search-suggestions :suggestions="$suggestions" :popularCities="$popularCities" :search="$search" />
-            @endif
+            {{-- Cukup panggil komponen ini saja --}}
+            <x-layouts.home.search-suggestions :suggestions="$suggestions" :popularCities="$popularCities" :search="$search" />
         </div>
 
         {{-- Select Kota --}}

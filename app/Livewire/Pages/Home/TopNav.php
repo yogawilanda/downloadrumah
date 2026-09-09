@@ -1,11 +1,12 @@
 <?php
+
 /**
  * @path: app/Livewire/Pages/Home/TopNav.php
  * @usage : Top Navigation that basically a bit needed some functionality for specifics pages
  * @author : yogawilanda <eayogawilanda@gmail.com>
  */
-namespace App\Livewire\Pages\Home;
 
+namespace App\Livewire\Pages\Home;
 
 use App\Models\Estate;
 use Laravolt\Indonesia\Models\City;
@@ -94,8 +95,12 @@ class TopNav extends Component
                 : collect(),
         ];
 
+        // Query kota populer (opsional: sesuaikan urutan/scope jika ada flag khusus)
+        $popularCities = City::query()->orderBy('name')->limit(5)->get();
+
         return view('livewire.pages.home.top-nav', [
             'suggestions' => $suggestions,
+            'popularCities' => $popularCities,
             'cities' => City::query()->orderBy('name')->limit(8)->get(),
         ]);
     }

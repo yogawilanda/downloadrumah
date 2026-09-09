@@ -18,6 +18,12 @@
         {{-- Content Area --}}
         <div class="space-y-6 md:space-y-8 px-4 md:px-8 pt-4 md:pt-6">
 
+            {{-- Hero Text --}}
+            <div class="mb-6 space-y-1">
+                <h2 class="text-2xl font-black">Cari hunian yang terasa cocok</h2>
+                <p class="text-sm text-gray-600">Lihat-lihat dulu berdasarkan lokasi, kebutuhan, dan budget.</p>
+            </div>
+
             {{-- Livewire Hero Search Widget Mandiri --}}
             @livewire(\App\Livewire\Pages\Home\DiscoveryIntent::class)
 
