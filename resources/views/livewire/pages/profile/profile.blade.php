@@ -16,7 +16,7 @@ usage: User profile settings page layout inside mobile container
         <!-- Main Content Area -->
         <div class="p-4 space-y-4">
             <!-- Header Kartu Profil Ringkas -->
-            <div class="flex items-center gap-3 p-3 bg-blue-50/50 rounded-2xl border border-blue-100">
+            <div class="flex items-center gap-3 p-3 bg-blue-50/50 rounded-md border border-blue-100">
                 <div class="w-12 h-12 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-lg shadow-sm shrink-0">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
@@ -27,19 +27,19 @@ usage: User profile settings page layout inside mobile container
             </div>
 
             <!-- Form 1: Informasi Profil -->
-            <div class="p-4 bg-white border border-gray-100 shadow-sm rounded-2xl space-y-3">
+            <div class="p-4 bg-white border border-gray-100 shadow-sm rounded-md space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Informasi Pribadi</h3>
                 <livewire:pages.profile.partials.update-profile-information-form />
             </div>
 
             <!-- Form 2: Ubah Password -->
-            <div class="p-4 bg-white border border-gray-100 shadow-sm rounded-2xl space-y-3">
+            <div class="p-4 bg-white border border-gray-100 shadow-sm rounded-md space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-400">Keamanan & Sandi</h3>
                 <livewire:pages.profile.partials.update-password-form />
             </div>
 
             <!-- Form 3: Hapus Akun -->
-            <div class="p-4 bg-red-50/50 border border-red-100 rounded-2xl space-y-3">
+            <div class="p-4 bg-red-50/50 border border-red-100 rounded-md space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-red-400">Zona Bahaya</h3>
                 <livewire:pages.profile.partials.delete-user-form />
             </div>

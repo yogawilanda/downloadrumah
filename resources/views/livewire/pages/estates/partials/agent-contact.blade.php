@@ -3,7 +3,7 @@
     $waMessage = rawurlencode("Halo {$agentName}, saya tertarik dengan properti '{$estate->title}' di DownloadRumah: " . url()->current());
     $waNumber = preg_replace('/[^0-9]/', '', $estate->user->phone_number ?? '6281259990179');
 @endphp
-<div class="p-4 border border-slate-200/60 rounded-3xl bg-slate-50/70 space-y-4">
+<div class="p-4 border border-slate-200/60 rounded-md bg-slate-50/70 space-y-4">
     <div class="flex items-center space-x-3">
         <div class="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">{{ substr($agentName, 0, 1) }}</div>
         <div class="flex-1 min-w-0"><p class="text-xs font-bold text-slate-900 truncate">{{ $agentName }}</p><p class="text-[11px] text-slate-500">{{ $estate->user->user_title ?? 'Pemilik Listing / Agen' }}</p></div>

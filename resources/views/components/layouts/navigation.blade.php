@@ -33,7 +33,7 @@ usage: Universal bottom navigation container for all viewports (Mobile, Tablet, 
             <!-- 3. Floating CTA (+ Pasang Iklan) -->
             <div class="flex items-center justify-center flex-1 h-full">
                 <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                    class="flex items-center justify-center w-11 h-11 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full shadow-md shadow-blue-200 hover:opacity-95 active:scale-95 transition-all"
+                    class="flex items-center justify-center w-11 h-11 md:w-12 md:h-12 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-md shadow-md shadow-blue-200 hover:opacity-95 active:scale-95 transition-all"
                     title="Pasang Iklan">
                     <x-icons.icons-adds class="w-5 h-5 md:w-6 md:h-6" />
                 </a>

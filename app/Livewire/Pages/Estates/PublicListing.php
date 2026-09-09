@@ -18,6 +18,8 @@ class PublicListing extends Component
 {
     use WithPagination, HasHomeFeedFilters, HasPublicEstateSearch;
 
+    public ?int $selectedEstateId = null;
+
     #[On('apply-home-filter')]
     public function handleFilterUpdate(array $params): void
     {
@@ -29,16 +31,35 @@ class PublicListing extends Component
         $this->resetPage();
     }
 
+    public function selectEstate(int $id): void
+    {
+        $this->selectedEstateId = $id;
+    }
+
     public function render(): View
     {
         $estates = Estate::query()
             ->with(['primaryImage', 'city', 'district', 'province'])
             ->published()
             ->available()
-            ->tap(fn ($query) => $this->applyPublicFilters($query))
+            ->tap(fn($query) => $this->applyPublicFilters($query))
             ->latest()
             ->paginate(10);
 
-        return view('livewire.pages.estates.public-listing', compact('estates'));
+        // Tentukan estate mana yang aktif untuk preview kolom kanan
+        $selectedEstate = null;
+
+        if ($this->selectedEstateId) {
+            $selectedEstate = Estate::find($this->selectedEstateId);
+        } else if ($estates->isNotEmpty()) {
+            // Default: ambil item pertama dari hasil paginasi saat ini
+            $selectedEstate = $estates->first();
+            $this->selectedEstateId = $selectedEstate->id;
+        }
+
+        return view('livewire.pages.estates.public-listing', [
+            'estates' => $estates,
+            'selectedEstate' => $selectedEstate,
+        ]);
     }
 }

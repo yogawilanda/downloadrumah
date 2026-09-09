@@ -18,7 +18,7 @@
      @mouseleave="startAutoSlide()">
 
     {{-- Gradient Option A: Slate Navy to Indigo (Sangat Elegan) --}}
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-800 to-indigo-900 text-white p-5 shadow-lg border border-slate-800/50">
+    <div class="relative overflow-hidden rounded-md bg-gradient-to-r from-blue-800 to-indigo-900 text-white p-5 shadow-lg border border-slate-800/50">
 
         {{-- Slide 1: Untuk Pengunjung / Pencari Properti --}}
         <div x-show="activeSlide === 1"

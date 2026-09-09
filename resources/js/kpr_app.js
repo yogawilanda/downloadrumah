@@ -1,7 +1,7 @@
 /**
  * <meta_config>
  * @path : resources/js/kpr_app.js | usage: Alpine.js KPR Calculator Component
- * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : JS Docblock
+ * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | comment style : JS Docblock
  * </meta_config>
  *
  * @author yogawilanda <eayogawilanda@gmail.com>
@@ -14,15 +14,26 @@ export default () => ({
     debounceTimer: null,
 
     /**
-     * Parse raw numeric string to integer safely.
+     * Read URL search params on initialization to set active tab & inputs.
      */
+    init() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('mode')) this.mode = params.get('mode');
+        if (params.has('price')) this.agent.propertyPrice = this.parseNumber(params.get('price'));
+        if (params.has('condition')) this.agent.condition = params.get('condition');
+    },
+
     parseNumber(val) {
         return Number(String(val || 0).replace(/\D/g, '')) || 0;
     },
 
-    /**
-     * Format number to short Indonesian textual representation.
-     */
+    formatInput(event, targetObj, key) {
+        const rawValue = event.target.value;
+        const numericVal = this.parseNumber(rawValue);
+        targetObj[key] = numericVal;
+        event.target.value = numericVal ? numericVal.toLocaleString('id-ID') : '';
+    },
+
     formatTerbilangShort(number) {
         const num = this.parseNumber(number);
         if (!num) return '0 Rupiah';
@@ -32,9 +43,6 @@ export default () => ({
         return `${num} Rupiah`;
     },
 
-    /**
-     * Compute Buyer KPR calculations without direct side-effects.
-     */
     get calcBuyer() {
         const installment = this.parseNumber(this.buyer.monthlyBudget);
         const i = ((Number(this.buyer.interest) || 0) / 100) / 12;
@@ -56,9 +64,6 @@ export default () => ({
         return { maxMonthlyInstallment: installment, maxPlafon, maxPropertyPrice: maxPrice };
     },
 
-    /**
-     * Compute Agent KPR calculations without direct side-effects.
-     */
     get calcAgent() {
         const price = this.parseNumber(this.agent.propertyPrice);
         const dpPercent = Number(this.agent.dpPercent) || 0;
@@ -82,9 +87,6 @@ export default () => ({
         return { dpAmount: Math.round(dpAmount), plafon: Math.round(plafon), monthlyInstallment: installment, estimatedLegalFee: fee };
     },
 
-    /**
-     * Fire-and-forget telemetry with debounce protection.
-     */
     trackDebouncedEvent(eventName, payloadData) {
         clearTimeout(this.debounceTimer);
         this.debounceTimer = setTimeout(() => {
@@ -94,17 +96,11 @@ export default () => ({
         }, 1500);
     },
 
-    /**
-     * Get search query string for buyer mode.
-     */
     get searchUrl() {
         const price = this.calcBuyer.maxPropertyPrice;
         return `/?max_price=${price}${this.buyer.location ? `&location=${this.buyer.location}` : ''}`;
     },
 
-    /**
-     * Format raw number to IDR Currency format.
-     */
     formatRupiah(num) {
         if (!num || isNaN(num)) return 'Rp 0';
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(num);

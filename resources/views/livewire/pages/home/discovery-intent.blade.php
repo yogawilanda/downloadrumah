@@ -8,19 +8,18 @@
 |--------------------------------------------------------------------------
 --}}
 
-<div class="hidden md:block w-full bg-blue-600 rounded-3xl p-6 md:p-8 text-white shadow-xl shadow-blue-500/10 relative overflow-visible z-20"
+<div class="hidden md:block w-full bg-blue-600 rounded-md p-6 md:p-8 text-white shadow-xl shadow-blue-500/10 relative overflow-visible z-20"
     x-data="{ searchOpen: false }">
 
     {{-- Headline Intent --}}
     <div class="mb-6 space-y-1">
-        <p class="text-xs font-bold uppercase tracking-wider text-blue-200">DownloadRumah</p>
-        <h2 class="text-2xl font-black">Cari hunian yang terasa cocok</h2>
+        <h2 class="text-2xl font-black">Cari aja dulu!</h2>
         <p class="text-xs text-blue-100">Lihat-lihat dulu berdasarkan lokasi, kebutuhan, dan budget.</p>
     </div>
 
     {{-- Form Widget Search Desktop (overflow-visible agar dropdown tidak terpotong) --}}
     <form wire:submit.prevent="submitSearch"
-        class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-white p-2.5 rounded-2xl text-gray-800 shadow-md relative overflow-visible">
+        class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-white p-2.5 rounded-md text-gray-800 shadow-md relative overflow-visible">
 
         {{-- Input Search --}}
         <div class="md:col-span-5 relative z-30" @click.outside="searchOpen = false">
@@ -62,7 +61,7 @@
         {{-- Submit Button --}}
         <div class="md:col-span-2 flex items-center">
             <button type="submit"
-                class="w-full h-full min-h-[40px] bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs rounded-xl transition shadow-sm">
+                class="w-full h-full min-h-[40px] bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs rounded-md transition shadow-sm">
                 Cari
             </button>
         </div>

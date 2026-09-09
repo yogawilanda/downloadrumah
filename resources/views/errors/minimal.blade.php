@@ -11,10 +11,10 @@
 <body class="antialiased bg-slate-100/60 min-h-screen flex items-center justify-center p-4">
 
     {{-- Wrapper Card Mobile First --}}
-    <div class="w-full max-w-md bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm text-center space-y-5">
+    <div class="w-full max-w-md bg-white rounded-md p-6 sm:p-8 border border-slate-200/80 shadow-sm text-center space-y-5">
 
         {{-- Code Badge --}}
-        <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto text-2xl font-extrabold shadow-inner">
+        <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-md flex items-center justify-center mx-auto text-2xl font-extrabold shadow-inner">
             @yield('code')
         </div>
 
@@ -31,7 +31,7 @@
         {{-- Action Button --}}
         <div class="pt-2">
             <a href="{{ route('home') }}"
-               class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl shadow-sm transition-all duration-200">
+               class="inline-flex items-center justify-center w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-md shadow-sm transition-all duration-200">
                 &larr; Kembali ke Beranda
             </a>
         </div>

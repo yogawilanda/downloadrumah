@@ -3,7 +3,7 @@
 
         {{-- Header --}}
         <div class="mb-5 flex items-center gap-3 border-b border-gray-100 pb-4">
-            <a href="{{ route('home') }}" wire:navigate class="p-2 bg-gray-100 rounded-xl text-gray-600 hover:bg-gray-200 transition">
+            <a href="{{ route('home') }}" wire:navigate class="p-2 bg-gray-100 rounded-md text-gray-600 hover:bg-gray-200 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
@@ -18,7 +18,7 @@
         <div class="space-y-3">
 
             {{-- Tile 1: Photo Engine (Latest) --}}
-            <div class="p-3.5 bg-blue-50/40 border border-blue-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-blue-50/40 border border-blue-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-blue-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full">v1.1.0-rc</span>
@@ -35,7 +35,7 @@
             </div>
 
             {{-- Tile 2: Admin Telemetry --}}
-            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v1.0.2</span>
@@ -52,7 +52,7 @@
             </div>
 
             {{-- Tile 3: Publicity Schema --}}
-            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v1.0.0</span>
@@ -69,7 +69,7 @@
             </div>
 
             {{-- Tile 4: Regional Data --}}
-            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.9.0</span>
@@ -86,7 +86,7 @@
             </div>
 
             {{-- Tile 5: Indonesian Regional --}}
-            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.5.0</span>
@@ -103,7 +103,7 @@
             </div>
 
             {{-- Tile 6: Form Stepper --}}
-            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.3.0</span>
@@ -120,7 +120,7 @@
             </div>
 
             {{-- Tile 7: Init --}}
-            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-2xl space-y-2">
+            <div class="p-3.5 bg-gray-50/80 border border-gray-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <span class="bg-gray-200 text-gray-700 text-[9px] font-black px-2 py-0.5 rounded-full">v0.1.0</span>

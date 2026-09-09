@@ -1,8 +1,8 @@
 @props(['estate', 'tab'])
 
-<article class="space-y-3 rounded-2xl border border-gray-100 bg-white p-3 shadow-sm">
+<article class="space-y-3 rounded-md border border-gray-100 bg-white p-3 shadow-sm">
     <div class="flex items-center gap-3">
-        <div class="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-gray-100">
+        <div class="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-gray-100">
             @if ($estate->primaryImage?->url)
                 <img src="{{ $estate->primaryImage->url }}" class="h-full w-full object-cover" alt="{{ $estate->title }}">
             @else
@@ -28,11 +28,11 @@
     <div class="border-t border-gray-50 pt-2">
         @if ($tab === 'my_listings')
             <div class="grid grid-cols-2 gap-2">
-                <a href="{{ route('estates.edit', $estate->slug) }}" class="rounded-xl bg-blue-50 py-2 text-center text-xs font-bold text-blue-600">Edit</a>
-                <button wire:click="deleteEstate({{ $estate->id }})" class="rounded-xl bg-red-50 py-2 text-xs font-bold text-red-600">Hapus</button>
+                <a href="{{ route('estates.edit', $estate->slug) }}" class="rounded-md bg-blue-50 py-2 text-center text-xs font-bold text-blue-600">Edit</a>
+                <button wire:click="deleteEstate({{ $estate->id }})" class="rounded-md bg-red-50 py-2 text-xs font-bold text-red-600">Hapus</button>
             </div>
         @else
-            <a href="{{ route('estates.show', $estate->slug) }}" class="block w-full rounded-xl bg-emerald-50 py-2 text-center text-xs font-bold text-emerald-600">Hubungi Agen (Co-Broke)</a>
+            <a href="{{ route('estates.show', $estate->slug) }}" class="block w-full rounded-md bg-emerald-50 py-2 text-center text-xs font-bold text-emerald-600">Hubungi Agen (Co-Broke)</a>
         @endif
     </div>
 </article>

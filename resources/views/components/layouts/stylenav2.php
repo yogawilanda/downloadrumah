@@ -165,18 +165,18 @@
 
                 <div class="space-y-1.5 pt-1">
                     <a href="{{ route('dashboard') }}" wire:navigate @click="openMenu = false"
-                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded-2xl transition font-medium text-sm">
+                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded-md transition font-medium text-sm">
                         <span>Dashboard</span>
                     </a>
 
                     <a href="{{ route('profile') }}" wire:navigate @click="openMenu = false"
-                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded-2xl transition font-medium text-sm">
+                       class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-purple-50 hover:text-purple-700 rounded-md transition font-medium text-sm">
                         <span>Ubah Profil</span>
                     </a>
 
                     <form method="POST" action="{{ route('logout') }}" class="pt-2 border-t border-gray-100">
                         @csrf
-                        <button type="submit" class="w-full flex items-center space-x-3 p-3 text-red-500 hover:bg-red-50 rounded-2xl transition text-left font-medium text-sm">
+                        <button type="submit" class="w-full flex items-center space-x-3 p-3 text-red-500 hover:bg-red-50 rounded-md transition text-left font-medium text-sm">
                             <span>Keluar Akun</span>
                         </button>
                     </form>

@@ -57,7 +57,7 @@ usage: specific usage top navigation with Material Design 3 style buttons and ce
                     toastModal = true;
                     setTimeout(() => toastModal = false, 2000);
                 " type="button"
-                class="w-full text-left p-3.5 bg-slate-50 hover:bg-slate-100/80 active:scale-[0.98] rounded-2xl border border-slate-100 flex items-center space-x-3.5 transition-all">
+                class="w-full text-left p-3.5 bg-slate-50 hover:bg-slate-100/80 active:scale-[0.98] rounded-md border border-slate-100 flex items-center space-x-3.5 transition-all">
                 <div
                     class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
                     <svg class="w-4 h-4 stroke-current" fill="none" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@ usage: specific usage top navigation with Material Design 3 style buttons and ce
 
             <!-- Option 2: Forward ke WA Lain -->
             <button @click="shareModal = false; waModal = true;" type="button"
-                class="w-full text-left p-3.5 bg-slate-50 hover:bg-slate-100/80 active:scale-[0.98] rounded-2xl border border-slate-100 flex items-center space-x-3.5 transition-all">
+                class="w-full text-left p-3.5 bg-slate-50 hover:bg-slate-100/80 active:scale-[0.98] rounded-md border border-slate-100 flex items-center space-x-3.5 transition-all">
                 <div
                     class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                     <x-icons.icons-chat class="w-4 h-4 fill-current" />
@@ -110,7 +110,7 @@ usage: specific usage top navigation with Material Design 3 style buttons and ce
             <div>
                 <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nomor WhatsApp Tujuan:</label>
                 <input type="text" x-model="shareTargetNumber" placeholder="Contoh: 08123456789"
-                    class="w-full text-xs px-4 py-3 bg-slate-50 border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:bg-white focus:border-transparent transition-all">
+                    class="w-full text-xs px-4 py-3 bg-slate-50 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:bg-white focus:border-transparent transition-all">
             </div>
 
             @php

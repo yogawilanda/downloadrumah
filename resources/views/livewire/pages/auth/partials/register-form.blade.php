@@ -23,14 +23,14 @@
         <div>
             <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Lengkap</label>
             <input wire:model="registerForm.name" type="text" required placeholder="John Doe"
-                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
             <x-input-error :messages="$errors->get('registerForm.name')" class="mt-1 text-xs" />
         </div>
 
         <div>
             <label class="block text-xs font-semibold text-gray-700 mb-1">Email</label>
             <input wire:model="registerForm.email" type="email" required placeholder="nama@email.com"
-                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
             <x-input-error :messages="$errors->get('registerForm.email')" class="mt-1 text-xs" />
         </div>
 
@@ -39,7 +39,7 @@
                     class="text-red-500">*</span></label>
             <input wire:model="registerForm.phone_number" type="tel" inputmode="numeric" required
                 placeholder="contoh: +628123456789 atau 08123456789"
-                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
             <x-input-error :messages="$errors->get('registerForm.phone_number')" class="mt-1 text-xs" />
         </div>
 
@@ -48,7 +48,7 @@
             <div class="relative">
                 <input wire:model.live="registerForm.password" :type="showPassword ? 'text' : 'password'" required
                     placeholder="••••••••"
-                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
                 <button type="button" @click="showPassword = !showPassword"
                     class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition focus:outline-none"
                     tabindex="-1">
@@ -68,7 +68,7 @@
             </div>
 
             {{-- Real-time Kriteria Password --}}
-            <div class="mt-2 p-2.5 bg-gray-50 rounded-xl text-xs space-y-1 text-gray-600 border border-gray-100">
+            <div class="mt-2 p-2.5 bg-gray-50 rounded-md text-xs space-y-1 text-gray-600 border border-gray-100">
                 <p class="font-medium text-gray-700">Kriteria kata sandi:</p>
                 <div class="grid grid-cols-2 gap-1">
                     <span class="{{ strlen($registerForm->password) >= 8 ? 'text-emerald-600 font-medium' : '' }}">•
@@ -93,7 +93,7 @@
             <div class="relative">
                 <input wire:model.live="registerForm.password_confirmation" :type="showPassword ? 'text' : 'password'"
                     required placeholder="••••••••"
-                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
             </div>
             @if (strlen($registerForm->password_confirmation) > 0)
                 <p
@@ -106,7 +106,7 @@
 
         <div class="pt-2">
             <button type="submit" wire:loading.attr="disabled"
-                class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center disabled:opacity-70">
+                class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-md shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center disabled:opacity-70">
                 <span wire:loading.remove wire:target="register" class="text-sm">Daftar Akun</span>
                 <span wire:loading wire:target="register" class="text-sm flex items-center gap-2">
                     <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">

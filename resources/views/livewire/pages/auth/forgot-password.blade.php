@@ -36,7 +36,7 @@ new #[Layout('components.layouts.app')] class extends Component
     }
 }; ?>
 
-<div class="w-full max-w-md mx-auto p-6 bg-white rounded-xl shadow-md border border-slate-100">
+<div class="w-full max-w-md mx-auto p-6 bg-white rounded-md shadow-md border border-slate-100">
     <div class="mb-6 text-center">
         <h2 class="text-xl font-semibold text-slate-800">Lupa Kata Sandi?</h2>
         <p class="mt-2 text-sm text-slate-600">
@@ -45,7 +45,7 @@ new #[Layout('components.layouts.app')] class extends Component
     </div>
 
     @if (session('status'))
-        <div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-lg">
+        <div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-md">
             {{ session('status') }}
         </div>
     @endif
@@ -63,7 +63,7 @@ new #[Layout('components.layouts.app')] class extends Component
                 required
                 autofocus
                 placeholder="nama@email.com"
-                class="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none @error('email') border-red-500 @else border-slate-300 @enderror"
+                class="w-full px-3 py-2 border rounded-md text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none @error('email') border-red-500 @else border-slate-300 @enderror"
             />
             @error('email')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -73,7 +73,7 @@ new #[Layout('components.layouts.app')] class extends Component
         <button
             type="submit"
             wire:loading.attr="disabled"
-            class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg shadow-sm transition duration-150 disabled:opacity-50"
+            class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-md shadow-sm transition duration-150 disabled:opacity-50"
         >
             <span wire:loading.remove wire:target="sendPasswordResetLink">
                 Kirim Tautan Reset

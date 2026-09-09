@@ -81,18 +81,18 @@ new class extends Component
         {{-- Nama Lengkap --}}
         <div>
             <x-input-label for="name" :value="__('Nama Lengkap')" class="text-xs font-bold text-slate-700" />
-            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full rounded-xl border-slate-200 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:ring-blue-500" required autofocus autocomplete="name" />
+            <x-text-input wire:model="name" id="name" name="name" type="text" class="mt-1 block w-full rounded-md border-slate-200 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:ring-blue-500" required autofocus autocomplete="name" />
             <x-input-error class="mt-1.5 text-xs font-medium text-rose-600" :messages="$errors->get('name')" />
         </div>
 
         {{-- Alamat Email --}}
         <div>
             <x-input-label for="email" :value="__('Email')" class="text-xs font-bold text-slate-700" />
-            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full rounded-xl border-slate-200 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:ring-blue-500" required autocomplete="username" />
+            <x-text-input wire:model="email" id="email" name="email" type="email" class="mt-1 block w-full rounded-md border-slate-200 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:ring-blue-500" required autocomplete="username" />
             <x-input-error class="mt-1.5 text-xs font-medium text-rose-600" :messages="$errors->get('email')" />
 
             @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! auth()->user()->hasVerifiedEmail())
-                <div class="mt-2 p-3 bg-amber-50/80 border border-amber-200/60 rounded-xl">
+                <div class="mt-2 p-3 bg-amber-50/80 border border-amber-200/60 rounded-md">
                     <p class="text-xs font-semibold text-amber-800">
                         {{ __('Alamat email Anda belum diverifikasi.') }}
 
@@ -113,13 +113,13 @@ new class extends Component
         {{-- Nomor Telepon --}}
         <div>
             <x-input-label for="phone_number" :value="__('Nomor Telepon / WhatsApp')" class="text-xs font-bold text-slate-700" />
-            <x-text-input wire:model="phone_number" id="phone_number" name="phone_number" type="tel" class="mt-1 block w-full rounded-xl border-slate-200 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:ring-blue-500" placeholder="081234567890" autocomplete="tel" />
+            <x-text-input wire:model="phone_number" id="phone_number" name="phone_number" type="tel" class="mt-1 block w-full rounded-md border-slate-200 text-xs font-semibold text-slate-800 focus:border-blue-500 focus:ring-blue-500" placeholder="081234567890" autocomplete="tel" />
             <x-input-error class="mt-1.5 text-xs font-medium text-rose-600" :messages="$errors->get('phone_number')" />
         </div>
 
         {{-- Action Button & Saved Status --}}
         <div class="flex items-center gap-4 pt-2">
-            <x-primary-button class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm shadow-blue-200 active:scale-95 transition">
+            <x-primary-button class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-md shadow-sm shadow-blue-200 active:scale-95 transition">
                 {{ __('Simpan Perubahan') }}
             </x-primary-button>
 

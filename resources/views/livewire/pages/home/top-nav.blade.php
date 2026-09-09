@@ -28,13 +28,13 @@
         {{-- Aksi Kanan --}}
         <div class="flex items-center gap-2 shrink-0">
             <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                class="hidden md:flex px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm transition active:scale-95 items-center gap-1.5">
+                class="hidden md:flex px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-md shadow-sm transition active:scale-95 items-center gap-1.5">
                 <x-icons.icons-adds class="w-3.5 h-3.5 fill-current" />
                 <span>Pasang Iklan</span>
             </a>
 
             <button type="button"
-                class="p-2 bg-gray-100 hover:bg-gray-200 text-slate-600 rounded-xl transition flex items-center justify-center relative active:scale-95"
+                class="p-2 bg-gray-100 hover:bg-gray-200 text-slate-600 rounded-md transition flex items-center justify-center relative active:scale-95"
                 title="Notifikasi">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -52,7 +52,7 @@
             <form wire:submit.prevent="submitSearch">
                 <input wire:model.live.debounce.300ms="search" @focus="searchOpen = true" type="text"
                     placeholder="Cari lokasi, nama properti..."
-                    class="w-full pl-8 pr-7 py-1.5 bg-gray-100 text-xs rounded-xl border-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-800 placeholder-gray-400 focus:bg-white" />
+                    class="w-full pl-8 pr-7 py-1.5 bg-gray-100 text-xs rounded-md border-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-800 placeholder-gray-400 focus:bg-white" />
             </form>
             <svg class="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-gray-400" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
@@ -65,7 +65,7 @@
         </div>
 
         <button @click="$dispatch('open-search-modal')"
-            class="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition shrink-0 active:scale-95"
+            class="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-md transition shrink-0 active:scale-95"
             title="Filter Lengkap">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,7 +86,7 @@
         </div>
 
         <select wire:model.live="city_id"
-            class="px-2 py-1 text-[11px] font-medium rounded-lg bg-gray-100 text-gray-600 border-none focus:ring-1 focus:ring-blue-500 max-w-[120px] truncate">
+            class="px-2 py-1 text-[11px] font-medium rounded-md bg-gray-100 text-gray-600 border-none focus:ring-1 focus:ring-blue-500 max-w-[120px] truncate">
             <option value="">Semua Kota</option>
             @foreach ($cities as $c)
                 <option value="{{ $c->code }}">{{ $c->name }}</option>

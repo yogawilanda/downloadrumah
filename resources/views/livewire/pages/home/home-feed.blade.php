@@ -13,15 +13,15 @@
 
     {{-- Main Container Card (Tanpa overflow-hidden agar dropdown melayang bebas) --}}
     <div
-        class="w-full max-w-md md:max-w-3xl lg:max-w-6xl mx-auto min-h-screen md:min-h-0 md:rounded-3xl relative pb-24 md:pb-12 bg-white border border-gray-100/80 shadow-sm">
+        class="w-full max-w-md md:max-w-3xl lg:max-w-6xl mx-auto min-h-screen md:min-h-0 md:rounded-md relative pb-24 md:pb-12 bg-white border border-gray-100/80 shadow-sm">
 
         {{-- Content Area --}}
         <div class="space-y-6 md:space-y-8 px-4 md:px-8 pt-4 md:pt-6">
 
             {{-- Hero Text --}}
             <div class="mb-6 space-y-1">
-                <h2 class="text-2xl font-black">Cari hunian yang terasa cocok</h2>
-                <p class="text-sm text-gray-600">Lihat-lihat dulu berdasarkan lokasi, kebutuhan, dan budget.</p>
+                <h2 class="text-2xl font-black">Pilih rumah yang paling cocok untuk kebutuhanmu.</h2>
+                <p class="text-sm text-gray-600">Pasang iklan rumah kamu disini, gratis!</p>
             </div>
 
             {{-- Livewire Hero Search Widget Mandiri --}}

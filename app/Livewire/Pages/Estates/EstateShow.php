@@ -44,6 +44,18 @@ class EstateShow extends Component
     }
 
     /**
+     * Generate URL Simulasi KPR dengan parameter harga & mode agent.
+     */
+    public function getKprUrlProperty(): string
+    {
+        return route('mortgage.calculator', [
+            'mode' => 'agent',
+            'price' => $this->estate->price ?? 0,
+            'condition' => $this->estate->is_secondary ? 'used' : 'new',
+        ]);
+    }
+
+    /**
      * Render halaman detail properti.
      */
     public function render(): View

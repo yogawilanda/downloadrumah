@@ -14,7 +14,7 @@
     @estate-form-error.window="setTimeout(() => { const field = $event.detail.field; const target = document.querySelector('[wire\\:model=\'form.' + field + '\']'); target?.scrollIntoView({ behavior: 'smooth', block: 'center' }); target?.focus(); }, 50)">
 
     @if ($errors->any())
-        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-xs rounded-xl">
+        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-xs rounded-md">
             <p class="font-bold mb-1">Ada input yang belum valid:</p>
             <ul class="list-disc pl-4 space-y-1">
                 @foreach ($errors->all() as $error)
@@ -57,7 +57,7 @@
 
     {{-- Flash Error Message --}}
     @if (session('error'))
-        <div class="mb-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
             {{ session('error') }}
         </div>
     @endif
@@ -83,25 +83,25 @@
             class="fixed bottom-16 left-0 right-0 z-30 border-t border-gray-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur-md">
             <div class="mx-auto flex max-w-md gap-2">
                 <button type="button" wire:click="saveDraft" wire:loading.attr="disabled" wire:target="saveDraft"
-                    class="min-h-11 flex-1 rounded-xl border border-gray-300 bg-white px-3 text-xs font-bold text-gray-700 disabled:opacity-50">
+                    class="min-h-11 flex-1 rounded-md border border-gray-300 bg-white px-3 text-xs font-bold text-gray-700 disabled:opacity-50">
                     <span wire:loading.remove wire:target="saveDraft">Simpan Sebagai Draft</span>
                     <span wire:loading wire:target="saveDraft">Menyimpan...</span>
                 </button>
                 @if ($currentStep > 1)
                     <button type="button" wire:click="previousStep" wire:loading.attr="disabled"
-                        class="min-h-11 w-1/4 rounded-xl border border-gray-300 bg-white text-xs font-bold text-gray-700 shadow-sm active:bg-gray-50">
+                        class="min-h-11 w-1/4 rounded-md border border-gray-300 bg-white text-xs font-bold text-gray-700 shadow-sm active:bg-gray-50">
                         Sebelumnya
                     </button>
                 @endif
 
                 @if ($currentStep < 4)
                     <button type="button" wire:click="nextStep" wire:loading.attr="disabled"
-                        class="min-h-11 flex-1 rounded-xl bg-blue-600 text-xs font-bold text-white shadow-md transition active:bg-blue-700">
+                        class="min-h-11 flex-1 rounded-md bg-blue-600 text-xs font-bold text-white shadow-md transition active:bg-blue-700">
                         Selanjutnya
                     </button>
                 @else
                     <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                        class="min-h-11 flex-1 rounded-xl bg-blue-600 text-xs font-bold text-white shadow-md transition hover:bg-blue-700 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">
+                        class="min-h-11 flex-1 rounded-md bg-blue-600 text-xs font-bold text-white shadow-md transition hover:bg-blue-700 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">
                         <span wire:loading.remove wire:target="save">
                             {{ $form->isEdit() ? 'Update Properti' : 'Simpan & Terbitkan' }}
                         </span>

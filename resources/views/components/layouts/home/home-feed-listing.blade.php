@@ -9,14 +9,14 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
     <div class="px-4 pt-4 space-y-4">
         @forelse ($estates as $estate)
             <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
-                class="block bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                class="block bg-white rounded-md overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <!-- Image Container with Badges -->
                 <div class="relative h-48 w-full bg-gray-200">
                     <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
                         alt="{{ $estate->title }}" class="w-full h-full object-cover" />
 
                     <span
-                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
+                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-md text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
                         {{ match ($estate->transaction_type) {
                             'sale' => 'Dijual',
                             'rent' => 'Disewakan',
@@ -26,7 +26,7 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                     </span>
 
                     <div
-                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-xl text-sm font-bold">
+                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-md text-sm font-bold">
                         {{ $estate->short_price }}
                     </div>
                 </div>
@@ -89,14 +89,14 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
     @forelse ($estates as $estate)
         <div class="w-[270px] flex-shrink-0 snap-start py-1">
             <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
-                class="block bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                class="block bg-white rounded-md overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
 
                 <div class="relative h-44 w-full bg-gray-200">
                     <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
                         alt="{{ $estate->title }}" class="w-full h-full object-cover" />
 
                     <span
-                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
+                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-md text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
                         {{ match ($estate->transaction_type) {
                             'sale' => 'Dijual',
                             'rent' => 'Disewakan',
@@ -106,7 +106,7 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                     </span>
 
                     <div
-                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-xl text-xs font-bold">
+                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-md text-xs font-bold">
                         {{ $estate->short_price }}
                     </div>
                 </div>
@@ -156,7 +156,7 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
         </div>
     @empty
         <div
-            class="w-full flex items-center justify-center py-8 px-4 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 text-center">
+            class="w-full flex items-center justify-center py-8 px-4 bg-gray-50/50 rounded-md border border-dashed border-gray-200 text-center">
             <p class="text-xs text-gray-400 font-medium">Belum ada properti tersedia.</p>
         </div>
     @endforelse

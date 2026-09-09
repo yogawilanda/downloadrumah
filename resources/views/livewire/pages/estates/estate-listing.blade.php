@@ -16,25 +16,25 @@
             <p class="text-xs text-slate-500 mt-0.5">Kelola seluruh portofolio listing Anda</p>
         </div>
         <a href="{{ route('estates.create') }}" wire:navigate
-            class="px-3.5 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-xl active:scale-95 transition shadow-sm shadow-blue-200">
+            class="px-3.5 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-md active:scale-95 transition shadow-sm shadow-blue-200">
             + Properti
         </a>
     </div>
 
     @if (session('success'))
-        <div class="p-3.5 bg-emerald-50/80 border border-emerald-200/60 text-emerald-700 text-xs rounded-xl font-semibold">
+        <div class="p-3.5 bg-emerald-50/80 border border-emerald-200/60 text-emerald-700 text-xs rounded-md font-semibold">
             {{ session('success') }}
         </div>
     @endif
 
     <!-- Navigation Tabs (Satu Baris Ringkas) -->
-    <div class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200/50">
+    <div class="flex bg-slate-100 p-1 rounded-md border border-slate-200/50">
         <button wire:click="setTab('my_listings')"
-            class="flex-1 py-2 text-xs font-bold rounded-xl transition {{ $tab === 'my_listings' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700' }}">
+            class="flex-1 py-2 text-xs font-bold rounded-md transition {{ $tab === 'my_listings' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700' }}">
             Properti Saya
         </button>
         <button wire:click="setTab('co_broke')"
-            class="flex-1 py-2 text-xs font-bold rounded-xl transition {{ $tab === 'co_broke' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700' }}">
+            class="flex-1 py-2 text-xs font-bold rounded-md transition {{ $tab === 'co_broke' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700' }}">
             Co-Broke
         </button>
     </div>
@@ -44,11 +44,11 @@
         @forelse($estates as $estate)
             <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
                 wire:key="listing-estate-{{ $estate->id }}"
-                class="p-3.5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-blue-200 hover:shadow-md transition-all flex items-center justify-between gap-3.5 group cursor-pointer">
+                class="p-3.5 bg-white rounded-md border border-slate-100 shadow-sm hover:border-blue-200 hover:shadow-md transition-all flex items-center justify-between gap-3.5 group cursor-pointer">
 
                 <div class="flex items-center gap-3.5 min-w-0 flex-1">
                     <!-- Thumbnail Mini -->
-                    <div class="w-16 h-16 rounded-xl bg-slate-100 flex-shrink-0 overflow-hidden relative border border-slate-100">
+                    <div class="w-16 h-16 rounded-md bg-slate-100 flex-shrink-0 overflow-hidden relative border border-slate-100">
                         @if ($estate->primaryImage?->url)
                             <img src="{{ $estate->primaryImage->url }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
@@ -109,7 +109,7 @@
                 </div>
             </a>
         @empty
-            <div class="p-8 bg-white rounded-2xl border border-slate-100 text-center space-y-1">
+            <div class="p-8 bg-white rounded-md border border-slate-100 text-center space-y-1">
                 <p class="text-xs font-bold text-slate-700">Belum ada listing</p>
                 <p class="text-[11px] text-slate-400">Tidak ada properti pada kategori ini saat ini.</p>
             </div>

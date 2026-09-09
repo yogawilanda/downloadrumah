@@ -22,7 +22,7 @@
     </div>
 
     @if ($errors->any())
-        <div class="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl flex items-center gap-2">
+        <div class="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 text-xs rounded-md flex items-center gap-2">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -36,7 +36,7 @@
             <label class="block text-xs font-semibold text-gray-700 mb-1">Email</label>
             <input wire:model="loginForm.email" type="email" required autocomplete="username"
                 placeholder="nama@email.com"
-                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none">
             <x-input-error :messages="$errors->get('loginForm.email') ?: $errors->get('email')" class="mt-1 text-xs" />
         </div>
 
@@ -48,7 +48,7 @@
             <div class="relative">
                 <input wire:model="loginForm.password" :type="showPassword ? 'text' : 'password'" required
                     autocomplete="current-password" placeholder="••••••••"
-                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md text-sm focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition outline-none pr-11">
                 <button type="button" @click="showPassword = !showPassword"
                     class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition focus:outline-none"
                     tabindex="-1">
@@ -84,7 +84,7 @@
 
         <div class="pt-2">
             <button type="submit" wire:loading.attr="disabled"
-                class="relative w-full h-11 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-xs font-bold rounded-xl transition flex items-center justify-center disabled:opacity-80">
+                class="relative w-full h-11 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-xs font-bold rounded-md transition flex items-center justify-center disabled:opacity-80">
 
                 {{-- State Normal --}}
                 <span wire:loading.remove wire:target="login">

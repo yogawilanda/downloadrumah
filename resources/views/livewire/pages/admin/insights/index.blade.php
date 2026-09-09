@@ -20,7 +20,7 @@
                     real-time.</p>
             </div>
             <button wire:click="$refresh"
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 transition shadow-sm">
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs font-semibold text-slate-700 hover:bg-slate-50 transition shadow-sm">
                 <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -32,7 +32,7 @@
         {{-- Analytics Cards: Kunci Maksimal 2 Kolom Agar Pas di Mobile Container --}}
         <div class="grid grid-cols-2 gap-2.5 sm:gap-3">
             {{-- Card 1: Total Hits --}}
-            <div class="bg-white p-3 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            <div class="bg-white p-3 rounded-md border border-slate-200/80 shadow-sm flex flex-col justify-between">
                 <div class="space-y-0.5">
                     <p class="text-[10px] sm:text-xs font-medium text-slate-500">Total Hits</p>
                     <h3 class="text-lg sm:text-xl font-extrabold text-slate-900">{{ number_format($totalHits) }}</h3>
@@ -45,7 +45,7 @@
             </div>
 
             {{-- Card 2: Sesi Unik --}}
-            <div class="bg-white p-3 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            <div class="bg-white p-3 rounded-md border border-slate-200/80 shadow-sm flex flex-col justify-between">
                 <div class="space-y-0.5">
                     <p class="text-[10px] sm:text-xs font-medium text-slate-500">Sesi Unik</p>
                     <h3 class="text-lg sm:text-xl font-extrabold text-blue-600">{{ number_format($uniqueSessions) }}
@@ -59,7 +59,7 @@
             </div>
 
             {{-- Card 3: Authenticated --}}
-            <div class="bg-white p-3 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            <div class="bg-white p-3 rounded-md border border-slate-200/80 shadow-sm flex flex-col justify-between">
                 <div class="space-y-0.5">
                     <p class="text-[10px] sm:text-xs font-medium text-slate-500 truncate">Authenticated</p>
                     <h3 class="text-lg sm:text-xl font-extrabold text-indigo-600">
@@ -73,7 +73,7 @@
             </div>
 
             {{-- Card 4: Top Page --}}
-            <div class="bg-white p-3 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
+            <div class="bg-white p-3 rounded-md border border-slate-200/80 shadow-sm flex flex-col justify-between">
                 <div class="space-y-0.5">
                     <p class="text-[10px] sm:text-xs font-medium text-slate-500">Top Page</p>
                     <h3 class="text-xs sm:text-sm font-bold text-slate-800 truncate">{{ $topPage }}</h3>
@@ -87,12 +87,12 @@
         </div>
 
         {{-- Stream Activity Container --}}
-        <div class="bg-white rounded-xl border border-slate-200/80 shadow-sm overflow-hidden p-3 sm:p-5 space-y-3">
+        <div class="bg-white rounded-md border border-slate-200/80 shadow-sm overflow-hidden p-3 sm:p-5 space-y-3">
             <div
                 class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-100">
                 <h2 class="text-xs sm:text-sm font-bold text-slate-800">Stream Aktivitas</h2>
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari IP / Event / Path..."
-                    class="w-full sm:w-64 px-3 py-1 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full sm:w-64 px-3 py-1 bg-slate-50 border border-slate-300 rounded-md text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
 
             {{-- Mobile List Tile (Hanya Muncul di HP / Layar Sempit) --}}
@@ -105,7 +105,7 @@
                             <span
                                 class="text-[10px] font-mono text-slate-400 shrink-0">{{ $log->created_at->format('d/m H:i:s') }}</span>
                         </div>
-                        <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 space-y-1">
+                        <div class="bg-slate-50 p-2 rounded-md border border-slate-100 space-y-1">
                             <div class="flex items-center justify-between">
                                 <span
                                     class="text-[11px] font-bold text-blue-600 uppercase">{{ $log->event_name }}</span>
@@ -189,7 +189,7 @@
             <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closeJourney">
             </div>
             <div
-                class="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col max-h-[85vh] overflow-hidden z-10">
+                class="relative w-full max-w-lg bg-white rounded-md shadow-2xl border border-slate-200 flex flex-col max-h-[85vh] overflow-hidden z-10">
                 <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
                     <div>
                         <h2 class="text-xs sm:text-sm font-bold text-slate-800">User Journey Timeline</h2>
@@ -197,7 +197,7 @@
                             {{ $selectedSessionId }}</p>
                     </div>
                     <button wire:click="closeJourney"
-                        class="p-1 rounded-lg text-slate-400 hover:text-slate-600 transition">
+                        class="p-1 rounded-md text-slate-400 hover:text-slate-600 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12" />
@@ -228,7 +228,7 @@
                 </div>
                 <div class="p-3 bg-slate-50 border-t border-slate-100 flex justify-end">
                     <button wire:click="closeJourney"
-                        class="px-4 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition shadow-sm">Tutup</button>
+                        class="px-4 py-1.5 bg-white border border-slate-300 rounded-md text-xs font-semibold text-slate-700 hover:bg-slate-100 transition shadow-sm">Tutup</button>
                 </div>
             </div>
         </div>
@@ -240,7 +240,7 @@
             <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
                 wire:click="closeCardDetail"></div>
             <div
-                class="relative w-full sm:max-w-md bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl border border-slate-200 flex flex-col max-h-[80vh] overflow-hidden z-10">
+                class="relative w-full sm:max-w-md bg-white rounded-t-2xl sm:rounded-md shadow-2xl border border-slate-200 flex flex-col max-h-[80vh] overflow-hidden z-10">
                 <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
                     <div>
                         <h2 class="text-xs sm:text-sm font-bold text-slate-800">Detail Breakdown Telemetry</h2>
@@ -248,7 +248,7 @@
                             {{ $activeCardDetail }}</p>
                     </div>
                     <button wire:click="closeCardDetail"
-                        class="p-1 rounded-lg text-slate-400 hover:text-slate-600 transition">
+                        class="p-1 rounded-md text-slate-400 hover:text-slate-600 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12" />
@@ -274,7 +274,7 @@
                 </div>
                 <div class="p-3 bg-slate-50 border-t border-slate-100 flex justify-end">
                     <button wire:click="closeCardDetail"
-                        class="w-full sm:w-auto px-4 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-100 transition shadow-sm">
+                        class="w-full sm:w-auto px-4 py-1.5 bg-white border border-slate-300 rounded-md text-xs font-semibold text-slate-700 hover:bg-slate-100 transition shadow-sm">
                         Tutup
                     </button>
                 </div>

@@ -14,7 +14,7 @@
     <h2 class="text-base font-bold text-center text-gray-900">Konfirmasi Listing</h2>
 
     <!-- Card Primary Summary -->
-    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+    <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-4">
         <!-- Badge & Judul -->
         <div class="flex items-start justify-between gap-3">
             <div>
@@ -79,19 +79,19 @@
     </div>
 
     <!-- Card Spesifikasi Bangunan & Fasilitas -->
-    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-3">
+    <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-3">
         <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-100 pb-2">Spesifikasi Utama</h3>
 
         <div class="grid grid-cols-3 gap-2 text-center text-xs">
-            <div class="p-2 bg-gray-50 rounded-xl">
+            <div class="p-2 bg-gray-50 rounded-md">
                 <span class="block text-[10px] text-gray-400">KT / KM</span>
                 <span class="font-bold text-gray-800">{{ $form->bedroom ?: 0 }} / {{ $form->bathroom ?: 0 }}</span>
             </div>
-            <div class="p-2 bg-gray-50 rounded-xl">
+            <div class="p-2 bg-gray-50 rounded-md">
                 <span class="block text-[10px] text-gray-400">LB / LT</span>
                 <span class="font-bold text-gray-800">{{ $form->building_size ?: 0 }}m² / {{ $form->land_size ?: 0 }}m²</span>
             </div>
-            <div class="p-2 bg-gray-50 rounded-xl">
+            <div class="p-2 bg-gray-50 rounded-md">
                 <span class="block text-[10px] text-gray-400">Legalitas</span>
                 <span class="font-bold text-gray-800">{{ strtoupper($form->certificate_type ?: 'SHM') }}</span>
             </div>
@@ -109,7 +109,7 @@
                 <div class="flex flex-wrap gap-1.5">
                     @foreach ($selectedFacilityModels as $fac)
                         @php $val = $form->selected_facilities[$fac->id]['value'] ?? null; @endphp
-                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50/70 text-blue-700 text-[11px] font-medium rounded-lg">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50/70 text-blue-700 text-[11px] font-medium rounded-md">
                             ✓ {{ $fac->name }} {{ $val ? "($val)" : '' }}
                         </span>
                     @endforeach
@@ -119,7 +119,7 @@
     </div>
 
     <!-- Card Kontak Pemilik Internal -->
-    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-2">
+    <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-2">
         <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider border-b border-gray-100 pb-2">Data Pemilik (Internal)</h3>
         <div class="flex items-center justify-between text-xs pt-1">
             <div>

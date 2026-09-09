@@ -3,11 +3,11 @@
         <label class="block text-xs font-semibold text-gray-700 mb-1.5">Persentase Komisi (%) <span
                 class="text-red-500">*</span></label>
         <input type="number" step="0.1" wire:model="form.commission_percentage" placeholder="Contoh: 2.5"
-            class="w-full rounded-xl border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 transition-all">
+            class="w-full rounded-md border border-gray-200 bg-gray-50/50 px-3.5 py-3 text-xs text-gray-800 transition-all">
     </div>
 
     @foreach ([['is_kpr', 'Bisa KPR?'], ['has_imb', 'IMB / PBG Ada?'], ['has_blueprint', 'Denah / Blueprint Ada?']] as [$field, $label])
-        <div class="flex items-center justify-between p-3 rounded-xl border border-gray-100 bg-gray-50/40">
+        <div class="flex items-center justify-between p-3 rounded-md border border-gray-100 bg-gray-50/40">
             <span class="text-xs font-semibold text-gray-700">{{ $label }} <span
                     class="text-red-500">*</span></span>
             <div class="flex items-center gap-4 text-xs">
