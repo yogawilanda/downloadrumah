@@ -15,7 +15,8 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                     <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
                         alt="{{ $estate->title }}" class="w-full h-full object-cover" />
 
-                    <span class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
+                    <span
+                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
                         {{ match ($estate->transaction_type) {
                             'sale' => 'Dijual',
                             'rent' => 'Disewakan',
@@ -24,7 +25,8 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                         } }}
                     </span>
 
-                    <div class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-xl text-sm font-bold">
+                    <div
+                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-xl text-sm font-bold">
                         {{ $estate->short_price }}
                     </div>
                 </div>
@@ -33,9 +35,12 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                 <div class="p-4">
                     <h2 class="font-bold text-gray-900 text-base line-clamp-1 mb-1">{{ $estate->title }}</h2>
                     <p class="text-xs text-gray-500 flex items-center mb-3">
-                        <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         {{ $estate->short_location_label }}
                     </p>
@@ -79,9 +84,7 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
             </div>
         @endif
     </div>
-
 @else
-
     {{-- TAMPILAN CAROUSEL MENYAMPING (Default untuk Home Feed) --}}
     @forelse ($estates as $estate)
         <div class="w-[270px] flex-shrink-0 snap-start py-1">
@@ -92,7 +95,8 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                     <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
                         alt="{{ $estate->title }}" class="w-full h-full object-cover" />
 
-                    <span class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
+                    <span
+                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-lg text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
                         {{ match ($estate->transaction_type) {
                             'sale' => 'Dijual',
                             'rent' => 'Disewakan',
@@ -101,7 +105,8 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                         } }}
                     </span>
 
-                    <div class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-xl text-xs font-bold">
+                    <div
+                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-xl text-xs font-bold">
                         {{ $estate->short_price }}
                     </div>
                 </div>
@@ -109,14 +114,18 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
                 <div class="p-3.5">
                     <h2 class="font-bold text-gray-900 text-sm line-clamp-1 mb-1">{{ $estate->title }}</h2>
                     <p class="text-xs text-gray-500 flex items-center mb-2.5">
-                        <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         <span class="truncate">{{ $estate->short_location_label }}</span>
                     </p>
 
-                    <div class="flex items-center space-x-3 pt-2.5 border-t border-gray-100 text-[11px] text-gray-600 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    <div
+                        class="flex items-center space-x-3 pt-2.5 border-t border-gray-100 text-[11px] text-gray-600 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                         @if ($estate->bedroom)
                             <div class="flex items-center space-x-1 shrink-0">
                                 <span class="font-bold text-gray-800">{{ $estate->bedroom }}</span>
@@ -146,8 +155,9 @@ usage: reusable listing card for carousel (home) or vertical list (/listings)
             </a>
         </div>
     @empty
-        <div class="w-full text-center py-6 text-xs text-gray-400">
-            Belum ada properti tersedia.
+        <div
+            class="w-full flex items-center justify-center py-8 px-4 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 text-center">
+            <p class="text-xs text-gray-400 font-medium">Belum ada properti tersedia.</p>
         </div>
     @endforelse
 

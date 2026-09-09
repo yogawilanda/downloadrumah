@@ -29,9 +29,10 @@
     @livewireStyles
 </head>
 
-<body class="bg-blue-600 font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-slate-100 font-sans antialiased text-gray-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col">
 
-    <main class="max-w-md mx-auto min-h-screen bg-white relative pb-16">
+    {{-- Main Container yang fleksibel untuk Mobile Shell maupun Desktop Grid --}}
+    <main class="w-full flex-grow relative pb-16 md:pb-0">
         {{ $slot }}
     </main>
 

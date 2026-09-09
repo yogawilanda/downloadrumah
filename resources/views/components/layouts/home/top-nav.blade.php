@@ -10,17 +10,17 @@
 
 @props(['transaction_type', 'search' => '', 'city' => '', 'max_price' => '', 'city_id' => '', 'cities' => [], 'suggestions' => ['cities' => [], 'estates' => []]])
 
-<div class="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm space-y-3"
+<div class="w-full px-4 pt-4 pb-3 border-b border-gray-100 shadow-sm space-y-3 bg-white/95 backdrop-blur-md"
     x-data="{ searchOpen: false }">
     {{-- Header Title --}}
     <div class="flex items-center justify-start">
         <div class="flex items-center gap-2">
             <div class="flex items-center justify-center text-blue-600">
-                <x-icons.header-logo class="w-7 h-7" />
+                <x-icons.header-logo class="w-6 h-6" />
             </div>
             <h1 class="text-lg tracking-tight leading-none">
                 <span class="font-bold text-gray-900">Download</span><span
-                    class="font-bold text-blue-600 ml-0.5">Rumah</span>
+                    class="font-bold text-blue-600">Rumah</span>
             </h1>
         </div>
     </div>
@@ -71,7 +71,7 @@
             </button>
         </div>
 
-        {{-- Dynamic Select City via city_id (Char 4) --}}
+        {{-- Dynamic Select City via city_id --}}
         <select wire:model.live="city_id"
             class="px-2 py-1 text-[11px] font-medium rounded-lg bg-gray-100 text-gray-600 border-none focus:ring-1 focus:ring-blue-500 max-w-[130px] truncate">
             <option value="">Semua Kota</option>
