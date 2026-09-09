@@ -39,6 +39,12 @@ class DiscoveryIntent extends Component
         $this->redirectRoute('listings.index', $params, navigate: true);
     }
 
+    public function selectCitySuggestion(string $cityCode): void
+    {
+        $this->city_id = $cityCode;
+        $this->submitSearch();
+    }
+
     public function render(): View
     {
         $term = trim($this->search);
