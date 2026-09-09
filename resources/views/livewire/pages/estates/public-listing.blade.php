@@ -1,3 +1,13 @@
+{{--
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path   : resources/views/livewire/pages/estates/public-listing.blade.php
+| @usage  : publicly display list of registered estate regardless authed or not
+| @ruling : max line of code 80%, max doc 20% | max total lines = 100
+| @author : yogawilanda <eayogawilanda@gmail.com>
+|--------------------------------------------------------------------------
+--}}
 @php
     $seoTitle = trim(($search ? $search . ' ' : '') . ($city ? 'di ' . $city : 'Properti'));
     $seoTitle .= $max_price ? ' hingga Rp' . number_format((float) $max_price, 0, ',', '.') : '';
@@ -8,11 +18,10 @@
     <meta property="og:title" content="{{ $seoTitle }} - DownloadRumah">
     <meta property="og:description" content="Cari listing properti aktif sesuai lokasi, kata kunci, dan budget Anda.">
 @endpush
+
 <div class="min-h-screen bg-gray-100 flex justify-center items-start" x-data="{ openSearchModal: false }"
     @open-search-modal.window="openSearchModal = true">
     <div class="w-full max-w-md min-h-screen bg-white relative pb-2">
-        <x-layouts.home.top-nav :transaction_type="$transaction_type" :search="$search" :city="$city" :max_price="$max_price"
-            :city_id="$city_id" :cities="$cities" :suggestions="$suggestions" />
 
         <header class="px-4 pt-5 pb-2">
             <p class="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Temukan hunian</p>
@@ -33,6 +42,6 @@
         </div>
 
         <x-layouts.home.home-feed-listing :estates="$estates" variant="vertical" />
-        <x-layouts.home.home-feed-search-advanced :transaction_type="$transaction_type" :cities="$cities" :districts="[]" />
+        <x-layouts.home.home-feed-search-advanced :transaction_type="$transaction_type" :cities="[]" :districts="[]" />
     </div>
 </div>

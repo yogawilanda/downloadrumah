@@ -39,7 +39,7 @@ class HomeFeed extends Component
         $suggestions = $this->searchSuggestions();
         $cities = City::query()->orderBy('name')->limit(8)->get();
 
-        return view('livewire.pages.home-feed', [
+        return view('livewire.pages.home.home-feed', [
             'estates' => $estates,
             'recentEstates' => $estates->take(4),
             'recommendedEstates' => $estates->skip(4)->take(4),

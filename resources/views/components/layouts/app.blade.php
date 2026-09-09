@@ -1,13 +1,11 @@
 {{--
 |--------------------------------------------------------------------------
-| <Context & Meta Configuration>
+| Context & Meta Configuration
 |--------------------------------------------------------------------------
 | @path : resources/views/components/layouts/app.blade.php
 | @usage : Root html for whole project
 | @ruling : max line of code 80%, max doc 20% | max total lines = 100
 | @author : yogawilanda <eayogawilanda@gmail.com>
-|--------------------------------------------------------------------------
-| <Context & Meta Configuration/>
 |--------------------------------------------------------------------------
 --}}
 
@@ -29,9 +27,19 @@
     @livewireStyles
 </head>
 
-<body class="bg-slate-100 font-sans antialiased text-gray-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col">
+<body
+    class="bg-slate-100 font-sans antialiased text-gray-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col">
 
-    {{-- Main Container yang fleksibel untuk Mobile Shell maupun Desktop Grid --}}
+    {{-- Global Responsive Header (Mobile, Tablet, & Desktop) --}}
+    @if (request()->routeIs(['home', 'listings.index']))
+        <header class="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-gray-100">
+            @livewire(\App\Livewire\Pages\Home\TopNav::class, [
+                'isListingPage' => request()->routeIs('listings.index'),
+            ])
+        </header>
+    @endif
+
+    {{-- Main Container --}}
     <main class="w-full flex-grow relative pb-16 md:pb-0">
         {{ $slot }}
     </main>
@@ -41,4 +49,5 @@
     @livewireScripts
 
 </body>
+
 </html>
