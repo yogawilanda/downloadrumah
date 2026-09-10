@@ -1,10 +1,10 @@
 {{--
 loc: resources/views/components/layouts/navigation-menu-sheet.blade.php
-usage: Center modal menu dialog for navigation
+usage: Center modal menu dialog for navigation (Mobile, Tablet, & Desktop)
 --}}
-<div x-show="openMenu" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none;">
+<div x-show="openMenu" x-cloak class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6" style="display: none;">
 
-    <!-- Backdrop (Fade-In Only) -->
+    <!-- Backdrop -->
     <div x-show="openMenu"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
@@ -12,16 +12,16 @@ usage: Center modal menu dialog for navigation
         @click="openMenu = false"
         class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
 
-    <!-- Panel Content Modal Tengah (Dengan Margin Horisontal / Inset Space) -->
+    <!-- Panel Content Modal Tengah (Lebar Adaptif sampai Tablet/Desktop) -->
     <div x-show="openMenu"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0 scale-95"
         x-transition:enter-end="opacity-100 scale-100"
-        class="w-full max-w-sm bg-white rounded-md shadow-2xl z-10 p-5 space-y-4 max-h-[85vh] overflow-y-auto relative mx-auto">
+        class="w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl bg-white rounded-md shadow-2xl z-10 p-4 sm:p-6 space-y-4 max-h-[85vh] overflow-y-auto relative mx-auto">
 
         <!-- Header Modal -->
-        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-            <h3 class="text-sm font-bold text-slate-800">Menu & Informasi</h3>
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <h3 class="text-sm sm:text-base font-bold text-slate-800">Menu & Informasi</h3>
             <button @click="openMenu = false" class="text-slate-400 hover:text-slate-600 focus:outline-none p-1.5 rounded-md hover:bg-slate-100 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -31,13 +31,13 @@ usage: Center modal menu dialog for navigation
 
         <!-- Header Status Akun -->
         @guest
-            <div class="p-3.5 bg-blue-50/70 border border-blue-100 rounded-md flex items-center justify-between">
+            <div class="p-3.5 bg-blue-50/70 border border-blue-100 rounded-md flex items-center justify-between gap-3">
                 <div class="space-y-0.5">
-                    <p class="text-xs font-bold text-slate-800">Ingin Pasang Iklan?</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-800">Ingin Pasang Iklan?</p>
                     <p class="text-xs text-slate-500">Masuk untuk kelola propertimu.</p>
                 </div>
                 <a href="{{ route('login') }}" wire:navigate @click="openMenu = false"
-                    class="px-3.5 py-1.5 bg-blue-600 text-white text-xs font-bold rounded-md shadow-sm hover:bg-blue-700 transition shrink-0">
+                    class="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-md shadow-sm hover:bg-blue-700 transition shrink-0 active:scale-95">
                     Masuk
                 </a>
             </div>
@@ -45,11 +45,11 @@ usage: Center modal menu dialog for navigation
             <div class="p-3.5 bg-slate-50 border border-slate-100 rounded-md flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0 flex-1">
                     <div
-                        class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shrink-0">
+                        class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shrink-0 shadow-sm shadow-blue-200">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
                     <div class="space-y-0.5 overflow-hidden">
-                        <p class="text-xs font-bold text-slate-800 truncate">{{ auth()->user()->name }}</p>
+                        <p class="text-xs sm:text-sm font-bold text-slate-800 truncate">{{ auth()->user()->name }}</p>
                         <p class="text-xs text-slate-500 truncate">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
@@ -58,7 +58,7 @@ usage: Center modal menu dialog for navigation
                 <form method="POST" action="{{ route('logout') }}" class="shrink-0">
                     @csrf
                     <button type="submit"
-                        class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/60 rounded-md transition text-xs font-bold flex items-center gap-1 active:scale-95">
+                        class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/60 rounded-md transition text-xs font-bold flex items-center gap-1 active:scale-95">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -73,7 +73,7 @@ usage: Center modal menu dialog for navigation
         @auth
             <div class="space-y-2">
                 <p class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Navigasi Utama</p>
-                <div class="grid grid-cols-1 gap-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
 
                     {{-- Dashboard Card --}}
                     <a href="{{ route('dashboard') }}" wire:navigate @click="openMenu = false"
@@ -112,7 +112,7 @@ usage: Center modal menu dialog for navigation
                     {{-- Khusus Super Admin --}}
                     @if (auth()->user()->isSuperAdmin())
                         <a href="{{ route('admin.insights.index') }}" wire:navigate @click="openMenu = false"
-                            class="p-3 bg-purple-50/70 border border-purple-100 hover:bg-purple-100/70 rounded-md transition flex items-center justify-between group">
+                            class="p-3 bg-purple-50/70 border border-purple-100 hover:bg-purple-100/70 rounded-md transition flex items-center justify-between group sm:col-span-2">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-md bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-sm shadow-purple-200">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,32 +155,34 @@ usage: Center modal menu dialog for navigation
         </div>
 
         <!-- Informasi Umum & Hukum -->
-        <div class="pt-2 border-t border-slate-100 space-y-1">
+        <div class="pt-3 border-t border-slate-100 space-y-1">
             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider px-1 mb-1">Informasi Aplikasi</p>
 
-            <a href="{{ route('privacy') }}" wire:navigate @click="openMenu = false"
-                class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
-                <span>Kebijakan Privasi</span>
-                <span class="text-slate-400 text-xs">›</span>
-            </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                <a href="{{ route('privacy') }}" wire:navigate @click="openMenu = false"
+                    class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
+                    <span>Kebijakan Privasi</span>
+                    <span class="text-slate-400 text-xs">›</span>
+                </a>
 
-            <a href="{{ route('support') }}" wire:navigate @click="openMenu = false"
-                class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
-                <span>Bantuan / Konsultasi Aplikasi</span>
-                <span class="text-slate-400 text-xs">›</span>
-            </a>
+                <a href="{{ route('support') }}" wire:navigate @click="openMenu = false"
+                    class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
+                    <span>Bantuan / Konsultasi Aplikasi</span>
+                    <span class="text-slate-400 text-xs">›</span>
+                </a>
 
-            <a href="{{ route('terms') }}" wire:navigate @click="openMenu = false"
-                class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
-                <span>Syarat & Ketentuan</span>
-                <span class="text-slate-400 text-xs">›</span>
-            </a>
+                <a href="{{ route('terms') }}" wire:navigate @click="openMenu = false"
+                    class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
+                    <span>Syarat & Ketentuan</span>
+                    <span class="text-slate-400 text-xs">›</span>
+                </a>
 
-            <a href="{{ route('release-notes') }}" wire:navigate @click="openMenu = false"
-                class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
-                <span>Release Notes</span>
-                <span class="text-xs text-blue-600 font-bold">v0.9.0-alpha</span>
-            </a>
+                <a href="{{ route('release-notes') }}" wire:navigate @click="openMenu = false"
+                    class="flex items-center justify-between p-2.5 text-slate-700 hover:bg-slate-50 rounded-md transition text-xs font-semibold">
+                    <span>Release Notes</span>
+                    <span class="text-xs text-blue-600 font-bold">v0.9.0-alpha</span>
+                </a>
+            </div>
         </div>
 
     </div>
