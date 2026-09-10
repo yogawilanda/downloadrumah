@@ -49,7 +49,7 @@
 
     @else
         {{-- 2. TAMPILAN HERO BANNER UTUH (Untuk Homefeed /) --}}
-        <div class="relative bg-blue-600 rounded-2xl p-5 md:p-8 text-white shadow-md overflow-visible">
+        <div class="relative bg-blue-600 rounded-md p-5 md:p-8 text-white shadow-md overflow-visible">
             <div class="relative z-10 space-y-4">
                 <div>
                     <h1 class="text-xl md:text-2xl font-black tracking-tight">Cari aja dulu!</h1>
