@@ -1,3 +1,4 @@
+{{-- @path: resources/views/livewire/pages/estates/partials/gallery.blade.php --}}
 <div class="relative h-80 w-full bg-slate-900 overflow-hidden shrink-0">
     <div class="h-full w-full flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden" @scroll.debounce.100ms="activeSlide = Math.round($el.scrollLeft / $el.clientWidth)">
         @forelse($estate->attachments as $attachment)

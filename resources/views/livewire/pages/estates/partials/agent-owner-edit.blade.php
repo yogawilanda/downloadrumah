@@ -1,3 +1,4 @@
+{{-- resources/views/livewire/pages/estates/partials/agent-owner-edit.blade.php --}}
 <div class="fixed bottom-20 left-0 right-0 z-40 pointer-events-none">
     <div class="max-w-md mx-auto px-4 pointer-events-auto">
         <div class="bg-white/95 backdrop-blur-md border border-slate-200/80 p-3 rounded-md shadow-xl shadow-slate-900/10 flex items-center justify-between gap-3">
