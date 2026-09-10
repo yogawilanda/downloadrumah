@@ -89,11 +89,12 @@ class Index extends Component
         $topPageRaw = ActivityLog::select('payload->url as url', DB::raw('count(*) as total'))
             ->whereNotNull('payload->url')->groupBy('payload->url')->orderByDesc('total')->first();
 
+        // paginate cukup 10
         $logs = ActivityLog::with('user:id,name,email')
             ->when($this->search !== '', fn($q) => $q->where('event_name', 'like', "%{$this->search}%")
                 ->orWhere('ip_address', 'like', "%{$this->search}%")
                 ->orWhere('payload->url', 'like', "%{$this->search}%"))
-            ->latest()->paginate(15);
+            ->latest()->paginate(10);
 
         $journeyLogs = $this->selectedSessionId
             ? ActivityLog::with('user:id,name')->where('payload->session_id', $this->selectedSessionId)->oldest()->get()
