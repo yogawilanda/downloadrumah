@@ -4,7 +4,6 @@
  * @usage : Search controller component that used for home-feed and listings.index
  * @author : yogawilanda <eayogawilanda@gmail.com>
  */
-
 namespace App\Livewire\Pages\Home;
 
 use App\Models\City;
@@ -15,6 +14,11 @@ use Livewire\Component;
 
 class DiscoveryIntent extends Component
 {
+    /**
+     * Variant UI: 'hero' (Home) atau 'compact' (Listings)
+     */
+    public string $variant = 'hero';
+
     #[Url]
     public string $search = '';
 
@@ -58,7 +62,6 @@ class DiscoveryIntent extends Component
                 : collect(),
         ];
 
-        // Mengambil 5 kota populer sebagai opsi awal
         $popularCities = City::query()->orderBy('name')->limit(5)->get();
 
         return view('livewire.pages.home.discovery-intent', [
