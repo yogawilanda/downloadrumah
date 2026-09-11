@@ -99,6 +99,16 @@ trait HasEstateAttributes
         );
     }
 
+    /**
+     * Accessor Boolean Status Publikasi
+     */
+    protected function isPublished(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->publicity_status === 'published'
+        );
+    }
+
     public function scopePublished($query)
     {
         return $query->where('publicity_status', 'published');

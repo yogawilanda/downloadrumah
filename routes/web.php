@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Pages\Catalog\PublicCatalog;
+use App\Livewire\Pages\Catalog\PublicCatalogDetail;
 use App\Livewire\Pages\Profile\Profile;
 use App\Livewire\Pages\Terms\TermsAndConditions;
 use App\Livewire\PrivacyPolicy;
@@ -30,9 +32,18 @@ Route::get('/', HomeFeed::class)
     ->middleware('dynamic_throttle:throttle.home_feed,1')
     ->name('home');
 
+// Public Catalog Terisolasi (Link-in-bio Agen)
+Route::get('/agen-properti/{username}', PublicCatalog::class)
+    ->name('catalog.show');
+    
+// Public Catalog Terisolasi
+Route::get('/agen-properti/{username}/p/{estate:slug}', PublicCatalogDetail::class)
+    ->name('catalog.detail');
+
 // Tools KPR
 Route::get('/kpr', MortgageCalculator::class)->name('mortgage.calculator');
 
+// Listing untuk semua user
 Route::get('/listings', PublicListing::class)->name('listings.index');
 
 // Public Media Storage Direct Access
@@ -62,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/estates/create', EstateForm::class)->name('estates.create');
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
+
     Route::get('/profile', Profile::class)->name('profile');
 
     // Super Admin Routes (Internal / Protected)
