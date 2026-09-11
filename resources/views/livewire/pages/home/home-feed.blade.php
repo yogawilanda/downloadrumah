@@ -35,7 +35,7 @@
                 </div>
 
                 {{-- Interactive Discovery Card (Feature Banner) --}}
-                <div class="p-4 bg-blue-600 rounded-md text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                {{-- <div class="p-4 bg-blue-600 rounded-md text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="space-y-1 text-center sm:text-left">
                         <div class="inline-block px-2 py-0.5 bg-white/20 text-[10px] font-bold tracking-wider uppercase rounded-full">Kuisioner Singkat</div>
                         <h3 class="font-bold text-base">Bantu Aku Pilih Tempat Tinggal</h3>
@@ -44,7 +44,7 @@
                     <button @click="$dispatch('open-analysis-modal')" class="w-full sm:w-auto px-4 py-2.5 bg-white text-blue-600 font-bold text-xs rounded-lg shadow hover:bg-indigo-50 transition whitespace-nowrap">
                         Mulai Analisa (1 Menit)
                     </button>
-                </div>
+                </div> --}}
             </div>
 
             {{-- Livewire Hero Search Widget Mandiri --}}
