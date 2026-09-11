@@ -46,18 +46,6 @@
                         @include('livewire.pages.estates.partials.agent-contact')
                     @endif
                 </div>
-
-                {{-- Mobile & Tablet Bottom Sticky Action Bar --}}
-                <div
-                    class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/80 p-3 sm:px-6">
-                    <div class="max-w-md md:max-w-2xl mx-auto">
-                        @if ($isOwner)
-                            @include('livewire.pages.estates.partials.agent-owner-edit')
-                        @else
-                            @include('livewire.pages.estates.partials.agent-contact')
-                        @endif
-                    </div>
-                </div>
             </div>
 
         </div>
