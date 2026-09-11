@@ -30,7 +30,7 @@
                                 class="text-[9px] font-bold uppercase px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md border border-blue-100">{{ $step->event_name }}</span>
                         </div>
                         <p
-                            class="text-[11px] font-mono text-slate-700 bg-slate-50 p-2.5 rounded-xl mt-1.5 border border-slate-200/80 break-all leading-relaxed">
+                            class="text-[11px] font-mono text-slate-700 bg-slate-50 p-2.5 rounded-md mt-1.5 border border-slate-200/80 break-all leading-relaxed">
                             {{ $step->payload['url'] ?? '-' }}
                         </p>
                     </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="p-3.5 bg-slate-50 border-t border-slate-100 flex justify-end">
             <button wire:click="closeJourney"
-                class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 transition shadow-sm active:scale-95">Tutup</button>
+                class="px-4 py-2 bg-white border border-slate-200 rounded-md text-xs font-bold text-slate-700 hover:bg-slate-100 transition shadow-sm active:scale-95">Tutup</button>
         </div>
     </div>
 </div>

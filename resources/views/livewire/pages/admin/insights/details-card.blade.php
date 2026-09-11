@@ -39,7 +39,7 @@
             </div>
             <div class="p-3.5 bg-slate-50 border-t border-slate-100 flex justify-end">
                 <button wire:click="closeCardDetail"
-                    class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 transition shadow-sm active:scale-95">Tutup</button>
+                    class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-200 rounded-md text-xs font-bold text-slate-700 hover:bg-slate-100 transition shadow-sm active:scale-95">Tutup</button>
             </div>
         </div>
     </div>

@@ -31,7 +31,7 @@
             @if ($agent->phone_number)
                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $agent->phone_number) }}" target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-sm w-full md:w-auto justify-center">
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs sm:text-sm rounded-md transition-all shadow-sm w-full md:w-auto justify-center">
                     <x-icons.icons-chat-2 />
                     <span>Hubungi via WhatsApp</span>
                 </a>
@@ -50,7 +50,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             @forelse($estates as $estate)
                 <div
-                    class="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
+                    class="bg-white rounded-md border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col justify-between">
                     <div>
                         <div class="aspect-video bg-slate-100 relative overflow-hidden">
                             <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"

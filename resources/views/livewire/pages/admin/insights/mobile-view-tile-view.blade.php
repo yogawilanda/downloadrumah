@@ -14,7 +14,7 @@
                     class="text-[10px] font-mono text-slate-400 shrink-0 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100">{{ $log->created_at->format('d/m H:i:s') }}</span>
             </div>
 
-            <div class="bg-slate-50/80 p-2.5 rounded-xl border border-slate-100 space-y-1.5">
+            <div class="bg-slate-50/80 p-2.5 rounded-md border border-slate-100 space-y-1.5">
                 <div class="flex items-center justify-between">
                     <span
                         class="px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-blue-100 text-blue-700">
