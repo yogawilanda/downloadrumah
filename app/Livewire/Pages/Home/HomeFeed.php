@@ -7,6 +7,7 @@ use App\Livewire\Pages\Home\Concerns\HasHomeFeedFilters;
 use App\Livewire\Pages\Home\Concerns\HasPublicEstateSearch;
 use App\Models\Estate;
 use Laravolt\Indonesia\Models\City;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,6 +18,15 @@ use Livewire\WithPagination;
 class HomeFeed extends Component
 {
     use WithPagination, HasHomeFeedFilters, HasPublicEstateSearch;
+
+    public ?array $analysisResult = null;
+
+    #[On('housing-analysis-completed')]
+    public function handleAnalysisCompleted(array $result): void
+    {
+        $this->analysisResult = $result;
+        // Opsional: BISA langsung assign $this->max_price = $result['target_budget'];
+    }
 
     public function render(ConfigureHomeFeedSeo $configureSeo)
     {
@@ -30,6 +40,11 @@ class HomeFeed extends Component
         $query = Estate::query()
             ->with(['primaryImage', 'city', 'district', 'province'])
             ->published()->available();
+
+        // Jika ada hasil analisis, terapkan scope/filter tambahan di query
+        if ($this->analysisResult) {
+            $query->where('price', '<=', $this->analysisResult['target_budget']);
+        }
 
         $estates = $this->applyPublicFilters($query)
             ->reorder('created_at', 'desc')
