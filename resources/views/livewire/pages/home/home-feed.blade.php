@@ -15,7 +15,7 @@
     <div class="w-full max-w-md md:max-w-3xl lg:max-w-6xl mx-auto min-h-screen md:min-h-0 md:rounded-md relative pb-24 md:pb-12 bg-white border border-gray-100/80 shadow-sm">
 
         {{-- Content Area --}}
-        <div class="space-y-6 md:space-y-8 px-4 md:px-8 pt-4 md:pt-6">
+        <div class="space-y-6 md:space-y-8 p-5 md:p-8 pt-4 md:pt-6">
 
             {{-- Hero Text & Guided Discovery Header --}}
             <div class="mb-6 space-y-4">
@@ -26,8 +26,8 @@
                     </div>
 
                     {{-- Secondary CTA: Pemilik Iklan --}}
-                    <a href="#" class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-lg transition shrink-0">
-                        <span>Pemilik Properti? Pasang Gratis</span>
+                    <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-lg transition shrink-0">
+                        <span>Pemilik Properti? Simpan dan gunakan alat ukur kami Gratis</span>
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
@@ -35,14 +35,14 @@
                 </div>
 
                 {{-- Interactive Discovery Card (Feature Banner) --}}
-                <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="p-4 bg-blue-600 rounded-md text-white shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="space-y-1 text-center sm:text-left">
-                        <div class="inline-block px-2 py-0.5 bg-white/20 text-[10px] font-bold tracking-wider uppercase rounded-full">Simulasi Smart</div>
+                        <div class="inline-block px-2 py-0.5 bg-white/20 text-[10px] font-bold tracking-wider uppercase rounded-full">Kuisioner Singkat</div>
                         <h3 class="font-bold text-base">Bantu Aku Pilih Tempat Tinggal</h3>
                         <p class="text-xs text-indigo-100">Hitung budget, simulasi tabungan, dan dapatkan rekomendasi kos/rumah yang sesuai kemampuanmu.</p>
                     </div>
-                    <button @click="$dispatch('open-analysis-modal')" class="w-full sm:w-auto px-4 py-2.5 bg-white text-indigo-600 font-bold text-xs rounded-lg shadow hover:bg-indigo-50 transition whitespace-nowrap">
-                        Mulai Analisis (1 Mnt)
+                    <button @click="$dispatch('open-analysis-modal')" class="w-full sm:w-auto px-4 py-2.5 bg-white text-blue-600 font-bold text-xs rounded-lg shadow hover:bg-indigo-50 transition whitespace-nowrap">
+                        Mulai Analisa (1 Menit)
                     </button>
                 </div>
             </div>
