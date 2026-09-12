@@ -11,6 +11,7 @@
  */
 
 use App\Http\Controllers\Api\ActivityLogController;
+use App\Http\Controllers\Api\EstateApiController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -20,4 +21,10 @@ Route::middleware(['web'])->prefix('v1')->group(function () {
     Route::get('/log-activity', [ActivityLogController::class, 'index']);
     Route::get('/log-activity/{id}', [ActivityLogController::class, 'show']);
     Route::post('/log-activity', [ActivityLogController::class, 'store']);
+
+    // Route::post('/estates/fast-store', [EstateApiController::class, 'fastStore']);
+});
+
+Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+    Route::post('/estates/fast-store', [EstateApiController::class, 'fastStore']);
 });

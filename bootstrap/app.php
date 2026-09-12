@@ -45,6 +45,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'super_admin' => EnsureSuperAdmin::class,
             'dynamic_throttle' => DynamicThrottle::class,
         ]);
+
+        /**
+         * Step 1.4: CSRF Exemption for Fast Store API
+         */
+        $middleware->preventRequestForgery(except: [
+            'api/v1/estates/fast-store',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         /**
@@ -53,4 +60,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+
     })->create();
