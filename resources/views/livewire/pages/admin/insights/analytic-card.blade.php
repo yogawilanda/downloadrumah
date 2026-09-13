@@ -1,94 +1,54 @@
-<div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
-    {{-- Total Hits --}}
-    <div
-        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:border-blue-200 transition">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">Total Hits</span>
-            <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-            </div>
-        </div>
-        <div>
-            <h3 class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">{{ number_format($totalHits) }}
-            </h3>
-            <span class="text-[10px] text-emerald-600 font-bold block mt-0.5">↑ Live Request</span>
-        </div>
-        <button wire:click="openCardDetail('events')"
-            class="mt-3 pt-2 border-t border-slate-100 text-left text-[11px] font-bold text-blue-600 flex items-center justify-between hover:underline">
-            <span>Rincian Event</span> <span>&rarr;</span>
-        </button>
-    </div>
+{{-- -------------------- Context & Meta Configuration ---------------------
+| Created | Updated : 25/08/26, 15.30 | 13/09/26, 13.33
+|--------------------------------------------------------------------------
+| @path      : resources/views/livewire/pages/admin/insights/analytic-card.blade.php
+| @usage     : 4-Card Consolidated Insights Section
+| @techstack : Laravel 13, Livewire 4, Alpine.js
+| @ruling    : max 100 lines. Ask first before changing code.
+| @author    : yogawilanda <eayogawilanda@gmail.com>
+|----------------------------------------------------------------------- --}}
 
-    {{-- Sesi Unik --}}
-    <div
-        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:border-blue-200 transition">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">Sesi Unik</span>
-            <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-            </div>
-        </div>
-        <div>
-            <h3 class="text-xl sm:text-2xl font-black text-indigo-600 tracking-tight">
-                {{ number_format($uniqueSessions) }}</h3>
-            <span class="text-[10px] text-slate-400 font-medium block mt-0.5">Active Session IDs</span>
-        </div>
-        <button wire:click="openCardDetail('sessions')"
-            class="mt-3 pt-2 border-t border-slate-100 text-left text-[11px] font-bold text-blue-600 flex items-center justify-between hover:underline">
-            <span>Daftar Sesi</span> <span>&rarr;</span>
-        </button>
-    </div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    {{-- Card 1: Volume & Velocity (Merged with Total Hits) --}}
+    <x-admin.stats-card title="Volume & Velocity" :value="number_format($totalHits)" :badge="'~' . round($totalHits / 6) . '/hr'"
+        :subtitle="'Total interaksi (' . number_format($totalHits) . ' hits)'"
+        tooltip="Total trafik & rata-rata kecepatan pengguna berinteraksi dengan aplikasi tiap harinya."
+        icon-bg="bg-indigo-50" icon-color="text-indigo-600" action-target="pages" action-label="Rincian Event">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+    </x-admin.stats-card>
 
-    {{-- Authenticated Users --}}
-    <div
-        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:border-blue-200 transition">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">Logged In</span>
-            <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-            </div>
-        </div>
-        <div>
-            <h3 class="text-xl sm:text-2xl font-black text-emerald-600 tracking-tight">
-                {{ number_format($authenticatedLogs) }}</h3>
-            <span class="text-[10px] text-slate-400 font-medium block mt-0.5 truncate">{{ number_format($guestLogs) }}
-                Guest Requests</span>
-        </div>
-        <button wire:click="openCardDetail('users')"
-            class="mt-3 pt-2 border-t border-slate-100 text-left text-[11px] font-bold text-blue-600 flex items-center justify-between hover:underline">
-            <span>Top User Log</span> <span>&rarr;</span>
-        </button>
-    </div>
+    {{-- Card 2: Konversi Identity (Merged with Logged In / Guest Breakdown) --}}
+    <x-admin.stats-card title="Konversi Identity" :value="($totalHits > 0 ? round(($authenticatedLogs / $totalHits) * 100, 1) : 0) . '%'"
+        :badge="number_format($authenticatedLogs) . ' Auth'"
+        :subtitle="number_format($authenticatedLogs) . ' Auth / ' . number_format($guestLogs) . ' Guest'"
+        tooltip="Rasio persentase & perbandingan total pengunjung terotentikasi (login) vs anonim (guest)."
+        icon-bg="bg-emerald-50" icon-color="text-emerald-600" action-target="users" action-label="Detail User Log">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+    </x-admin.stats-card>
 
-    {{-- Top Page --}}
-    <div
-        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between hover:border-blue-200 transition">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">Top Page</span>
-            <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                </svg>
-            </div>
-        </div>
-        <div>
-            <h3 class="text-xs sm:text-sm font-bold text-slate-800 truncate font-mono bg-slate-50 p-1.5 rounded-lg border border-slate-100"
-                title="{{ $topPage }}">{{ $topPage }}</h3>
-            <span class="text-[10px] text-slate-400 font-medium block mt-1">Halaman Paling Banyak Dilihat</span>
-        </div>
-        <button wire:click="openCardDetail('pages')"
-            class="mt-3 pt-2 border-t border-slate-100 text-left text-[11px] font-bold text-blue-600 flex items-center justify-between hover:underline">
-            <span>Populer URL</span> <span>&rarr;</span>
-        </button>
-    </div>
+    {{-- Card 3: Session Depth (Merged with Active Sesi Unik) --}}
+    <x-admin.stats-card title="Session Depth" :value="$uniqueSessions > 0 ? round($totalHits / $uniqueSessions, 1) : 0" badge="Hits/Sesi"
+        :subtitle="'Dari ' . number_format($uniqueSessions) . ' sesi unik aktif'"
+        tooltip="Tingkat keaktifan user: rata-rata jumlah interaksi per sesi dari total sesi unik."
+        icon-bg="bg-sky-50" icon-color="text-sky-600" action-target="sessions" action-label="Daftar Sesi">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+    </x-admin.stats-card>
+
+    {{-- Card 4: Area Terpopuler --}}
+    <x-admin.stats-card title="Area Terpopuler" :value="$topPage" subtitle="Paling sering dikunjungi"
+        tooltip="Halaman atau fitur aplikasi yang paling mendominasi trafik dan menjadi pusat aktivitas user."
+        icon-bg="bg-amber-50" icon-color="text-amber-600">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        </svg>
+    </x-admin.stats-card>
 </div>
