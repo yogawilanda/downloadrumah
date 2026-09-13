@@ -2,12 +2,35 @@
 
 /**
  * <meta_config>
- * @path : app/Models/ActivityLog.php | usage: Eloquent Model for Activity Telemetry
- * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : PHP Docblock
- * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
- * </meta_config>
+ * @path             : app/Models/ActivityLog.php
+ * @usage            : Eloquent Model for Activity Telemetry (Consumed by Controller, API, & Alpine.js)
+ * @type             : Eloquent Model (Data Layer & Accessor Fallbacks)
+ * @table            : activity_logs
  *
- * @author yogawilanda <eayogawilanda@gmail.com>
+ * @expected_attributes : [MAX 5-7 Core Casts & Accessors]
+ *   - payload (array)                     : Auto-cast JSON telemetry payload
+ *
+ * @expected_relations  : [MAX 3-5 Relationships]
+ *   - user() (BelongsTo)                  : Linked User account model (Nullable for guests)
+ *
+ * @scopes_and_methods  : [MAX 3-5 Query Scopes & Formatters]
+ *   - serializeDate(DateTimeInterface)    : Standard JSON timestamp serializer
+ *   - scopeFilter(Builder, array)         : Filter logs by module, event_name, user_id, date
+ *
+ * @tech_debt        : [Logic Leakage & Filter Audit]
+ *   - UI ID MASK DECODING: `scopeFilter` performs `base_convert()` unmasking logic inside query scope.
+ *   - REFACTOR TARGET    : Move ID unmasking to Form Request / Action Class before passing to `scopeFilter`.
+ *
+ * @ruling           : Max 100 total lines. Exceed? Modularize via Concerns/Traits.
+ * @overflow_action  : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
+ * @ruling_scope     : ISOLATION & CLEAN QUERYING. Scope handles pure DB queries only. Decode masked IDs before scope entry.
+ * @ruling_type      : STRICT TYPE SAFETY. Explicit DateTimeInterface type-hinting & return types on relations.
+ * @ruling_model     : LEAN ATTRIBUTES. Auto-cast payload array cleanly.
+ * @ruling_ui        : NO UI LEAKAGE. Unmasking obfuscated string parameters belongs in Controller/Request layer.
+ *
+ * @created/updated  : 25/09/2026 | 13/09/2026
+ * @author           : yogawilanda <eayogawilanda@gmail.com>
+ * </meta_config>
  */
 
 namespace App\Models;
