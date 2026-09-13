@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ExportActivityLogController;
 use App\Livewire\Pages\Catalog\PublicCatalog;
 use App\Livewire\Pages\Catalog\PublicCatalogDetail;
 use App\Livewire\Pages\Profile\Profile;
@@ -35,7 +36,7 @@ Route::get('/', HomeFeed::class)
 // Public Catalog Terisolasi (Link-in-bio Agen)
 Route::get('/agen-properti/{username}', PublicCatalog::class)
     ->name('catalog.show');
-    
+
 // Public Catalog Terisolasi
 Route::get('/agen-properti/{username}/p/{estate:slug}', PublicCatalogDetail::class)
     ->name('catalog.detail');
@@ -75,12 +76,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/estates/{estate:slug}/edit', EstateForm::class)->name('estates.edit');
 
     Route::get('/profile', Profile::class)->name('profile');
-
-    // Super Admin Routes (Internal / Protected)
-    Route::middleware('super_admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/settings', \App\Livewire\Pages\Admin\Settings\Index::class)->name('settings.index');
-        Route::get('/insights', \App\Livewire\Pages\Admin\Insights\Index::class)->name('insights.index');
-    });
 });
 
 Route::post('/logout', function () {
