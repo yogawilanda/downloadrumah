@@ -9,7 +9,7 @@ resources/views/components/layouts/home/search-standby.blade.php
 
     <div class="space-y-1">
         @forelse ($popularCities as $pCity)
-            <button type="button" wire:click="selectCitySuggestion('{{ $pCity->code }}')" @click="searchOpen = false"
+            <button type="button" wire:click="selectCitySuggestion('{{ $pCity->name }}')" @click="searchOpen = false"
                 class="w-full text-left flex items-center justify-between rounded-md px-2.5 py-2 text-xs font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition group">
                 <div class="flex items-center gap-2">
                     <span class="text-blue-500 font-bold">⌖</span>

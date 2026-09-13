@@ -1,41 +1,29 @@
 <?php
-/**
- * @path: app/Livewire/Pages/Home/DiscoveryIntent.php
- * @usage : Search controller component that used for home-feed and listings.index
- * @author : yogawilanda <eayogawilanda@gmail.com>
- */
+
 namespace App\Livewire\Pages\Home;
 
 use App\Models\City;
 use App\Models\Estate;
+use App\Services\CityService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class DiscoveryIntent extends Component
 {
-    /**
-     * Variant UI: 'hero' (Home) atau 'compact' (Listings)
-     */
     public string $variant = 'hero';
 
-    #[Url]
-    public string $search = '';
-
-    #[Url]
-    public string $city_id = '';
-
-    #[Url]
-    public string $transaction_type = '';
-
-    #[Url]
-    public string $max_price = '';
+    #[Url] public string $search = '';
+    #[Url] public string $city = ''; // Satu-satunya single source of truth untuk lokasi
+    #[Url] public string $transaction_type = '';
+    #[Url] public string $max_price = '';
 
     public function submitSearch(): void
     {
         $params = array_filter([
             'search' => $this->search,
-            'city_id' => $this->city_id,
+            'city' => Str::slug($this->city), // Otomatis format ke slug "buleleng" / "kota-surabaya"
             'transaction_type' => $this->transaction_type,
             'max_price' => $this->max_price,
         ]);
@@ -43,13 +31,13 @@ class DiscoveryIntent extends Component
         $this->redirectRoute('listings.index', $params, navigate: true);
     }
 
-    public function selectCitySuggestion(string $cityCode): void
+    public function selectCitySuggestion(string $cityName): void
     {
-        $this->city_id = $cityCode;
+        $this->city = $cityName;
         $this->submitSearch();
     }
 
-    public function render(): View
+    public function render(CityService $cityService): View
     {
         $term = trim($this->search);
 
@@ -58,16 +46,14 @@ class DiscoveryIntent extends Component
                 ? City::query()->where('name', 'like', "%{$term}%")->orderBy('name')->limit(5)->get()
                 : collect(),
             'estates' => mb_strlen($term) >= 2
-                ? Estate::query()->published()->available()->where('title', 'like', "%{$term}%")->latest()->limit(5)->get()
+                ? Estate::query()->published()->available()->with('primaryImage')->where('title', 'like', "%{$term}%")->latest()->limit(5)->get()
                 : collect(),
         ];
 
-        $popularCities = City::query()->orderBy('name')->limit(5)->get();
-
         return view('livewire.pages.home.discovery-intent', [
             'suggestions' => $suggestions,
-            'cities' => City::query()->orderBy('name')->limit(12)->get(),
-            'popularCities' => $popularCities,
+            'cities' => $cityService->getDropdownCities(12),
+            'popularCities' => $cityService->getPopularCities(5),
         ]);
     }
 }

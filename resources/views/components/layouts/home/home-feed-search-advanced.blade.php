@@ -47,21 +47,21 @@ usage: Filter modal component for HomeFeed page
             </div>
 
             <!-- Filter Kota (Code Char 4) -->
-            @if(count($cities) > 0)
+            @if (count($cities) > 0)
                 <div>
                     <label class="block text-[11px] font-semibold text-gray-600 mb-1">Pilih Kota / Kabupaten</label>
-                    <select wire:model.live="city_id"
-                        class="w-full px-3 py-2 bg-gray-50 border border-gray-200 text-xs rounded-md focus:ring-2 focus:ring-blue-500 focus:bg-white text-gray-800 transition">
+                    <select wire:model.live="city"
+                        class="w-full md:w-auto text-xs sm:text-sm border-0 bg-transparent text-gray-700 focus:ring-0 cursor-pointer">
                         <option value="">Semua Kota</option>
                         @foreach ($cities as $c)
-                            <option value="{{ $c->code }}">{{ $c->name }}</option>
+                            <option value="{{ \Illuminate\Support\Str::slug($c->name) }}">{{ $c->name }}</option>
                         @endforeach
                     </select>
                 </div>
             @endif
 
             <!-- Filter Kecamatan (Code Char 7) -->
-            @if(count($districts) > 0)
+            @if (count($districts) > 0)
                 <div>
                     <label class="block text-[11px] font-semibold text-gray-600 mb-1">Pilih Kecamatan</label>
                     <select wire:model.live="district_id"

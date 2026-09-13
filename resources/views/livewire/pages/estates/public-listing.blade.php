@@ -40,7 +40,7 @@
         <div class="flex items-end justify-between pb-3 border-b border-gray-200/60 mb-6">
             <div class="space-y-0.5">
                 <h1 class="text-base sm:text-xl font-black text-gray-900 tracking-tight">
-                    {{ $search ? 'Hasil Pencarian: "' . $search . '"' : ($city ? 'Properti di ' . $city : 'Properti Terbaru') }}
+                    {{ $search ? 'Hasil Pencarian: "' . $search . '"' : ($city ? 'Properti di ' . \Illuminate\Support\Str::headline($city) : 'Properti Terbaru') }}
                 </h1>
                 <p class="text-xs text-gray-400">Pilih unit yang sesuai dengan preferensi Anda</p>
             </div>

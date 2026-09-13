@@ -19,6 +19,9 @@ class TopNav extends Component
     public string $search = '';
 
     #[Url]
+    public string $city = '';
+
+    #[Url]
     public string $city_id = '';
 
     #[Url]
@@ -63,6 +66,7 @@ class TopNav extends Component
         $params = array_filter([
             'search' => $this->search,
             'city_id' => $this->city_id,
+            'city' => $this->city,
             'transaction_type' => $this->transaction_type,
             'max_price' => $this->max_price,
         ]);
