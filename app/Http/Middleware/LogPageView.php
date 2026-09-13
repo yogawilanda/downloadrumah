@@ -37,35 +37,44 @@ class LogPageView
     use HasUserAgentParser;
 
     /**
-     * Handle an incoming request for page view analytics.
+     * Handle an incoming request.
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $response = $next($request);
+        // Langsung teruskan response ke pengguna tanpa memblokir execution
+        return $next($request);
+    }
 
+    /**
+     * Jalankan proseslogging SETELAH HTTP response dikirim penuh ke browser.
+     */
+    public function terminate(Request $request, Response $response): void
+    {
         /**
-         * Step 1.1: Skip non-GET requests and internal API/Asset calls
+         * Skip non-GET requests dan internal API/Asset calls
          */
         if (! $request->isMethod('GET') || $request->expectsJson() || $request->is('api/*')) {
-            return $response;
+            return;
         }
 
         /**
-         * Step 1.2: Record Page View via ActivityLog Model
+         * Record Page View secara Async setelah response terkirim
          */
-        ActivityLog::create([
-            'user_id'    => Auth::id(),
-            'module'     => 'traffic',
-            'event_name' => 'page_view',
-            'payload'    => [
-                'url'         => $request->fullUrl(),
-                'session_id'  => $request->hasSession() ? $request->session()->getId() : null,
-                'date_logged' => now()->toDateString(),
-            ],
-            'ip_address' => $request->ip(),
-            'user_agent' => $this->parseUserAgent($request->userAgent()),
-        ]);
-
-        return $response;
+        try {
+            ActivityLog::create([
+                'user_id'    => Auth::id(),
+                'module'     => 'traffic',
+                'event_name' => 'page_view',
+                'payload'    => [
+                    'url'         => $request->fullUrl(),
+                    'session_id'  => $request->hasSession() ? $request->session()->getId() : null,
+                    'date_logged' => now()->toDateString(),
+                ],
+                'ip_address' => $request->ip(),
+                'user_agent' => $this->parseUserAgent($request->userAgent()),
+            ]);
+        } catch (\Throwable $e) {
+            // Silence exception agar tidak mengganggu log server
+        }
     }
 }

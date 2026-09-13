@@ -13,8 +13,9 @@ usage: reusable listing card for carousel (home) or vertical/horizontal list (/l
 
                 <!-- Image Container (HP: Full Width Top, Desktop: Fixed Width Left) -->
                 <div class="relative h-48 md:h-44 md:w-64 lg:w-72 shrink-0 bg-gray-200 overflow-hidden">
+                    <!-- FIX: Tambah loading="lazy" & decoding="async" -->
                     <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
-                        alt="{{ $estate->title }}"
+                        alt="{{ $estate->title }}" loading="lazy" decoding="async"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
 
                     <!-- Badge Status -->
@@ -40,7 +41,8 @@ usage: reusable listing card for carousel (home) or vertical/horizontal list (/l
                     <div>
                         <!-- Title & Location -->
                         <div class="flex items-start justify-between gap-2">
-                            <h2 class="font-bold text-gray-900 text-base md:text-lg line-clamp-1 group-hover:text-blue-600 transition-colors">
+                            <h2
+                                class="font-bold text-gray-900 text-base md:text-lg line-clamp-1 group-hover:text-blue-600 transition-colors">
                                 {{ $estate->title }}
                             </h2>
                         </div>
@@ -58,7 +60,8 @@ usage: reusable listing card for carousel (home) or vertical/horizontal list (/l
                     </div>
 
                     <!-- Bottom Spec Strip & Desktop Price -->
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-gray-100 gap-2">
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-gray-100 gap-2">
                         <!-- Specs Info -->
                         <div class="flex items-center space-x-3 text-xs text-gray-600">
                             @if ($estate->bedroom)
@@ -114,8 +117,11 @@ usage: reusable listing card for carousel (home) or vertical/horizontal list (/l
                 class="block bg-white rounded-md overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
 
                 <div class="relative h-44 w-full bg-gray-200">
-                    <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
-                        alt="{{ $estate->title }}" class="w-full h-full object-cover" />
+                    <!-- FIX: Tambah loading="lazy" & decoding="async" -->
+                    <img src="{{ $estate->primaryImage?->url }}" alt="{{ $estate->title }}"
+                        loading="{{ $loop->first ? 'eager' : 'lazy' }}"
+                        fetchpriority="{{ $loop->first ? 'high' : 'auto' }}" decoding="async"
+                        class="w-full h-full object-cover" />
 
                     <span
                         class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-md text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">

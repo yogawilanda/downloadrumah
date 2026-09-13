@@ -14,17 +14,18 @@ window.trackEvent = function (module, eventName, payloadData = {}) {
         navigator.sendBeacon(url, new Blob([data], { type: "application/json" }));
         return;
     }
-    window.requestIdleCallback(() => {
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content || "",
-            },
-            body: data,
-        }).catch(() => {});
-    });
+
+    // Fallback menggunakan fetch async non-blocking
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content || "",
+        },
+        body: data,
+        keepalive: true,
+    }).catch(() => {});
 };
 
 // --- Registrasi Alpine Data ---
