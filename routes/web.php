@@ -1,27 +1,48 @@
 <?php
 
-use App\Http\Controllers\Admin\ExportActivityLogController;
+/**
+ * <meta_config>
+ * @path             : routes/web.php
+ * @usage            : Public & Agent Web Routing Entrypoint & Public Domain Orchestrator
+ * @type             : Routing Orchestrator
+ *
+ * @expected_groups  : [Route Domains & Middlewares]
+ *   - Public Routes    : Home Feed, Link-in-Bio Catalog, KPR Tools, & Static Legal pages (Unauthenticated)
+ *   - Auth Subsystem   : Authentication & Session Routes (`auth.php`)
+ *   - Agent Dashboard  : Authenticated Agent Workspace & Estate Listing CRUD (`middleware: auth`)
+ *   - Wildcard Routes  : Estate Public Detail View (`/estates/{estate:slug}`)
+ *
+ * @ruling_v1_1_6_routing : [STRICT ROUTING GOVERNANCE]
+ *   1. ROUTE DELEGATION & ISOLATION   : Keep file lean (< 100 LOC). Sensitive routes MUST be isolated in dedicated files (`routes/admin.php`).
+ *   2. ZERO INLINE CLOSURES           : NO inline closures for business/file logic. Refactor `/media/{path}` & `/logout` to dedicated Controllers.
+ *   3. WILDCARD PARAMETER ORDERING    : Dynamic slug parameters (`/estates/{slug}`) MUST sit at the bottom to prevent route matching collisions.
+ *   4. TYPE-SAFE DOT NAMING           : All routes MUST use explicit dot-notation naming (`catalog.show`, `estates.create`).
+ *
+ * @tech_debt        : [ROUTING LEAKAGE & STRUCTURAL AUDIT]
+ *   - INLINE CLOSURES IN ROUTER       : Media direct access (`/media/{path}`) performs file checking inline. Move to `MediaStreamController`.
+ *
+ * @created | updated : 25/09/2026 | 13/09/2026
+ * @author           : yogawilanda <eayogawilanda@gmail.com>
+ * </meta_config>
+ */
+
+use App\Livewire\Pages\AgentDashboard;
 use App\Livewire\Pages\Catalog\PublicCatalog;
 use App\Livewire\Pages\Catalog\PublicCatalogDetail;
+use App\Livewire\Pages\Estates\EstateForm;
+use App\Livewire\Pages\Estates\EstateListing;
+use App\Livewire\Pages\Estates\EstateShow;
+use App\Livewire\Pages\Estates\PublicListing;
+use App\Livewire\Pages\Home\HomeFeed;
 use App\Livewire\Pages\Profile\Profile;
+use App\Livewire\Pages\Supports\ReleaseNotes;
+use App\Livewire\Pages\Supports\SupportCenter;
 use App\Livewire\Pages\Terms\TermsAndConditions;
+use App\Livewire\Pages\Tools\MortgageCalculator;
 use App\Livewire\PrivacyPolicy;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
-
-// Full Pages
-use App\Livewire\Pages\Home\HomeFeed;
-use App\Livewire\Pages\AgentDashboard;
-use App\Livewire\Pages\Tools\MortgageCalculator;
-use App\Livewire\Pages\Estates\PublicListing;
-
-// Component Based / Estates
-use App\Livewire\Pages\Estates\EstateForm;
-use App\Livewire\Pages\Estates\EstateShow;
-use App\Livewire\Pages\Estates\EstateListing;
-use App\Livewire\Pages\Supports\SupportCenter;
-use App\Livewire\Pages\Supports\ReleaseNotes;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +71,9 @@ Route::get('/listings', PublicListing::class)->name('listings.index');
 // Public Media Storage Direct Access
 Route::get('/media/{path}', function ($path) {
     $file = storage_path('app/public/' . $path);
-    if (!file_exists($file))
+    if (! file_exists($file)) {
         abort(404);
+    }
     return Response::file($file);
 })->where('path', '.*');
 
@@ -59,7 +81,6 @@ Route::get('/privacy', PrivacyPolicy::class)->name('privacy');
 Route::get('/terms', TermsAndConditions::class)->name('terms');
 
 Route::get('/support', SupportCenter::class)->name('support');
-
 Route::get('/release-notes', ReleaseNotes::class)->name('release-notes');
 
 /*
@@ -78,13 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', Profile::class)->name('profile');
 });
 
-Route::post('/logout', function () {
-    Auth::guard('web')->logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
 
-    return redirect('/');
-})->name('logout');
 
 /*
 |--------------------------------------------------------------------------

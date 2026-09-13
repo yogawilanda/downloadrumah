@@ -9,6 +9,7 @@
  * @author yogawilanda <eayogawilanda@gmail.com>
  */
 
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Livewire\Pages\Auth\AuthModal;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,8 @@ Route::middleware('auth')->group(function () {
 
     Volt::route('confirm-password', 'pages.auth.confirm-password')
         ->name('password.confirm');
+
+    Route::post('/logout', LogoutController::class)->name('logout');
 });
+
+
