@@ -2,12 +2,25 @@
 
 /**
  * <meta_config>
- * @path : app/Http/Middleware/LogPageView.php | usage: Global Web Traffic Telemetry Middleware
- * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : PHP Docblock
- * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
- * </meta_config>
+ * @path             : app/Http/Middleware/LogPageView.php
+ * @usage            : Global HTTP Middleware for Page View & Visitor Telemetry Tracking
+ * @type             : HTTP Middleware (Telemetry Layer)
  *
- * @author yogawilanda <eayogawilanda@gmail.com>
+ * @expected_params  : Illuminate\Http\Request $request, Closure $next
+ * @expected_output  : Symfony\Component\HttpFoundation\Response
+ *
+ * @tech_debt        : [Middleware Performance & Async Audit]
+ *   - SYNCHRONOUS DB LOGGING : `ActivityLog::create` berjalan secara sinkron di setiap request GET. Jika trafik tinggi, pertimbangkan queue/job async atau buffer log agar tidak membebani latency response.
+ *   - TRAIT DEPENDENCY : Bergantung pada `HasUserAgentParser` dari namespace API Controller (`App\Http\Controllers\Api\Concerns`). Idealnya dipindah ke global Concern jika dipakai lintas layer.
+ *
+ * @ruling           : Max 100 total lines of code. Exceed? Modularize via Concerns/Jobs.
+ * @ruling           : Max params 3-5, exceed Modularize to trait
+ * @ruling_scope     : FILTERED LOGGING. Skips non-GET requests, JSON API calls, and asset streams.
+ * @ruling_privacy   : USER IDENTIFICATION. Gracefully captures `user_id` (null if guest) and session ID.
+ *
+ * @created | updated : 25/09/2026 | 13/09/2026
+ * @author           : yogawilanda <eayogawilanda@gmail.com>
+ * </meta_config>
  */
 
 namespace App\Http\Middleware;

@@ -2,15 +2,43 @@
 
 /**
  * <meta_config>
- * @path : app/Livewire/Pages/Admin/Insights/Index.php | usage: Livewire component for Insights & Journey Trace
- * @ruling : max line of code 80%, max doc 20% | max total lines = 100
- * </meta_config>
+ * @path             : app/Livewire/Pages/Admin/Insights/Index.php
+ * @usage            : Livewire Component for Admin Insights Telemetry & Journey Trace
+ * @type             : Livewire Component (Presentation & UI Orchestrator)
  *
- * @author yogawilanda <eayogawilanda@gmail.com>
+ * @expected_attributes : [Active Component State Properties]
+ *   - search (string)                     : Real-time search keyword filter for activity logs
+ *   - selectedSessionId (?string)         : Active session ID for journey trace timeline modal
+ *   - activeCardDetail (?string)          : Active modal view type ('pages'|'users'|'sessions'|'events')
+ *
+ * @scopes_and_methods  : [Component Handlers & Data Accessors]
+ *   - updatingSearch()                    : Resets pagination state on keyword change
+ *   - inspectJourney(string), closeJourney(): Toggles session journey trace modal state
+ *   - openCardDetail(string), closeCardDetail(): Toggles aggregate breakdown modal state
+ *   - getCardDetailsData()                : Computes aggregated breakdown dataset for active modal
+ *   - statsData() (Computed)              : Request-bound memoized counters for telemetry cards
+ *
+ * @tech_debt_status        : On standby.
+ * @tech_debt               : [VERBOSE COMPONENT & QUERY AUDIT]
+ *   - RAW SQL LEAKAGE      : `getCardDetailsData` relies on `DB::raw()` & MySQL JSON extraction (`payload->url`) directly inside component.
+ *   - RE-RENDER OVERHEAD   : Full-page re-render executes multiple count() & aggregate queries on every search input stroke.
+ *   - REFACTOR TARGET      : Extract aggregate logic to `App\Queries\ActivityInsightQuery` & convert card modals to Alpine.js Island state.
+ *   - MISSING DTO          : Data passed to view as raw Eloquent models/collections instead of lightweight DTOs.
+ *
+ * @ruling           : Max 100 total lines (80% code, 20% doc). Exceed? Modularize via Concerns/Traits.
+ * @overflow_action  : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
+ * @ruling_scope     : ISOLATION & CLEAN QUERYING. Heavy JSON aggregates & raw queries MUST be encapsulated in Query Classes.
+ * @ruling_type      : STRICT TYPE SAFETY. Explicit return type View on render() & Collection on getCardDetailsData().
+ * @ruling_ui        : NO UI LEAKAGE. Component orchestrates modal visibility states cleanly without raw HTML strings.
+ *
+ * @created | updated : 25/09/2026 | 13/09/2026
+ * @author           : yogawilanda <eayogawilanda@gmail.com>
+ * </meta_config>
  */
 
 namespace App\Livewire\Pages\Admin\Insights;
 
+use App\Livewire\Pages\Admin\Insights\Concerns\HasExportableFeature;
 use App\Models\ActivityLog;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -100,6 +128,7 @@ class Index extends Component
             ? ActivityLog::with('user:id,name')->where('payload->session_id', $this->selectedSessionId)->oldest()->get()
             : collect();
 
+        // total passing data : 8
         return view('livewire.pages.admin.insights.index', [
             'totalHits' => $totalHits,
             'uniqueSessions' => $uniqueSessions,

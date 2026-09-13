@@ -2,18 +2,21 @@
 
 /**
  * <meta_config>
- * @path : app/Livewire/Pages/Estates/EstateForm.php | usage: Main Orchestrator for Estate Wizard Form
- * @ruling : max line of code 80%, max doc 20% | max total lines = 100 | stepper : true | comment style : PHP Docblock
- * @overflow_action : IF total lines > 100, STOP generation and trigger refactoring using traits, components, DTOs, or forms.
- * </meta_config>
+ * @path             : app/Livewire/Pages/Estates/EstateForm.php
+ * @usage            : Main Livewire Component Orchestrator for Estate Wizard Form
+ * @type             : Livewire Form Orchestrator
+ * @tech_debt_map    : \App\Livewire\Pages\Estates\Concerns\HasEstateFormTechDebt
  *
- * @author yogawilanda <eayogawilanda@gmail.com>
+ * @ruling           : Max 100 total lines. Exceed? Modularize via Concerns/Traits.
+ * @overflow_action  : SEE TRAIT HasEstateFormTechDebt FOR FULL AUDIT & REFACTOR ROADMAP.
+ * </meta_config>
  */
 
 namespace App\Livewire\Pages\Estates;
 
 use App\Livewire\Forms\EstateFormData;
 use App\Livewire\Pages\Estates\Concerns\HasEstateAttachmentManagement;
+use App\Livewire\Pages\Estates\Concerns\HasEstateFormTechDebt;
 use App\Livewire\Pages\Estates\Concerns\HasFormWizardStep;
 use App\Models\City;
 use App\Models\District;
@@ -27,10 +30,13 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+/**
+ * @mixin HasEstateFormTechDebt
+ */
 #[Layout('components.layouts.app')]
 class EstateForm extends Component
 {
-    use HasEstateAttachmentManagement, HasFormWizardStep, WithFileUploads;
+    use HasEstateAttachmentManagement, HasFormWizardStep, WithFileUploads, HasEstateFormTechDebt;
 
     public EstateFormData $form;
 
