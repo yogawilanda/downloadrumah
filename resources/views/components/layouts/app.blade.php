@@ -71,11 +71,11 @@
     @endif
 
     {{-- Page Content --}}
-    <main class="w-full flex-grow relative pb-16 md:pb-0">
+    <main class="w-full flex-grow relative pb-16 md:pb-16">
         {{ $slot }}
     </main>
 
-    <x-layouts.navigation />
+    <x-layouts.bottom-navigation />
 
     @livewireScripts
 </body>
