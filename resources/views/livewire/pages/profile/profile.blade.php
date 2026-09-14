@@ -16,8 +16,8 @@ usage: User profile settings page layout inside mobile container
         <!-- Main Content Area -->
         <div class="p-4 space-y-4">
             <!-- Header Kartu Profil Ringkas -->
-            <div class="flex items-center gap-3 p-3 bg-blue-50/50 rounded-md border border-blue-100">
-                <div class="w-12 h-12 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-lg shadow-sm shrink-0">
+            <div class="flex items-center gap-3 p-3 bg-sky-50/50 rounded-md border border-blue-100">
+                <div class="w-12 h-12 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-lg shadow-sm shrink-0">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                 </div>
                 <div class="space-y-0.5 overflow-hidden">

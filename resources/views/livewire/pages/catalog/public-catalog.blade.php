@@ -13,7 +13,7 @@
                             class="w-full h-full object-cover">
                     @else
                         <div
-                            class="w-full h-full flex items-center justify-center bg-blue-50 text-blue-600 font-bold text-2xl uppercase">
+                            class="w-full h-full flex items-center justify-center bg-sky-50 text-blue-600 font-bold text-2xl uppercase">
                             {{ substr($agent->display_brand_name, 0, 2) }}
                         </div>
                     @endif

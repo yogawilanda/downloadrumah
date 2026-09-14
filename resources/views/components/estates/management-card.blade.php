@@ -28,7 +28,7 @@
     <div class="border-t border-gray-50 pt-2">
         @if ($tab === 'my_listings')
             <div class="grid grid-cols-2 gap-2">
-                <a href="{{ route('estates.edit', $estate->slug) }}" class="rounded-md bg-blue-50 py-2 text-center text-xs font-bold text-blue-600">Edit</a>
+                <a href="{{ route('estates.edit', $estate->slug) }}" class="rounded-md bg-sky-50 py-2 text-center text-xs font-bold text-blue-600">Edit</a>
                 <button wire:click="deleteEstate({{ $estate->id }})" class="rounded-md bg-red-50 py-2 text-xs font-bold text-red-600">Hapus</button>
             </div>
         @else

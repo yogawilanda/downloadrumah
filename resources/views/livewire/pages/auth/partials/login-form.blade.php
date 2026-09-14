@@ -84,7 +84,7 @@
 
         <div class="pt-2">
             <button type="submit" wire:loading.attr="disabled"
-                class="relative w-full h-11 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white text-xs font-bold rounded-md transition flex items-center justify-center disabled:opacity-80">
+                class="relative w-full h-11 bg-sky-600 hover:bg-sky-700 active:scale-[0.99] text-white text-xs font-bold rounded-md transition flex items-center justify-center disabled:opacity-80">
 
                 {{-- State Normal --}}
                 <span wire:loading.remove wire:target="login">

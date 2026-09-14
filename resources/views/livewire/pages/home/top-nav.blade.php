@@ -28,7 +28,7 @@
         {{-- Aksi Kanan --}}
         <div class="flex items-center gap-2 shrink-0">
             <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
-                class="hidden md:flex px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-md shadow-sm transition active:scale-95 items-center gap-1.5">
+                class="hidden md:flex px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-md shadow-sm transition active:scale-95 items-center gap-1.5">
                 <x-icons.icons-adds class="w-3.5 h-3.5 fill-current" />
                 <span>Pasang Iklan</span>
             </a>
@@ -79,7 +79,7 @@
     <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar">
         @foreach (['' => 'Semua', 'sale' => 'Dijual', 'rent' => 'Disewa'] as $key => $label)
             <button wire:click="$set('transaction_type', '{{ $key }}')"
-                class="px-2.5 py-1 text-[11px] font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === $key ? 'bg-blue-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                class="px-2.5 py-1 text-[11px] font-medium rounded-full whitespace-nowrap transition-all {{ $transaction_type === $key ? 'bg-sky-600 text-white shadow-sm' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                 {{ $label }}
             </button>
         @endforeach

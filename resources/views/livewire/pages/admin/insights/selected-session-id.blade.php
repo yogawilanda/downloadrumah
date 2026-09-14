@@ -22,12 +22,12 @@
                 @forelse($journeyLogs as $step)
                     <div class="relative pl-5">
                         <span
-                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-600 ring-4 ring-white"></span>
+                            class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-sky-600 ring-4 ring-white"></span>
                         <div class="flex items-center justify-between gap-2">
                             <span
                                 class="text-[10px] font-mono text-slate-400">{{ $step->created_at->format('H:i:s') }}</span>
                             <span
-                                class="text-[9px] font-bold uppercase px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md border border-blue-100">{{ $step->event_name }}</span>
+                                class="text-[9px] font-bold uppercase px-2 py-0.5 bg-sky-50 text-blue-600 rounded-md border border-blue-100">{{ $step->event_name }}</span>
                         </div>
                         <p
                             class="text-[11px] font-mono text-slate-700 bg-slate-50 p-2.5 rounded-md mt-1.5 border border-slate-200/80 break-all leading-relaxed">

@@ -16,7 +16,7 @@
     <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-4">
         <div class="flex items-center justify-between border-b border-gray-100 pb-3">
             <div class="flex items-center gap-2">
-                <span class="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+                <span class="p-1.5 bg-sky-50 text-blue-600 rounded-md">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -139,7 +139,7 @@
     <!-- Spesifikasi Bangunan -->
     <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-4">
         <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
-            <span class="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+            <span class="p-1.5 bg-sky-50 text-blue-600 rounded-md">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -166,7 +166,7 @@
     <!-- Fasilitas Properti Section -->
     <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-4">
         <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
-            <span class="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+            <span class="p-1.5 bg-sky-50 text-blue-600 rounded-md">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -182,7 +182,7 @@
                 @endphp
 
                 <div
-                    class="p-2.5 rounded-md border border-gray-100 bg-gray-50/50 transition-all {{ $isChecked ? 'bg-blue-50/30 border-blue-200' : '' }}">
+                    class="p-2.5 rounded-md border border-gray-100 bg-gray-50/50 transition-all {{ $isChecked ? 'bg-sky-50/30 border-blue-200' : '' }}">
                     <label class="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" wire:model.live="form.selected_facilities.{{ $facility->id }}.id"
                             value="{{ $facility->id }}"

@@ -17,12 +17,12 @@
         <label class="block text-xs font-medium text-gray-600 mb-1.5">Kondisi Properti</label>
         <div class="grid grid-cols-2 gap-2">
             <button type="button" @click="agent.condition = 'new'"
-                :class="agent.condition === 'new' ? 'bg-blue-50 border-blue-600 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500'"
+                :class="agent.condition === 'new' ? 'bg-sky-50 border-blue-600 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500'"
                 class="py-2 text-xs border rounded-md transition text-center">
                 Baru (Primary)
             </button>
             <button type="button" @click="agent.condition = 'used'"
-                :class="agent.condition === 'used' ? 'bg-blue-50 border-blue-600 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500'"
+                :class="agent.condition === 'used' ? 'bg-sky-50 border-blue-600 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500'"
                 class="py-2 text-xs border rounded-md transition text-center">
                 Second (Secondary)
             </button>

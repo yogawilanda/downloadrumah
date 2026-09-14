@@ -15,35 +15,35 @@ usage: Active filter chips area for home feed
         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider shrink-0">Filter:</span>
 
         @if ($max_price)
-            <div class="flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
+            <div class="flex items-center gap-1 bg-sky-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
                 <span>Maks: Rp {{ number_format((float) $max_price, 0, ',', '.') }}</span>
                 <button wire:click="$set('max_price', '')" class="hover:text-blue-900 ml-1 font-bold">✕</button>
             </div>
         @endif
 
         @if ($location)
-            <div class="flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
+            <div class="flex items-center gap-1 bg-sky-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
                 <span>Target: {{ ucfirst($location) }}</span>
                 <button wire:click="$set('location', '')" class="hover:text-blue-900 ml-1 font-bold">✕</button>
             </div>
         @endif
 
         @if ($city_id)
-            <div class="flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
+            <div class="flex items-center gap-1 bg-sky-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
                 <span>Kota Aktif</span>
                 <button wire:click="$set('city_id', '')" class="hover:text-blue-900 ml-1 font-bold">✕</button>
             </div>
         @endif
 
         @if ($district_id)
-            <div class="flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
+            <div class="flex items-center gap-1 bg-sky-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0">
                 <span>Kecamatan Aktif</span>
                 <button wire:click="$set('district_id', '')" class="hover:text-blue-900 ml-1 font-bold">✕</button>
             </div>
         @endif
 
         @if ($search)
-            <div class="flex items-center gap-1 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0 max-w-[160px]">
+            <div class="flex items-center gap-1 bg-sky-50 text-blue-700 border border-blue-200 px-2.5 py-1 rounded-full text-[11px] font-medium shrink-0 max-w-[160px]">
                 <span class="truncate">"{{ $search }}"</span>
                 <button wire:click="$set('search', '')" class="hover:text-blue-900 ml-1 font-bold shrink-0">✕</button>
             </div>

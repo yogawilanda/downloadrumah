@@ -89,7 +89,7 @@ new #[Layout('components.layouts.app')] class extends Component {
                 <p class="text-xs font-medium text-blue-50">🔑 "Gunakan kombinasi simbol, angka, dan huruf untuk keamanan maksimal."</p>
             </div>
 
-            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-500/30 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-sky-500/30 rounded-full blur-2xl pointer-events-none"></div>
         </div>
 
         <!-- RIGHT COLUMN: Auth Form Area -->
@@ -157,7 +157,7 @@ new #[Layout('components.layouts.app')] class extends Component {
                 </div>
 
                 <button type="submit" wire:loading.attr="disabled"
-                    class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-md shadow-sm transition disabled:opacity-50">
+                    class="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-md shadow-sm transition disabled:opacity-50">
                     <span wire:loading.remove wire:target="resetPassword">Simpan Kata Sandi Baru</span>
                     <span wire:loading wire:target="resetPassword">Memproses...</span>
                 </button>

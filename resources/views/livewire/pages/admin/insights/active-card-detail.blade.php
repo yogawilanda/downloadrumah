@@ -25,7 +25,7 @@
                             {{ $row->key_name }}
                         </span>
                         <span
-                            class="shrink-0 px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 font-bold font-mono text-[10px] whitespace-nowrap border border-blue-100">
+                            class="shrink-0 px-2.5 py-1 rounded-full bg-sky-50 text-blue-600 font-bold font-mono text-[10px] whitespace-nowrap border border-blue-100">
                             {{ number_format($row->total) }} Hits
                         </span>
                     </div>

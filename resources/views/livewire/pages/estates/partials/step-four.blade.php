@@ -26,7 +26,7 @@
                         default => 'Dijual'
                     };
                 @endphp
-                <span class="inline-block px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase bg-blue-50 text-blue-600 rounded-md mb-2">
+                <span class="inline-block px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase bg-sky-50 text-blue-600 rounded-md mb-2">
                     {{ $typeLabel }} • {{ strtoupper($form->listing_group ?: 'Secondary') }}
                 </span>
                 <h3 class="font-bold text-base text-gray-900 leading-snug">{{ $form->title ?: '-' }}</h3>
@@ -109,7 +109,7 @@
                 <div class="flex flex-wrap gap-1.5">
                     @foreach ($selectedFacilityModels as $fac)
                         @php $val = $form->selected_facilities[$fac->id]['value'] ?? null; @endphp
-                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50/70 text-blue-700 text-[11px] font-medium rounded-md">
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-sky-50/70 text-blue-700 text-[11px] font-medium rounded-md">
                             ✓ {{ $fac->name }} {{ $val ? "($val)" : '' }}
                         </span>
                     @endforeach

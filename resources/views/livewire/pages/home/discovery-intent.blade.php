@@ -41,13 +41,13 @@
             </select>
 
             <button type="submit"
-                class="w-full md:w-auto px-5 py-2 bg-blue-600 text-white font-semibold text-xs rounded-lg hover:bg-blue-700 transition">
+                class="w-full md:w-auto px-5 py-2 bg-sky-600 text-white font-semibold text-xs rounded-lg hover:bg-sky-700 transition">
                 Cari
             </button>
         </form>
     @else
         {{-- 2. TAMPILAN HERO BANNER UTUH (Untuk Homefeed /) --}}
-        <div class="relative bg-blue-600 rounded-md p-5 md:p-8 text-white shadow-md overflow-visible">
+        <div class="relative bg-sky-600 rounded-md p-5 md:p-8 text-white shadow-md overflow-visible">
             <div class="relative z-10 space-y-4">
                 <div>
                     <h1 class="text-xl md:text-2xl font-black tracking-tight">Cari aja dulu!</h1>
@@ -100,7 +100,7 @@
                     <!-- Submit Button -->
                     <div class="md:col-span-2 pt-2 md:pt-0">
                         <button type="submit"
-                            class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg shadow transition">
+                            class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs rounded-lg shadow transition">
                             Cari
                         </button>
                     </div>

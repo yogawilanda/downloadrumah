@@ -14,7 +14,7 @@
 
         <div class="space-y-4">
             {{-- About Section --}}
-            <section class="bg-blue-50/60 p-4 rounded-md border border-blue-100">
+            <section class="bg-sky-50/60 p-4 rounded-md border border-blue-100">
                 <h2 class="font-bold text-blue-900 text-sm mb-1">Tentang DownloadRumah</h2>
                 <p class="text-xs text-blue-700/80 leading-relaxed">
                     Platform digital mobile-first untuk pencarian hunian impian, kalkulasi KPR presisi, dan konsultasi
@@ -53,7 +53,7 @@
                     class="flex items-center justify-between p-3.5 bg-gray-50 hover:bg-gray-100/80 rounded-md border border-gray-100 transition group">
                     <div class="flex items-center gap-3">
                         <div
-                            class="w-9 h-9 bg-blue-100 text-blue-600 rounded-md flex items-center justify-center shrink-0">
+                            class="w-9 h-9 bg-sky-100 text-blue-600 rounded-md flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />

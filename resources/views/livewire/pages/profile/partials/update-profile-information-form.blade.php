@@ -165,7 +165,7 @@ new class extends Component {
         {{-- Action Button & Saved Status --}}
         <div class="flex items-center gap-4 pt-2">
             <x-primary-button
-                class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-md shadow-sm shadow-blue-200 active:scale-95 transition">
+                class="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-md shadow-sm shadow-blue-200 active:scale-95 transition">
                 {{ __('Simpan Perubahan') }}
             </x-primary-button>
 

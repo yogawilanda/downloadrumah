@@ -28,7 +28,7 @@
 </head>
 
 <body
-    class="bg-slate-100 font-sans antialiased text-gray-900 selection:bg-blue-500 selection:text-white min-h-screen flex flex-col">
+    class="bg-slate-100 font-sans antialiased text-gray-900 selection:bg-sky-500 selection:text-white min-h-screen flex flex-col">
 
     {{-- Global Responsive Header (Mobile, Tablet, & Desktop) --}}
     @if (request()->routeIs(['home', 'listings.index']))

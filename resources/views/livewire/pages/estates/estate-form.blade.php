@@ -42,12 +42,12 @@
         <p class="mb-2 text-center text-xs font-semibold text-gray-500">Langkah {{ $currentStep }} dari 4</p>
         <div class="relative flex items-center justify-between">
             <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-0.5 bg-gray-200 -z-10"></div>
-            <div class="absolute left-0 top-1/2 transform -translate-y-1/2 h-0.5 bg-blue-600 -z-10 transition-all duration-300"
+            <div class="absolute left-0 top-1/2 transform -translate-y-1/2 h-0.5 bg-sky-600 -z-10 transition-all duration-300"
                 style="width: {{ (($currentStep - 1) / 3) * 100 }}%;"></div>
             @foreach ([1 => 'Info Umum', 2 => 'Detail Properti', 3 => 'Info Tambahan', 4 => 'Konfirmasi'] as $step => $label)
                 <div class="flex flex-col items-center">
                     <button type="button" wire:click="setStep({{ $step }})" wire:loading.attr="disabled"
-                        class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition {{ $currentStep >= $step ? 'bg-blue-600 text-white ring-4 ring-blue-100' : 'bg-gray-200 text-gray-500' }}">{{ $step }}</button>
+                        class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition {{ $currentStep >= $step ? 'bg-sky-600 text-white ring-4 ring-blue-100' : 'bg-gray-200 text-gray-500' }}">{{ $step }}</button>
                     <span
                         class="text-[10px] font-medium mt-1 {{ $currentStep === $step ? 'text-gray-900 font-bold' : 'text-gray-400' }}">{{ $label }}</span>
                 </div>
@@ -96,12 +96,12 @@
 
                 @if ($currentStep < 4)
                     <button type="button" wire:click="nextStep" wire:loading.attr="disabled"
-                        class="min-h-11 flex-1 rounded-md bg-blue-600 text-xs font-bold text-white shadow-md transition active:bg-blue-700">
+                        class="min-h-11 flex-1 rounded-md bg-sky-600 text-xs font-bold text-white shadow-md transition active:bg-sky-700">
                         Selanjutnya
                     </button>
                 @else
                     <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                        class="min-h-11 flex-1 rounded-md bg-blue-600 text-xs font-bold text-white shadow-md transition hover:bg-blue-700 active:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50">
+                        class="min-h-11 flex-1 rounded-md bg-sky-600 text-xs font-bold text-white shadow-md transition hover:bg-sky-700 active:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-50">
                         <span wire:loading.remove wire:target="save">
                             {{ $form->isEdit() ? 'Update Properti' : 'Simpan & Terbitkan' }}
                         </span>

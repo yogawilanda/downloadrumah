@@ -18,13 +18,13 @@
         <div class="space-y-3">
 
             {{-- Tile 1: Photo Engine (Latest) --}}
-            <div class="p-3.5 bg-blue-50/40 border border-blue-100 rounded-md space-y-2">
+            <div class="p-3.5 bg-sky-50/40 border border-blue-100 rounded-md space-y-2">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
-                        <span class="bg-blue-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full">v1.1.0-rc</span>
+                        <span class="bg-sky-600 text-white text-[9px] font-black px-2 py-0.5 rounded-full">v1.1.0-rc</span>
                         <span class="text-[10px] font-semibold text-gray-400">07 Sept 2026 • 22:34 WIB</span>
                     </div>
-                    <span class="font-mono text-[9px] bg-blue-100/80 text-blue-700 px-1.5 py-0.5 rounded-md font-bold">e0b9af5</span>
+                    <span class="font-mono text-[9px] bg-sky-100/80 text-blue-700 px-1.5 py-0.5 rounded-md font-bold">e0b9af5</span>
                 </div>
                 <div>
                     <h3 class="text-xs font-bold text-gray-900">Photo Engine & Cover Selector</h3>

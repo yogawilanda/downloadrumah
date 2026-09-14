@@ -9,7 +9,7 @@
 <div class="p-4 rounded-md bg-slate-50/70 space-y-4">
     <div class="flex items-center space-x-3">
         <div
-            class="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
+            class="w-11 h-11 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
             {{ substr($agentName, 0, 1) }}
         </div>
         <div class="flex-1 min-w-0">

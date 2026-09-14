@@ -1,6 +1,6 @@
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
     <div class="flex items-center gap-2">
-        <div class="w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-sky-600"></div>
         <h2 class="text-sm font-bold text-slate-800">Stream Aktivitas Live</h2>
     </div>
     <div class="relative w-full sm:w-72">

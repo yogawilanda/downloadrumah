@@ -34,7 +34,7 @@
                         @foreach ($suggestions['cities'] as $city)
                             <button type="button" wire:click="selectCitySuggestion('{{ $city->name }}')"
                                 @click="searchOpen = false"
-                                class="w-full text-left flex items-center gap-2 rounded-md px-2 py-2 text-xs font-semibold text-gray-700 hover:bg-blue-50 transition">
+                                class="w-full text-left flex items-center gap-2 rounded-md px-2 py-2 text-xs font-semibold text-gray-700 hover:bg-sky-50 transition">
                                 <span class="text-blue-600">⌖</span>{{ $city->name }}
                             </button>
                         @endforeach

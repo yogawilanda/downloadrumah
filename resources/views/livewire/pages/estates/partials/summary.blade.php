@@ -14,7 +14,7 @@
     <div class="space-y-3">
         <div class="flex items-center justify-between gap-3">
             <a href="{{ $this->kprUrl }}" wire:navigate
-                class="inline-flex items-center gap-2 px-3.5 py-2 bg-blue-50 text-blue-600 font-bold text-xs rounded-md hover:bg-blue-100 transition shadow-sm">
+                class="inline-flex items-center gap-2 px-3.5 py-2 bg-sky-50 text-blue-600 font-bold text-xs rounded-md hover:bg-sky-100 transition shadow-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z">
@@ -64,21 +64,21 @@
             <div class="flex flex-wrap gap-2">
                 @if ($estate->attr->legal_docs)
                     <span
-                        class="px-3 py-1.5 bg-blue-50/70 text-blue-700 border border-blue-100/80 text-xs font-semibold rounded-md flex items-center gap-1">
+                        class="px-3 py-1.5 bg-sky-50/70 text-blue-700 border border-blue-100/80 text-xs font-semibold rounded-md flex items-center gap-1">
                         <span class="text-blue-500">Legalitas:</span><span>{{ $estate->attr->legal_docs }}</span>
                     </span>
                 @endif
 
                 @if ($estate->attr->electricity)
                     <span
-                        class="px-3 py-1.5 bg-blue-50/70 text-blue-700 border border-blue-100/80 text-xs font-semibold rounded-md flex items-center gap-1">
+                        class="px-3 py-1.5 bg-sky-50/70 text-blue-700 border border-blue-100/80 text-xs font-semibold rounded-md flex items-center gap-1">
                         <span class="text-blue-500">Listrik:</span><span>{{ $estate->attr->electricity }} VA</span>
                     </span>
                 @endif
 
                 @if ($estate->attr->water_type)
                     <span
-                        class="px-3 py-1.5 bg-blue-50/70 text-blue-700 border border-blue-100/80 text-xs font-semibold rounded-md flex items-center gap-1">
+                        class="px-3 py-1.5 bg-sky-50/70 text-blue-700 border border-blue-100/80 text-xs font-semibold rounded-md flex items-center gap-1">
                         <span class="text-blue-500">Sumber Air:</span><span>{{ $estate->attr->water_type }}</span>
                     </span>
                 @endif

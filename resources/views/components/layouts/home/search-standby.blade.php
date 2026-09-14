@@ -4,13 +4,13 @@ resources/views/components/layouts/home/search-standby.blade.php
 <div class="p-3 space-y-3">
     <div class="flex items-center justify-between px-1">
         <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Pencarian Populer</p>
-        <span class="text-[10px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Rekomendasi</span>
+        <span class="text-[10px] font-semibold text-blue-600 bg-sky-50 px-2 py-0.5 rounded-md">Rekomendasi</span>
     </div>
 
     <div class="space-y-1">
         @forelse ($popularCities as $pCity)
             <button type="button" wire:click="selectCitySuggestion('{{ $pCity->name }}')" @click="searchOpen = false"
-                class="w-full text-left flex items-center justify-between rounded-md px-2.5 py-2 text-xs font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition group">
+                class="w-full text-left flex items-center justify-between rounded-md px-2.5 py-2 text-xs font-semibold text-gray-700 hover:bg-sky-50 hover:text-blue-600 transition group">
                 <div class="flex items-center gap-2">
                     <span class="text-blue-500 font-bold">⌖</span>
                     <span>{{ $pCity->name }}</span>

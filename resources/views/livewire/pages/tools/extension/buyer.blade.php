@@ -53,7 +53,7 @@
     </div>
 
     <!-- Output Result -->
-    <div class="p-4 bg-blue-50/70 border border-blue-100 rounded-md space-y-2.5">
+    <div class="p-4 bg-sky-50/70 border border-blue-100 rounded-md space-y-2.5">
         <div class="flex justify-between text-xs text-gray-600">
             <span>Target Cicilan/Bulan:</span>
             <span class="font-semibold text-gray-800" x-text="formatRupiah(calcBuyer.maxMonthlyInstallment)"></span>
@@ -71,7 +71,7 @@
 
     <!-- CTA Direct to Search -->
     <a :href="searchUrl" wire:navigate
-        class="block w-full py-3 bg-blue-600 text-white text-center font-semibold text-xs rounded-md shadow-md shadow-blue-100 hover:bg-blue-700 active:scale-[0.98] transition">
+        class="block w-full py-3 bg-sky-600 text-white text-center font-semibold text-xs rounded-md shadow-md shadow-blue-100 hover:bg-sky-700 active:scale-[0.98] transition">
         Cari Rumah Sesuai Budget Ini
     </a>
 </div>

@@ -39,7 +39,7 @@
                 <p class="text-xs font-medium text-blue-50">⚡ "Proses cari rumah jadi jauh lebih cepat dan transparan di DownloadRumah."</p>
             </div>
 
-            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-blue-500/30 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-sky-500/30 rounded-full blur-2xl pointer-events-none"></div>
         </div>
 
         <!-- RIGHT COLUMN: Auth Form Area (Mobile, Tab, Desktop konsisten tanpa flex-between) -->

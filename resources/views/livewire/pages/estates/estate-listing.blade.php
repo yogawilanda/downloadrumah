@@ -16,7 +16,7 @@
             <p class="text-xs text-slate-500 mt-0.5">Kelola seluruh portofolio listing Anda</p>
         </div>
         <a href="{{ route('estates.create') }}" wire:navigate
-            class="px-3.5 py-2.5 bg-blue-600 text-white text-xs font-bold rounded-md active:scale-95 transition shadow-sm shadow-blue-200">
+            class="px-3.5 py-2.5 bg-sky-600 text-white text-xs font-bold rounded-md active:scale-95 transition shadow-sm shadow-blue-200">
             + Properti
         </a>
     </div>
@@ -80,7 +80,7 @@
                                 $transStyle = match ($estate->transaction_status) {
                                     'sold' => 'bg-slate-100 text-slate-600 border-slate-200',
                                     'rented' => 'bg-purple-50 text-purple-700 border-purple-200/60',
-                                    default => 'bg-blue-50 text-blue-600 border-blue-200/60',
+                                    default => 'bg-sky-50 text-blue-600 border-blue-200/60',
                                 };
                             @endphp
 

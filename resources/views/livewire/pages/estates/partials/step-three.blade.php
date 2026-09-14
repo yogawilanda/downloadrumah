@@ -2,7 +2,7 @@
     <h2 class="text-base font-bold text-center text-gray-900">Info Tambahan</h2>
     <div class="bg-white p-5 rounded-md border border-gray-100 shadow-sm space-y-4">
         <div class="flex items-center gap-2 border-b border-gray-100 pb-3">
-            <span class="p-1.5 bg-blue-50 text-blue-600 rounded-md">
+            <span class="p-1.5 bg-sky-50 text-blue-600 rounded-md">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -43,7 +43,7 @@
             <label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
                 <input type="checkbox" wire:model="form.show_owner_phone" class="sr-only peer">
                 <div
-                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600">
+                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-sky-600">
                 </div>
             </label>
         </div>
@@ -64,7 +64,7 @@
                     <input type="checkbox" wire:change="updatePublicityStatus" @checked($form->publicity_status === 'published')
                         class="sr-only peer" @disabled($form->publicity_status === 'archived')>
                     <div
-                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed">
+                        class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-sky-600 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed">
                     </div>
                 </label>
             </div>

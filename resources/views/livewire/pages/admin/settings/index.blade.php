@@ -51,7 +51,7 @@
                                     <div class="flex items-center gap-2">
                                         <label for="s-{{ $row->id }}" class="text-sm font-semibold text-slate-800">{{ $row->label }}</label>
                                         @if ($row->is_public)
-                                            <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-200/60">Public</span>
+                                            <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-sky-50 text-blue-600 border border-blue-200/60">Public</span>
                                         @endif
                                     </div>
                                     <p class="text-[11px] font-mono text-slate-400">{{ $row->key }}</p>
@@ -68,7 +68,7 @@
                                                 wire:model.boolean="drafts.{{ $row->id }}"
                                                 wire:change="save({{ $row->id }})"
                                                 class="sr-only peer">
-                                            <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                                            <div class="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-sky-600"></div>
                                         </label>
                                     @else
                                         {{-- Text/Number Input with Action Button --}}
@@ -77,7 +77,7 @@
                                             class="flex-1 min-w-0 px-3 py-1.5 bg-white border border-slate-300 rounded-md text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
 
                                         <button wire:click="save({{ $row->id }})" wire:loading.attr="disabled" wire:target="save({{ $row->id }})"
-                                            class="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white text-xs font-semibold rounded-md transition shadow-sm">
+                                            class="inline-flex items-center gap-1 px-3 py-1.5 bg-sky-600 hover:bg-sky-700 disabled:bg-sky-300 text-white text-xs font-semibold rounded-md transition shadow-sm">
                                             <svg wire:loading wire:target="save({{ $row->id }})" class="animate-spin w-3 h-3" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
                                             <span>Simpan</span>
                                         </button>

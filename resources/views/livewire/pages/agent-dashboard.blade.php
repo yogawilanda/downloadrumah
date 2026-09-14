@@ -16,12 +16,12 @@
         <div>
             <h1 class="text-base sm:text-xl font-bold text-slate-900">Halo, {{ auth()->user()->name }} 👋</h1>
             <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Ruang kerja properti</p>
-            <span class="mt-2 inline-block rounded-md bg-blue-50/80 px-2.5 py-0.5 text-[11px] font-bold text-blue-600 border border-blue-100">
+            <span class="mt-2 inline-block rounded-md bg-sky-50/80 px-2.5 py-0.5 text-[11px] font-bold text-blue-600 border border-blue-100">
                 User / Agent MVP
             </span>
         </div>
         <a href="{{ route('estates.create') }}" wire:navigate
-            class="w-full sm:w-auto px-4 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-xs font-bold rounded-md transition flex items-center justify-center gap-1 shadow-sm shadow-blue-200">
+            class="w-full sm:w-auto px-4 py-2.5 bg-sky-600 hover:bg-sky-700 active:scale-95 text-white text-xs font-bold rounded-md transition flex items-center justify-center gap-1 shadow-sm shadow-blue-200">
             <span>+ Properti Baru</span>
         </a>
     </div>

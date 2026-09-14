@@ -1,4 +1,4 @@
-<section class="mx-4 overflow-hidden rounded-md bg-blue-600 p-4 text-white shadow-sm">
+<section class="mx-4 overflow-hidden rounded-md bg-sky-600 p-4 text-white shadow-sm">
     <p class="text-[10px] font-bold uppercase tracking-wider text-blue-100">DownloadRumah</p>
     <h1 class="mt-1 text-xl font-black leading-tight">Cari hunian yang terasa cocok</h1>
     <p class="mt-1 text-xs text-blue-100">Lihat-lihat dulu berdasarkan lokasi, kebutuhan, dan budget.</p>

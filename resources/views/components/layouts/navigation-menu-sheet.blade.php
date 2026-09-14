@@ -28,13 +28,13 @@ usage: Center modal menu dialog for navigation (Mobile, Tablet, & Desktop)
 
         <!-- Header Status Akun -->
         @guest
-            <div class="p-3.5 bg-blue-50/70 border border-blue-100 rounded-md flex items-center justify-between gap-3">
+            <div class="p-3.5 bg-sky-50/70 border border-blue-100 rounded-md flex items-center justify-between gap-3">
                 <div class="space-y-0.5">
                     <p class="text-xs sm:text-sm font-bold text-slate-800">Ingin Pasang Iklan?</p>
                     <p class="text-xs text-slate-500">Masuk untuk kelola propertimu.</p>
                 </div>
                 <a href="{{ route('login') }}" wire:navigate @click="openMenu = false"
-                    class="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-md shadow-sm hover:bg-blue-700 transition shrink-0 active:scale-95">
+                    class="px-4 py-2 bg-sky-600 text-white text-xs font-bold rounded-md shadow-sm hover:bg-sky-700 transition shrink-0 active:scale-95">
                     Masuk
                 </a>
             </div>
@@ -42,7 +42,7 @@ usage: Center modal menu dialog for navigation (Mobile, Tablet, & Desktop)
             <div class="p-3.5 bg-slate-50 border border-slate-100 rounded-md flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0 flex-1">
                     <div
-                        class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shrink-0 shadow-sm shadow-blue-200">
+                        class="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-sm shrink-0 shadow-sm shadow-blue-200">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
                     <div class="space-y-0.5 overflow-hidden">
@@ -74,10 +74,10 @@ usage: Center modal menu dialog for navigation (Mobile, Tablet, & Desktop)
 
                     {{-- Dashboard Card --}}
                     <a href="{{ route('dashboard') }}" wire:navigate @click="openMenu = false"
-                        class="p-3 bg-blue-50/60 border border-blue-100 hover:bg-blue-100/70 rounded-md transition flex items-center justify-between group">
+                        class="p-3 bg-sky-50/60 border border-blue-100 hover:bg-sky-100/70 rounded-md transition flex items-center justify-between group">
                         <div class="flex items-center gap-3">
                             <div
-                                class="w-9 h-9 rounded-md bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm shadow-blue-200">
+                                class="w-9 h-9 rounded-md bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-sm shadow-blue-200">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />

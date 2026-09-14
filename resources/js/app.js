@@ -7,6 +7,16 @@ import triggerWaModal from './trigger_contact_modal';
 
 window.trackEvent = function (module, eventName, payloadData = {}) {
     if (!window.navigator.onLine) return;
+
+    // 1. External Telemetry: Send to GA4 (if script tag is loaded)
+    if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, {
+            event_category: module,
+            ...payloadData,
+        });
+    }
+
+    // 2. Internal Telemetry: Send to Laravel Backend API
     const url = "/api/v1/log-activity";
     const data = JSON.stringify({ module, event_name: eventName, payload: payloadData });
 

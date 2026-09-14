@@ -106,7 +106,7 @@
 
         <div class="pt-2">
             <button type="submit" wire:loading.attr="disabled"
-                class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3 px-4 rounded-md shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center disabled:opacity-70">
+                class="w-full bg-sky-600 hover:bg-sky-700 active:scale-[0.98] text-white font-bold py-3 px-4 rounded-md shadow-lg shadow-blue-100 transition duration-150 flex items-center justify-center disabled:opacity-70">
                 <span wire:loading.remove wire:target="register" class="text-xs font-bold">Daftar Akun</span>
                 <span wire:loading wire:target="register" class="text-xs font-bold flex items-center gap-2">
                     <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">

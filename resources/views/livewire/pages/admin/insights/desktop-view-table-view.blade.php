@@ -19,7 +19,7 @@
                     <td class="py-3 px-3 whitespace-nowrap">
                         <div class="flex items-center gap-2">
                             <div
-                                class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold text-[10px] flex items-center justify-center shrink-0">
+                                class="w-6 h-6 rounded-full bg-sky-100 text-blue-600 font-bold text-[10px] flex items-center justify-center shrink-0">
                                 {{ strtoupper(substr($log->user ? $log->user->name : 'G', 0, 1)) }}
                             </div>
                             <span
@@ -29,7 +29,7 @@
                     <td class="py-3 px-3">
                         <div class="flex items-center gap-2">
                             <span
-                                class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-100 shrink-0">
+                                class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-sky-50 text-blue-600 border border-blue-100 shrink-0">
                                 {{ $log->event_name }}
                             </span>
                             <span class="text-slate-600 font-mono text-[11px] truncate max-w-sm"
@@ -45,7 +45,7 @@
                     <td class="py-3 px-3 text-right whitespace-nowrap">
                         @if (isset($log->payload['session_id']))
                             <button wire:click="inspectJourney('{{ $log->payload['session_id'] }}')"
-                                class="px-3 py-1 bg-blue-50 text-blue-600 border border-blue-100 rounded-lg text-[10px] font-bold hover:bg-blue-600 hover:text-white transition active:scale-95">
+                                class="px-3 py-1 bg-sky-50 text-blue-600 border border-blue-100 rounded-lg text-[10px] font-bold hover:bg-sky-600 hover:text-white transition active:scale-95">
                                 Trace Journey
                             </button>
                         @endif

@@ -86,15 +86,15 @@ usage: Filter modal component for HomeFeed page
                 <label class="block text-[11px] font-semibold text-gray-600 mb-1">Tipe Transaksi</label>
                 <div class="grid grid-cols-3 gap-1.5">
                     <button type="button" wire:click="$set('transaction_type', '')"
-                        class="py-1.5 text-xs font-medium rounded-md border transition {{ $transaction_type === '' ? 'bg-blue-50 border-blue-600 text-blue-600 font-bold' : 'border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                        class="py-1.5 text-xs font-medium rounded-md border transition {{ $transaction_type === '' ? 'bg-sky-50 border-blue-600 text-blue-600 font-bold' : 'border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                         Semua
                     </button>
                     <button type="button" wire:click="$set('transaction_type', 'sale')"
-                        class="py-1.5 text-xs font-medium rounded-md border transition {{ $transaction_type === 'sale' ? 'bg-blue-50 border-blue-600 text-blue-600 font-bold' : 'border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                        class="py-1.5 text-xs font-medium rounded-md border transition {{ $transaction_type === 'sale' ? 'bg-sky-50 border-blue-600 text-blue-600 font-bold' : 'border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                         Dijual
                     </button>
                     <button type="button" wire:click="$set('transaction_type', 'rent')"
-                        class="py-1.5 text-xs font-medium rounded-md border transition {{ $transaction_type === 'rent' ? 'bg-blue-50 border-blue-600 text-blue-600 font-bold' : 'border-gray-200 text-gray-600 hover:bg-gray-50' }}">
+                        class="py-1.5 text-xs font-medium rounded-md border transition {{ $transaction_type === 'rent' ? 'bg-sky-50 border-blue-600 text-blue-600 font-bold' : 'border-gray-200 text-gray-600 hover:bg-gray-50' }}">
                         Disewa
                     </button>
                 </div>
@@ -108,7 +108,7 @@ usage: Filter modal component for HomeFeed page
                 Reset
             </button>
             <button type="button" @click="openSearchModal = false"
-                class="flex-1 py-2 bg-blue-600 text-white text-xs font-semibold rounded-md shadow-md hover:bg-blue-700 transition active:scale-95">
+                class="flex-1 py-2 bg-sky-600 text-white text-xs font-semibold rounded-md shadow-md hover:bg-sky-700 transition active:scale-95">
                 Terapkan
             </button>
         </div>
