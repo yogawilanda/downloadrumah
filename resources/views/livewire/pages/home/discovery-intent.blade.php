@@ -1,4 +1,3 @@
-
 {{-- ------------------------------------------------------------------------------------------------------
 | <meta_config>
 | @path             : resources/views/livewire/pages/home/discovery-intent.blade.php
@@ -9,10 +8,10 @@
 | @techstack        : Laravel 13.17, Livewire 3.6.4, Alpine.js 3.x, Tailwind CSS
 | @design_tokens    : Font: Outfit | Theme: White / Slate / Sky Accent
 |
-| @ruling           : Hero variant acts as a discovery doorway rather than a conventional
-|                     marketplace filter form.
-| @ruling_ui        : Structural geometry is concentrated on the outer discovery surface.
-|                     Internal controls remain familiar and visually calm.
+| @ruling           : Hero acts as a discovery doorway; compact acts as a lightweight
+|                     search controller for active listing exploration.
+| @ruling_ui        : Compact remains intentionally minimal and avoids marketplace-style
+|                     filter controls. Hero owns the stronger discovery presentation.
 | @ruling_motion    : Short 150–200ms interaction transitions only.
 | @ruling_performance : CSS geometry only; no additional JavaScript or decorative animation.
 |
@@ -24,8 +23,8 @@
 @if ($variant === 'compact')
 
     {{-- ----------------------------------------------------------------------------------------------
-    | Compact Search Surface
-    | ------------------------------------------------------------------------------------------- --}}
+    | Compact Discovery Controller
+    | ----------------------------------------------------------------------------------------------- --}}
 
     <div
         x-data="{ searchOpen: false }"
@@ -35,18 +34,46 @@
 
         <form
             wire:submit.prevent="submitSearch"
-            class="relative flex flex-col items-center gap-2 border border-slate-200 bg-white p-2 shadow-sm sm:p-2.5 md:flex-row"
+            class="flex border border-slate-300 bg-white"
         >
 
-            <div class="relative w-full md:flex-1">
+            {{-- Search --}}
 
-                <input
-                    type="text"
-                    wire:model.live.debounce.300ms="search"
-                    @focus="searchOpen = true"
-                    placeholder="Cari lokasi, nama properti..."
-                    class="w-full border-0 px-3 py-2 text-xs text-slate-800 outline-none placeholder:text-slate-400 focus:ring-0 sm:text-sm"
-                >
+            <div class="relative min-w-0 flex-1">
+
+                <div class="flex h-10 items-center">
+
+                    <span
+                        class="pl-3 text-slate-400"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            class="h-4 w-4"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <circle
+                                cx="8.5"
+                                cy="8.5"
+                                r="5.5"
+                            ></circle>
+
+                            <path d="M13 13L17 17"></path>
+                        </svg>
+                    </span>
+
+                    <input
+                        type="text"
+                        wire:model.live.debounce.300ms="search"
+                        @focus="searchOpen = true"
+                        placeholder="Cari lokasi, nama properti..."
+                        autocomplete="off"
+                        class="w-full border-0 bg-transparent px-3 py-2 text-xs font-medium text-slate-800 outline-none placeholder:text-slate-400 focus:ring-0 sm:text-sm"
+                    >
+
+                </div>
 
                 <x-layouts.home.search-suggestions
                     :suggestions="$suggestions"
@@ -56,36 +83,14 @@
 
             </div>
 
-            <div class="hidden h-4 w-px bg-slate-200 md:block"></div>
 
-            <select
-                wire:model.live="city"
-                class="w-full cursor-pointer border-0 bg-transparent text-xs text-slate-700 focus:ring-0 md:w-auto sm:text-sm"
-            >
-                <option value="">Semua Kota</option>
-
-                @foreach ($cities as $c)
-
-                    <option value="{{ \Illuminate\Support\Str::slug($c->name) }}">
-                        {{ $c->name }}
-                    </option>
-
-                @endforeach
-
-            </select>
-
-            <select
-                wire:model.live="transaction_type"
-                class="w-full cursor-pointer border-0 bg-transparent text-xs text-slate-700 focus:ring-0 md:w-auto sm:text-sm"
-            >
-                <option value="">Status (Semua)</option>
-                <option value="sale">Dijual</option>
-                <option value="rent">Disewakan</option>
-            </select>
+            {{-- Submit --}}
 
             <button
                 type="submit"
-                class="w-full bg-sky-600 px-5 py-2 text-xs font-semibold text-white transition-colors duration-150 hover:bg-sky-700 md:w-auto"
+                wire:loading.attr="disabled"
+                wire:target="submitSearch"
+                class="shrink-0 border-l border-slate-200 bg-slate-950 px-5 text-xs font-bold text-white transition duration-150 hover:bg-sky-600 disabled:cursor-wait disabled:opacity-60"
             >
                 Cari
             </button>
@@ -94,11 +99,12 @@
 
     </div>
 
+
 @else
 
     {{-- ----------------------------------------------------------------------------------------------
     | Hero Discovery Surface
-    | ------------------------------------------------------------------------------------------- --}}
+    | ----------------------------------------------------------------------------------------------- --}}
 
     <div class="relative">
 
@@ -123,9 +129,7 @@
         </div>
 
 
-        {{-- ------------------------------------------------------------------------------------------
-        | Main Discovery Surface
-        | ------------------------------------------------------------------------------------------- --}}
+        {{-- Main Discovery Surface --}}
 
         <div
             x-data="{ searchOpen: false }"

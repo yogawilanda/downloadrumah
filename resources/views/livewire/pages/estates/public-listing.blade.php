@@ -8,17 +8,6 @@
 | @author : yogawilanda <eayogawilanda@gmail.com>
 |--------------------------------------------------------------------------
 --}}
-@php
-    $seoTitle = trim(($search ? $search . ' ' : '') . ($city ? 'di ' . $city : 'Properti'));
-    $seoTitle .= $max_price ? ' hingga Rp' . number_format((float) $max_price, 0, ',', '.') : '';
-@endphp
-@section('has_custom_meta', true)
-@push('meta')
-    <meta name="description" content="Temukan {{ $seoTitle }} di DownloadRumah.">
-    <meta property="og:title" content="{{ $seoTitle }} - DownloadRumah">
-    <meta property="og:description" content="Cari listing properti aktif sesuai lokasi, kata kunci, dan budget Anda.">
-@endpush
-
 <div class="min-h-screen bg-gray-50/50 pb-12" x-data="{ openSearchModal: false }" @open-search-modal.window="openSearchModal = true">
 
     <!-- 1. FULL-WIDTH STICKY FILTER BAR (Membentang Penuh 100% Layar) -->

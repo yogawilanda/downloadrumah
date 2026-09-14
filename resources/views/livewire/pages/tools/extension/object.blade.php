@@ -1,71 +1,288 @@
-{{-- resources/views/livewire/pages/tools/extension/object.blade.php --}}
 
-<div x-show="mode === 'agent'" class="space-y-4 text-sm" x-cloak>
+{{-- ------------------------------------------------------------------------------------------------------
+| <meta_config>
+| @path             : resources/views/livewire/pages/tools/extension/object.blade.php
+| @usage            : KPR Planning — Property Installment Mode
+| @type             : Alpine Extension View
+|
+| @ruling           : Property mode starts from a known property price and estimates financing needs.
+| @ruling_ui        : Property price is the primary input; installment is the dominant output.
+| @ruling_result    : Financing breakdown remains secondary to the estimated monthly installment.
+| @ruling_motion    : Short 150–200ms transitions only.
+|
+| @status           : Active
+| @author           : yogawilanda <eaywilanda@gmail.com>
+| </meta_config>
+-------------------------------------------------------------------------------------------------------- --}}
+
+<div
+    x-show="mode === 'agent'"
+    x-cloak
+    class="space-y-6"
+>
+
+    {{-- Primary Property Input --}}
+
     <div>
-        <label class="block text-xs font-medium text-gray-600 mb-1">Harga Properti (Rp)</label>
+
+        <div class="mb-2 flex items-center gap-2">
+
+            <span class="h-1.5 w-1.5 bg-sky-500"></span>
+
+            <label class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                Properti
+            </label>
+
+        </div>
+
+        <label class="mb-2 block text-sm font-semibold text-slate-800">
+            Berapa harga properti yang ingin dihitung?
+        </label>
+
+        <div class="relative border border-slate-300 bg-white transition-colors duration-150 focus-within:border-sky-400">
+
+            <span
+                class="absolute inset-y-0 left-0 flex items-center pl-4 text-xs font-semibold text-slate-400"
+            >
+                Rp
+            </span>
+
+            <input
+                type="text"
+                :value="agent.propertyPrice ? agent.propertyPrice.toLocaleString('id-ID') : ''"
+                @input="formatInput($event, agent, 'propertyPrice')"
+                placeholder="650.000.000"
+                class="w-full border-0 bg-transparent py-3.5 pl-10 pr-4 text-base font-semibold text-slate-900 outline-none placeholder:text-slate-300 focus:ring-0"
+            >
+
+        </div>
+
+        <p
+            class="mt-1.5 pl-1 text-[10px] font-medium text-sky-600"
+            x-text="formatTerbilangShort(agent.propertyPrice)"
+        ></p>
+
+    </div>
+
+
+    {{-- Property Condition --}}
+
+    <div>
+
+        <label class="mb-2 block text-xs font-semibold text-slate-700">
+            Kondisi properti
+        </label>
+
+        <div class="grid grid-cols-2 border border-slate-300">
+
+            <button
+                type="button"
+                @click="agent.condition = 'new'"
+                :class="agent.condition === 'new'
+                    ? 'bg-slate-50 text-slate-950 border-b-2 border-sky-500'
+                    : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'"
+                class="px-3 py-3 text-xs font-semibold transition-colors duration-150"
+            >
+                Properti baru
+            </button>
+
+            <button
+                type="button"
+                @click="agent.condition = 'used'"
+                :class="agent.condition === 'used'
+                    ? 'bg-slate-50 text-slate-950 border-b-2 border-sky-500'
+                    : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'"
+                class="border-l border-slate-300 px-3 py-3 text-xs font-semibold transition-colors duration-150"
+            >
+                Properti bekas
+            </button>
+
+        </div>
+
+    </div>
+
+
+    {{-- Financing Assumptions --}}
+
+    <div class="border-t border-slate-200 pt-5">
+
+        <div class="mb-3">
+
+            <p class="text-xs font-semibold text-slate-700">
+                Rencana pembiayaan
+            </p>
+
+            <p class="mt-0.5 text-[10px] text-slate-400">
+                Tentukan uang muka dan asumsi KPR untuk memperkirakan cicilan.
+            </p>
+
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+
+            {{-- Down Payment --}}
+
+            <div>
+
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                    Uang muka
+                </label>
+
+                <div class="relative">
+
+                    <input
+                        type="number"
+                        x-model.number="agent.dpPercent"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0"
+                    >
+
+                    <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
+                        %
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            {{-- Interest --}}
+
+            <div>
+
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                    Bunga / Tahun
+                </label>
+
+                <div class="relative">
+
+                    <input
+                        type="number"
+                        step="0.1"
+                        x-model.number="agent.interest"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0"
+                    >
+
+                    <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
+                        %
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- Tenure --}}
+
+    <div>
+
+        <label class="mb-2 block text-xs font-semibold text-slate-700">
+            Tenor KPR
+        </label>
+
         <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-xs text-gray-400 font-semibold">Rp</span>
-            <input type="text" :value="agent.propertyPrice ? agent.propertyPrice.toLocaleString('id-ID') : ''"
-                @input="formatInput($event, agent, 'propertyPrice')" placeholder="650.000.000"
-                class="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-md text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+            <input
+                type="number"
+                x-model.number="agent.tenure"
+                class="w-full border border-slate-300 bg-white px-3 py-3 pr-16 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0"
+            >
+
+            <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
+                Tahun
+            </span>
+
         </div>
-        <p class="text-sm text-blue-600 font-semibold mt-1 pl-1" x-text="formatTerbilangShort(agent.propertyPrice)"></p>
+
     </div>
 
-    <!-- Fast Toggle: Status Properti -->
-    <div>
-        <label class="block text-xs font-medium text-gray-600 mb-1.5">Kondisi Properti</label>
-        <div class="grid grid-cols-2 gap-2">
-            <button type="button" @click="agent.condition = 'new'"
-                :class="agent.condition === 'new' ? 'bg-sky-50 border-blue-600 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500'"
-                class="py-2 text-xs border rounded-md transition text-center">
-                Baru (Primary)
-            </button>
-            <button type="button" @click="agent.condition = 'used'"
-                :class="agent.condition === 'used' ? 'bg-sky-50 border-blue-600 text-blue-600 font-semibold' : 'border-gray-200 text-gray-500'"
-                class="py-2 text-xs border rounded-md transition text-center">
-                Second (Secondary)
-            </button>
+
+    {{-- Result --}}
+
+    <div class="border border-slate-300 bg-slate-50">
+
+        <div class="border-b border-slate-200 px-4 py-3">
+
+            <p class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                Perkiraan pembiayaan
+            </p>
+
         </div>
+
+        <div class="space-y-3 px-4 py-4">
+
+            <div class="flex items-center justify-between gap-4 text-xs">
+
+                <span class="text-slate-500">
+                    Uang muka
+                </span>
+
+                <span
+                    class="font-semibold text-slate-800"
+                    x-text="formatRupiah(calcAgent.dpAmount)"
+                ></span>
+
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4 text-xs">
+
+                <span class="text-slate-500">
+                    Plafon pinjaman KPR
+                </span>
+
+                <span
+                    class="font-semibold text-slate-800"
+                    x-text="formatRupiah(calcAgent.plafon)"
+                ></span>
+
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4 text-xs">
+
+                <span class="text-slate-500">
+                    Estimasi surat & pajak
+                </span>
+
+                <span
+                    class="font-medium text-slate-600"
+                    x-text="formatRupiah(calcAgent.estimatedLegalFee)"
+                ></span>
+
+            </div>
+
+
+            <div class="border-t border-slate-200 pt-3">
+
+                <div class="flex items-end justify-between gap-4">
+
+                    <span class="text-xs font-semibold text-slate-700">
+                        Estimasi cicilan / bulan
+                    </span>
+
+                    <span
+                        class="text-lg font-bold tracking-tight text-sky-600"
+                        x-text="formatRupiah(calcAgent.monthlyInstallment)"
+                    ></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="grid grid-cols-2 gap-3">
-        <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Uang Muka / DP (%)</label>
-            <input type="number" x-model.number="agent.dpPercent"
-                class="w-full p-2.5 border border-gray-200 rounded-md text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-        <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Bunga KPR (%/Thn)</label>
-            <input type="number" step="0.1" x-model.number="agent.interest"
-                class="w-full p-2.5 border border-gray-200 rounded-md text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-    </div>
 
-    <div>
-        <label class="block text-xs font-medium text-gray-600 mb-1">Tenor (Tahun)</label>
-        <input type="number" x-model.number="agent.tenure"
-            class="w-full p-2.5 border border-gray-200 rounded-md text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
-    </div>
+    {{-- Context Note --}}
 
-    <!-- Output Result -->
-    <div class="p-4 bg-gray-50 border border-gray-200/80 rounded-md space-y-2">
-        <div class="flex justify-between text-xs text-gray-600">
-            <span>Nilai Uang Muka (DP):</span>
-            <span class="font-semibold text-gray-800" x-text="formatRupiah(calcAgent.dpAmount)"></span>
-        </div>
-        <div class="flex justify-between text-xs text-gray-600">
-            <span>Plafon Pinjaman KPR:</span>
-            <span class="font-semibold text-gray-800" x-text="formatRupiah(calcAgent.plafon)"></span>
-        </div>
-        <div class="flex justify-between text-xs text-gray-500 pt-0.5">
-            <span>Est. Biaya Surat & Pajak:</span>
-            <span class="font-medium text-gray-700" x-text="formatRupiah(calcAgent.estimatedLegalFee)"></span>
-        </div>
-        <hr class="border-gray-200">
-        <div class="flex justify-between items-center pt-1">
-            <span class="text-xs font-bold text-gray-900">Cicilan / Bulan:</span>
-            <span class="text-base font-extrabold text-blue-600" x-text="formatRupiah(calcAgent.monthlyInstallment)"></span>
-        </div>
-    </div>
+    <p class="text-center text-[10px] leading-5 text-slate-400">
+        Hasil merupakan estimasi berdasarkan asumsi yang kamu masukkan dan
+        dapat berbeda dari perhitungan bank.
+    </p>
+
 </div>

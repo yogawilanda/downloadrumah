@@ -1,77 +1,246 @@
-{{--
-|--------------------------------------------------------------------------
-| Extension: Buyer Mode (Cari Sesuai Budget)
-|--------------------------------------------------------------------------
-| @path : resources/views/livewire/pages/tools/extension/buyer.blade.php
---}}
-<div x-show="mode === 'buyer'" class="space-y-4 text-sm">
-    <div>
-        <label class="block text-sm font-medium text-gray-600 mb-1">Kemampuan Cicilan Maksimal/Bulan</label>
-        <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-xs text-gray-400 font-semibold">Rp</span>
-            <input type="text" :value="buyer.monthlyBudget ? buyer.monthlyBudget.toLocaleString('id-ID') : ''"
-                @input="formatInput($event, buyer, 'monthlyBudget')" placeholder="5.000.000"
-                class="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-md text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-        <p class="text-sm text-blue-600 font-semibold mt-1 pl-1" x-text="formatTerbilangShort(buyer.monthlyBudget)"></p>
-    </div>
+{{-- ------------------------------------------------------------------------------------------------------
+| <meta_config>
+| @path             : resources/views/livewire/pages/tools/extension/buyer.blade.php
+| @usage            : KPR Planning — Buyer Affordability Mode
+| @type             : Alpine Extension View
+|
+| @ruling           : Buyer mode prioritizes affordability intent before technical loan assumptions.
+| @ruling_ui        : Monthly budget is the primary input; supporting assumptions remain visually secondary.
+| @ruling_result    : The estimated property price is the dominant output and leads directly to discovery.
+| @ruling_motion    : Short 150–200ms transitions only.
+|
+| @status           : Active
+| @author           : yogawilanda <eayogawilanda@gmail.com>
+| </meta_config>
+-------------------------------------------------------------------------------------------------------- --}}
+
+<div x-show="mode === 'buyer'" x-cloak class="space-y-6">
+
+    {{-- Primary Affordability Input --}}
 
     <div>
-        <label class="block text-xs font-medium text-gray-600 mb-1">Target Lokasi Cari Rumah</label>
+
+        <div class="mb-2 flex items-center gap-2">
+
+            <span class="h-1.5 w-1.5 bg-sky-500"></span>
+
+            <label class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                Kemampuan utama
+            </label>
+
+        </div>
+
+        <label class="mb-2 block text-sm font-semibold text-slate-800">
+            Berapa cicilan yang nyaman setiap bulan?
+        </label>
+
+        <div
+            class="relative border border-slate-300 bg-white transition-colors duration-150 focus-within:border-sky-400">
+
+            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-xs font-semibold text-slate-400">
+                Rp
+            </span>
+
+            <input type="text" :value="buyer.monthlyBudget ? buyer.monthlyBudget.toLocaleString('id-ID') : ''"
+                @input="formatInput($event, buyer, 'monthlyBudget')" placeholder="5.000.000"
+                class="w-full border-0 bg-transparent py-3.5 pl-10 pr-4 text-base font-semibold text-slate-900 outline-none placeholder:text-slate-300 focus:ring-0">
+
+        </div>
+
+        <p class="mt-1.5 pl-1 text-[10px] font-medium text-sky-600" x-text="formatTerbilangShort(buyer.monthlyBudget)">
+        </p>
+
+    </div>
+
+
+    {{-- Location --}}
+
+    <div>
+
+        <label class="mb-2 block text-xs font-semibold text-slate-700">
+            Di mana kamu ingin mencari?
+        </label>
+
         <select x-model="buyer.location"
-            class="w-full p-2.5 border border-gray-200 rounded-md text-xs text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+            class="w-full cursor-pointer border border-slate-300 bg-white px-3 py-3 text-xs font-medium text-slate-700 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0">
             <option value="">Semua Lokasi</option>
             <option value="surabaya">Surabaya & Sekitarnya</option>
             <option value="sidoarjo">Sidoarjo</option>
             <option value="gresik">Gresik</option>
             <option value="jabodetabek">Jabodetabek</option>
         </select>
+
     </div>
 
-    <div class="grid grid-cols-2 gap-3">
-        <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Bunga KPR (%/Thn)</label>
-            <input type="number" step="0.1" x-model.number="buyer.interest"
-                class="w-full p-2.5 border border-gray-200 rounded-md text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+    {{-- Planning Assumptions --}}
+
+    <div class="border-t border-slate-200 pt-5">
+
+        <div class="mb-3">
+
+            <p class="text-xs font-semibold text-slate-700">
+                Rencana pembiayaan
+            </p>
+
+            <p class="mt-0.5 text-[10px] text-slate-400">
+                Sesuaikan asumsi untuk mendapatkan perkiraan yang lebih relevan.
+            </p>
+
         </div>
-        <div>
-            <label class="block text-xs font-medium text-gray-600 mb-1">Tenor (Tahun)</label>
-            <input type="number" x-model.number="buyer.tenure"
-                class="w-full p-2.5 border border-gray-200 rounded-md text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none">
+
+        <div class="grid grid-cols-2 gap-3">
+
+            {{-- Interest --}}
+
+            <div>
+
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                    Bunga / Tahun
+                </label>
+
+                <div class="relative">
+
+                    <input type="number" step="0.1" x-model.number="buyer.interest"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0">
+
+                    <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
+                        %
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            {{-- Tenure --}}
+
+            <div>
+
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                    Tenor
+                </label>
+
+                <div class="relative">
+
+                    <input type="number" x-model.number="buyer.tenure"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-12 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0">
+
+                    <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
+                        Tahun
+                    </span>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
+
+    {{-- Down Payment --}}
 
     <div>
-        <label class="block text-xs font-medium text-gray-600 mb-1">Rencana DP Siap Disediakan (Rp)</label>
-        <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-xs text-gray-400 font-semibold">Rp</span>
+
+        <label class="mb-2 block text-xs font-semibold text-slate-700">
+            Dana awal yang sudah disiapkan
+        </label>
+
+        <div
+            class="relative border border-slate-300 bg-white transition-colors duration-150 focus-within:border-sky-400">
+
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-xs font-semibold text-slate-400">
+                Rp
+            </span>
+
             <input type="text" :value="buyer.dp ? buyer.dp.toLocaleString('id-ID') : ''"
                 @input="formatInput($event, buyer, 'dp')" placeholder="50.000.000"
-                class="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-md text-xs font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                class="w-full border-0 bg-transparent py-3 pl-9 pr-3 text-sm font-medium text-slate-800 outline-none placeholder:text-slate-300 focus:ring-0">
+
         </div>
-        <p class="text-[10px] text-blue-600 font-semibold mt-1 pl-1" x-text="formatTerbilangShort(buyer.dp)"></p>
+
+        <p class="mt-1 pl-1 text-[10px] font-medium text-slate-400" x-text="formatTerbilangShort(buyer.dp)"></p>
+
     </div>
 
-    <!-- Output Result -->
-    <div class="p-4 bg-sky-50/70 border border-blue-100 rounded-md space-y-2.5">
-        <div class="flex justify-between text-xs text-gray-600">
-            <span>Target Cicilan/Bulan:</span>
-            <span class="font-semibold text-gray-800" x-text="formatRupiah(calcBuyer.maxMonthlyInstallment)"></span>
+
+    {{-- Result --}}
+
+    <div class="border border-slate-300 bg-slate-50">
+
+        <div class="border-b border-slate-200 px-4 py-3">
+
+            <p class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                Perkiraan kemampuan
+            </p>
+
         </div>
-        <div class="flex justify-between text-xs text-gray-600">
-            <span>Plafon Pinjaman Max Bank:</span>
-            <span class="font-semibold text-gray-800" x-text="formatRupiah(calcBuyer.maxPlafon)"></span>
+
+        <div class="space-y-3 px-4 py-4">
+
+            <div class="flex items-center justify-between gap-4 text-xs">
+
+                <span class="text-slate-500">
+                    Target cicilan
+                </span>
+
+                <span class="font-semibold text-slate-800"
+                    x-text="formatRupiah(calcBuyer.maxMonthlyInstallment)"></span>
+
+            </div>
+
+
+            <div class="flex items-center justify-between gap-4 text-xs">
+
+                <span class="text-slate-500">
+                    Perkiraan plafon bank
+                </span>
+
+                <span class="font-semibold text-slate-800" x-text="formatRupiah(calcBuyer.maxPlafon)"></span>
+
+            </div>
+
+
+            <div class="border-t border-slate-200 pt-3">
+
+                <div class="flex items-end justify-between gap-4">
+
+                    <span class="text-xs font-semibold text-slate-700">
+                        Kisaran harga properti
+                    </span>
+
+                    <span class="text-lg font-bold tracking-tight text-sky-600"
+                        x-text="formatRupiah(calcBuyer.maxPropertyPrice)"></span>
+
+                </div>
+
+            </div>
+
         </div>
-        <hr class="border-blue-100">
-        <div class="flex justify-between items-center pt-0.5">
-            <span class="text-xs font-bold text-blue-900">Maksimal Harga Rumah:</span>
-            <span class="text-base font-extrabold text-blue-600" x-text="formatRupiah(calcBuyer.maxPropertyPrice)"></span>
-        </div>
+
     </div>
 
-    <!-- CTA Direct to Search -->
+
+    {{-- Discovery CTA --}}
+
     <a :href="searchUrl" wire:navigate
-        class="block w-full py-3 bg-sky-600 text-white text-center font-semibold text-xs rounded-md shadow-md shadow-blue-100 hover:bg-sky-700 active:scale-[0.98] transition">
-        Cari Rumah Sesuai Budget Ini
+        class="group flex w-full items-center justify-between border border-slate-950 bg-slate-950 px-4 py-3.5 text-xs font-semibold text-white transition-colors duration-150 hover:border-sky-600 hover:bg-sky-600">
+
+        <span>
+            Cari properti dalam kisaran ini
+        </span>
+
+        <span class="text-slate-400 transition-colors duration-150 group-hover:text-white" aria-hidden="true">
+            →
+        </span>
+
     </a>
+
+
+    <p class="text-center text-[10px] leading-5 text-slate-400">
+        Perhitungan ini adalah perkiraan untuk membantu perencanaan,
+        bukan keputusan persetujuan kredit dari bank.
+    </p>
+
 </div>

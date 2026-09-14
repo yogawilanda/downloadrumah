@@ -1,26 +1,63 @@
-{{--
-loc: resources\views\components\layouts\home\home-feed-listing.blade.php
-usage: reusable listing card for carousel (home) or vertical/horizontal list (/listings)
---}}
-@props(['estates', 'variant' => 'carousel'])
+
+{{-- ------------------------------------------------------------------------------------------------------
+| <meta_config>
+| @path             : resources/views/components/layouts/home/home-feed-listing.blade.php
+| @usage            : Reusable property listing surface for carousel and public listing views
+| @type             : Blade Component
+| @expected_data    : [$estates, $variant]
+| @design_tokens    : Font: Outfit | Theme: White / Slate / Sky Accent
+|
+| @ruling           : Listing surfaces prioritize property imagery, location, price, and essential specs.
+| @ruling_ui        : Hard borders, restrained geometry, minimal rounding, no decorative card shadows.
+| @ruling_motion    : Short 150–200ms transitions only.
+| @ruling_performance : Preserve lazy loading for non-primary images and eager loading only where appropriate.
+|
+| @status            : Active
+| @author            : yogawilanda <eaywilanda@gmail.com>
+| </meta_config>
+-------------------------------------------------------------------------------------------------------- --}}
+
+@props([
+    'estates',
+    'variant' => 'carousel',
+])
+
 
 @if ($variant === 'vertical')
-    {{-- TAMPILAN PUBLIC LISTING (Mobile: Card Stack | Desktop: Horizontal Row) --}}
-    <div class="px-4 pt-4 space-y-4 max-w-4xl mx-auto">
+
+    {{-- ----------------------------------------------------------------------------------------------
+    | Public Listing — Responsive Property Rows
+    | ----------------------------------------------------------------------------------------------- --}}
+
+    <div class="mx-auto w-full max-w-4xl space-y-4 px-4 pt-4">
+
         @forelse ($estates as $estate)
-            <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
-                class="flex flex-col md:flex-row bg-white rounded-md overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 transition-all duration-200 group">
 
-                <!-- Image Container (HP: Full Width Top, Desktop: Fixed Width Left) -->
-                <div class="relative h-48 md:h-44 md:w-64 lg:w-72 shrink-0 bg-gray-200 overflow-hidden">
-                    <!-- FIX: Tambah loading="lazy" & decoding="async" -->
-                    <img src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
-                        alt="{{ $estate->title }}" loading="lazy" decoding="async"
-                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <a
+                href="{{ route('estates.show', $estate->slug) }}"
+                wire:navigate
+                class="group flex flex-col overflow-hidden border border-slate-300 bg-white transition-colors duration-150 hover:border-sky-300 md:flex-row"
+            >
 
-                    <!-- Badge Status -->
+                {{-- Image --}}
+
+                <div class="relative h-52 shrink-0 overflow-hidden bg-slate-200 md:h-44 md:w-64 lg:w-72">
+
+                    <img
+                        src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
+                        alt="{{ $estate->title }}"
+                        loading="lazy"
+                        decoding="async"
+                        class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                    >
+
+                    {{-- Status --}}
+
                     <span
-                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-md text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
+                        class="absolute left-3 top-3 flex items-center gap-1.5 border border-white/70 bg-white/95 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-slate-700"
+                    >
+                        <span class="h-1.5 w-1.5 bg-sky-500"></span>
+
                         {{ match ($estate->transaction_type) {
                             'sale' => 'Dijual',
                             'rent' => 'Disewakan',
@@ -29,102 +66,175 @@ usage: reusable listing card for carousel (home) or vertical/horizontal list (/l
                         } }}
                     </span>
 
-                    <!-- Price Tag Badge (HP Only) -->
-                    <div
-                        class="md:hidden absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-md text-xs font-bold">
+                    {{-- Mobile Price --}}
+
+                    <span
+                        class="absolute bottom-3 right-3 border border-white/20 bg-slate-950/90 px-2.5 py-1 text-xs font-bold text-white md:hidden"
+                    >
                         {{ $estate->short_price }}
-                    </div>
+                    </span>
+
                 </div>
 
-                <!-- Content Container (Info & Specs) -->
-                <div class="p-4 md:p-5 flex flex-col justify-between flex-1 min-w-0">
+
+                {{-- Content --}}
+
+                <div class="flex min-w-0 flex-1 flex-col justify-between p-4 md:p-5">
+
                     <div>
-                        <!-- Title & Location -->
-                        <div class="flex items-start justify-between gap-2">
-                            <h2
-                                class="font-bold text-gray-900 text-base md:text-lg line-clamp-1 group-hover:text-blue-600 transition-colors">
-                                {{ $estate->title }}
-                            </h2>
-                        </div>
 
-                        <p class="text-xs text-gray-500 flex items-center mt-1 mb-3">
-                            <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <h2
+                            class="line-clamp-1 text-base font-bold tracking-tight text-slate-900 transition-colors duration-150 group-hover:text-sky-600 md:text-lg"
+                        >
+                            {{ $estate->title }}
+                        </h2>
+
+
+                        <p class="mt-1.5 mb-4 flex items-center text-xs text-slate-500">
+
+                            <svg
+                                class="mr-1.5 h-3.5 w-3.5 shrink-0 text-slate-400"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                />
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
                             </svg>
-                            <span class="truncate">{{ $estate->short_location_label }}</span>
-                        </p>
-                    </div>
 
-                    <!-- Bottom Spec Strip & Desktop Price -->
-                    <div
-                        class="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-gray-100 gap-2">
-                        <!-- Specs Info -->
-                        <div class="flex items-center space-x-3 text-xs text-gray-600">
-                            @if ($estate->bedroom)
-                                <div class="flex items-center space-x-1">
-                                    <span class="font-bold text-gray-800">{{ $estate->bedroom }}</span>
-                                    <span class="text-gray-400">KT</span>
-                                </div>
-                            @endif
-                            @if ($estate->bathroom)
-                                <div class="flex items-center space-x-1">
-                                    <span class="font-bold text-gray-800">{{ $estate->bathroom }}</span>
-                                    <span class="text-gray-400">KM</span>
-                                </div>
-                            @endif
-                            @if ($estate->building_size)
-                                <div class="flex items-center space-x-1">
-                                    <span class="font-bold text-gray-800">{{ $estate->building_size }}</span>
-                                    <span class="text-gray-400">m² (LB)</span>
-                                </div>
-                            @endif
-                            @if ($estate->land_size)
-                                <div class="flex items-center space-x-1">
-                                    <span class="font-bold text-gray-800">{{ $estate->land_size }}</span>
-                                    <span class="text-gray-400">m² (LT)</span>
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Price (Visible on Desktop Right Bottom) -->
-                        <div class="hidden md:block text-right">
-                            <span class="text-lg font-black text-blue-600">
-                                {{ $estate->short_price }}
+                            <span class="truncate">
+                                {{ $estate->short_location_label }}
                             </span>
-                        </div>
+
+                        </p>
+
                     </div>
+
+
+                    {{-- Specs / Price --}}
+
+                    <div class="flex flex-col gap-3 border-t border-slate-200 pt-3 sm:flex-row sm:items-center sm:justify-between">
+
+                        <div class="flex items-center gap-3 overflow-x-auto text-xs text-slate-600 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+
+                            @if ($estate->bedroom)
+                                <div class="flex shrink-0 items-center gap-1">
+                                    <span class="font-bold text-slate-800">
+                                        {{ $estate->bedroom }}
+                                    </span>
+                                    <span class="text-slate-400">KT</span>
+                                </div>
+                            @endif
+
+                            @if ($estate->bathroom)
+                                <div class="flex shrink-0 items-center gap-1">
+                                    <span class="font-bold text-slate-800">
+                                        {{ $estate->bathroom }}
+                                    </span>
+                                    <span class="text-slate-400">KM</span>
+                                </div>
+                            @endif
+
+                            @if ($estate->building_size)
+                                <div class="flex shrink-0 items-center gap-1">
+                                    <span class="font-bold text-slate-800">
+                                        {{ $estate->building_size }}
+                                    </span>
+                                    <span class="text-slate-400">m² LB</span>
+                                </div>
+                            @endif
+
+                            @if ($estate->land_size)
+                                <div class="flex shrink-0 items-center gap-1">
+                                    <span class="font-bold text-slate-800">
+                                        {{ $estate->land_size }}
+                                    </span>
+                                    <span class="text-slate-400">m² LT</span>
+                                </div>
+                            @endif
+
+                        </div>
+
+
+                        <span class="hidden shrink-0 text-right text-base font-bold tracking-tight text-sky-600 md:block">
+                            {{ $estate->short_price }}
+                        </span>
+
+                    </div>
+
                 </div>
+
             </a>
+
         @empty
+
             <x-layouts.home.empty-state :show-reset="true" />
+
         @endforelse
 
+
+        {{-- Pagination --}}
+
         @if (method_exists($estates, 'links'))
-            <div class="pt-4 pb-6 overflow-x-auto">
+
+            <div class="overflow-x-auto py-4 pb-6">
                 {{ $estates->links('pagination::simple-tailwind') }}
             </div>
-        @endif
-    </div>
-@else
-    {{-- TAMPILAN CAROUSEL MENYAMPING (Tetap Utuh untuk Home Feed Landing Page) --}}
-    @forelse ($estates as $estate)
-        <div class="w-[270px] flex-shrink-0 snap-start py-1">
-            <a href="{{ route('estates.show', $estate->slug) }}" wire:navigate
-                class="block bg-white rounded-md overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
 
-                <div class="relative h-44 w-full bg-gray-200">
-                    <!-- FIX: Tambah loading="lazy" & decoding="async" -->
-                    <img src="{{ $estate->primaryImage?->url }}" alt="{{ $estate->title }}"
+        @endif
+
+    </div>
+
+
+@else
+
+    {{-- ----------------------------------------------------------------------------------------------
+    | Home Feed — Horizontal Property Carousel
+    | ----------------------------------------------------------------------------------------------- --}}
+
+    @forelse ($estates as $estate)
+
+        <div class="w-[270px] shrink-0 snap-start py-1">
+
+            <a
+                href="{{ route('estates.show', $estate->slug) }}"
+                wire:navigate
+                class="group block overflow-hidden border border-slate-300 bg-white transition-colors duration-150 hover:border-sky-300"
+            >
+
+                {{-- Image --}}
+
+                <div class="relative h-44 w-full overflow-hidden bg-slate-200">
+
+                    <img
+                        src="{{ $estate->primaryImage?->url }}"
+                        alt="{{ $estate->title }}"
                         loading="{{ $loop->first ? 'eager' : 'lazy' }}"
-                        fetchpriority="{{ $loop->first ? 'high' : 'auto' }}" decoding="async"
-                        class="w-full h-full object-cover" />
+                        fetchpriority="{{ $loop->first ? 'high' : 'auto' }}"
+                        decoding="async"
+                        class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                    >
+
+
+                    {{-- Status --}}
 
                     <span
-                        class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase rounded-md text-white backdrop-blur-md {{ $estate->transaction_type === 'sale' ? 'bg-emerald-600/90' : 'bg-amber-600/90' }}">
+                        class="absolute left-3 top-3 flex items-center gap-1.5 border border-white/70 bg-white/95 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-slate-700"
+                    >
+                        <span class="h-1.5 w-1.5 bg-sky-500"></span>
+
                         {{ match ($estate->transaction_type) {
                             'sale' => 'Dijual',
                             'rent' => 'Disewakan',
@@ -133,60 +243,114 @@ usage: reusable listing card for carousel (home) or vertical/horizontal list (/l
                         } }}
                     </span>
 
-                    <div
-                        class="absolute bottom-3 right-3 bg-gray-900/80 backdrop-blur-md text-white px-3 py-1 rounded-md text-xs font-bold">
+
+                    {{-- Price --}}
+
+                    <span
+                        class="absolute bottom-3 right-3 border border-white/20 bg-slate-950/90 px-2.5 py-1 text-xs font-bold text-white"
+                    >
                         {{ $estate->short_price }}
-                    </div>
+                    </span>
+
                 </div>
+
+
+                {{-- Content --}}
 
                 <div class="p-3.5">
-                    <h2 class="font-bold text-gray-900 text-sm line-clamp-1 mb-1">{{ $estate->title }}</h2>
-                    <p class="text-xs text-gray-500 flex items-center mb-2.5">
-                        <svg class="w-3.5 h-3.5 mr-1 text-gray-400 shrink-0" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+
+                    <h2 class="mb-1 line-clamp-1 text-sm font-bold tracking-tight text-slate-900 transition-colors duration-150 group-hover:text-sky-600">
+                        {{ $estate->title }}
+                    </h2>
+
+
+                    <p class="mb-3 flex items-center text-xs text-slate-500">
+
+                        <svg
+                            class="mr-1.5 h-3.5 w-3.5 shrink-0 text-slate-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                            />
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
                         </svg>
-                        <span class="truncate">{{ $estate->short_location_label }}</span>
+
+                        <span class="truncate">
+                            {{ $estate->short_location_label }}
+                        </span>
+
                     </p>
 
-                    <div
-                        class="flex items-center space-x-3 pt-2.5 border-t border-gray-100 text-[11px] text-gray-600 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+
+                    {{-- Specs --}}
+
+                    <div class="flex items-center gap-3 overflow-x-auto border-t border-slate-200 pt-2.5 text-[11px] text-slate-600 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+
                         @if ($estate->bedroom)
-                            <div class="flex items-center space-x-1 shrink-0">
-                                <span class="font-bold text-gray-800">{{ $estate->bedroom }}</span>
-                                <span class="text-gray-400">KT</span>
+                            <div class="flex shrink-0 items-center gap-1">
+                                <span class="font-bold text-slate-800">
+                                    {{ $estate->bedroom }}
+                                </span>
+                                <span class="text-slate-400">KT</span>
                             </div>
                         @endif
+
                         @if ($estate->bathroom)
-                            <div class="flex items-center space-x-1 shrink-0">
-                                <span class="font-bold text-gray-800">{{ $estate->bathroom }}</span>
-                                <span class="text-gray-400">KM</span>
+                            <div class="flex shrink-0 items-center gap-1">
+                                <span class="font-bold text-slate-800">
+                                    {{ $estate->bathroom }}
+                                </span>
+                                <span class="text-slate-400">KM</span>
                             </div>
                         @endif
+
                         @if ($estate->building_size)
-                            <div class="flex items-center space-x-1 shrink-0">
-                                <span class="font-bold text-gray-800">{{ $estate->building_size }}</span>
-                                <span class="text-gray-400">m² (LB)</span>
+                            <div class="flex shrink-0 items-center gap-1">
+                                <span class="font-bold text-slate-800">
+                                    {{ $estate->building_size }}
+                                </span>
+                                <span class="text-slate-400">m² LB</span>
                             </div>
                         @endif
+
                         @if ($estate->land_size)
-                            <div class="flex items-center space-x-1 shrink-0">
-                                <span class="font-bold text-gray-800">{{ $estate->land_size }}</span>
-                                <span class="text-gray-400">m² (LT)</span>
+                            <div class="flex shrink-0 items-center gap-1">
+                                <span class="font-bold text-slate-800">
+                                    {{ $estate->land_size }}
+                                </span>
+                                <span class="text-slate-400">m² LT</span>
                             </div>
                         @endif
+
                     </div>
+
                 </div>
+
             </a>
+
         </div>
+
     @empty
-        <div
-            class="w-full flex items-center justify-center py-8 px-4 bg-gray-50/50 rounded-md border border-dashed border-gray-200 text-center">
-            <p class="text-xs text-gray-400 font-medium">Belum ada properti tersedia.</p>
+
+        <div class="flex w-full items-center justify-center border border-dashed border-slate-300 bg-white px-4 py-8 text-center">
+            <p class="text-xs font-medium text-slate-400">
+                Belum ada properti tersedia.
+            </p>
         </div>
+
     @endforelse
 
 @endif
