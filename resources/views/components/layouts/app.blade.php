@@ -17,6 +17,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Google Tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('services.ga4.id') }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        // 1. Set global parameters first
+        @if (session()->has('utm_short'))
+            gtag('set', {
+                'utm_short': @json(session('utm_short'))
+            });
+        @endif
+
+        // 2. Initialize GA4 & trigger initial page_view
+        gtag('config', '{{ config('services.ga4.id') }}');
+    </script>
+
     @if (app()->environment('production'))
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     @endif
