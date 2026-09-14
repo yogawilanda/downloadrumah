@@ -46,34 +46,16 @@ body {
     will-change: scroll-position;
 }
 
-/*
-|--------------------------------------------------------------------------
-| DownloadRumah Structural Visual System
-|--------------------------------------------------------------------------
-*/
-
 .home-dot-field {
-    background-image: radial-gradient(
-        circle,
-        rgb(100 116 139 / 0.72) 1.15px,
-        transparent 1.15px
-    );
+    background-image: radial-gradient(circle, #94a3b8 1.8px, transparent 1px);
     background-size: 18px 18px;
+    mask-image: linear-gradient(to bottom left, black 5%, transparent 76%);
+    -webkit-mask-image: linear-gradient(to bottom left, black 5%, transparent 76%);
 }
 
-.home-dot-field-small {
-    background-image: radial-gradient(
-        circle,
-        rgb(148 163 184 / 0.7) 1px,
-        transparent 1px
-    );
-    background-size: 15px 15px;
-}
-
-.home-rail {
-    background: rgb(203 213 225 / 0.8);
-}
-
-.home-rail-light {
-    background: rgb(226 232 240 / 0.9);
+.home-dot-field-soft {
+    background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+    background-size: 20px 20px;
+    mask-image: linear-gradient(to right, transparent, black 35%, transparent 95%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 35%, transparent 95%);
 }
