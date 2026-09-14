@@ -1,68 +1,61 @@
-{{-- path: resources/views/components/layouts/home/home-feed-banner.blade.php --}}
-<div class="px-4"
-     x-data="{
-         activeSlide: 1,
-         totalSlides: 2,
-         timer: null,
-         startAutoSlide() {
-             this.timer = setInterval(() => {
-                 this.activeSlide = this.activeSlide === this.totalSlides ? 1 : this.activeSlide + 1;
-             }, 4000);
-         },
-         stopAutoSlide() {
-             clearInterval(this.timer);
-         }
-     }"
-     x-init="startAutoSlide()"
-     @mouseenter="stopAutoSlide()"
-     @mouseleave="startAutoSlide()">
+{{-- ------------------------------------------------------------------------------------------------------
+| <meta_config>
+| @path             : resources/views/components/layouts/home/home-feed-banner.blade.php
+| @usage            : Home Feed — Contextual Discovery Message
+| @type             : Presentational Component
+| @techstack        : Laravel 13.17, Alpine.js 3.x, Tailwind CSS
+|
+| @ruling           : Do not position DownloadRumah as a listing marketplace or advertising platform.
+| @ruling_ui        : Quiet supporting surface; no promotional carousel.
+| @ruling_motion    : No continuous animation.
+| @ruling_performance : Static content only.
+|
+| @status           : Active
+| @author           : yogawilanda <eaywilanda@gmail.com>
+| </meta_config>
+-------------------------------------------------------------------------------------------------------- --}}
 
-    {{-- Gradient Option A: Slate Navy to Indigo (Sangat Elegan) --}}
-    <div class="relative overflow-hidden rounded-md bg-gradient-to-r from-blue-800 to-indigo-900 text-white p-5 shadow-lg border border-slate-800/50">
 
-        {{-- Slide 1: Untuk Pengunjung / Pencari Properti --}}
-        <div x-show="activeSlide === 1"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-x-2"
-             x-transition:enter-end="opacity-100 translate-x-0"
-             class="space-y-2">
-            <span class="inline-block bg-amber-400/20 border border-amber-400/30 text-amber-300 text-xs font-bold tracking-wide px-2.5 py-0.5 rounded-full">
-                Lihat-lihat dari rumah
-            </span>
-            <h3 class="text-base font-bold leading-snug tracking-tight text-white">
-                Temukan pilihan hunian dengan lebih tenang
-            </h3>
-            <p class="text-xs md:text-sm text-slate-200 leading-relaxed">
-                Bandingkan pilihan dan simpan gambaran kebutuhanmu sebelum memutuskan survey lokasi.
+
+
+
+<div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+
+    <div class="max-w-2xl">
+
+        <div class="mb-2 flex items-center gap-2">
+
+            <span class="h-1 w-5 bg-sky-500"></span>
+
+            <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                Cara kami bekerja
             </p>
+
         </div>
 
-        {{-- Slide 2: Untuk Marketing / Agen --}}
-        <div x-show="activeSlide === 2"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-x-2"
-             x-transition:enter-end="opacity-100 translate-x-0"
-             class="space-y-2"
-             x-cloak>
-            <span class="inline-block bg-white/15 border border-white/20 text-blue-200 text-xs font-bold tracking-wide px-2.5 py-0.5 rounded-full">
-                💼 Untuk Marketing & Agen
-            </span>
-            <h3 class="text-base font-bold leading-snug tracking-tight text-white">
-                Simpan & Kelola Semua Listingmu
-            </h3>
-            <p class="text-xs md:text-sm text-slate-200 leading-relaxed">
-                Jadikan platform ini alat marketing andalanmu untuk pajang properti dan jangkau calon pembeli.
-            </p>
-        </div>
+        <h3 class="text-base font-bold leading-snug tracking-tight text-slate-900 sm:text-lg">
+            Tidak semua orang datang dengan kebutuhan yang sudah jelas.
+        </h3>
 
-        {{-- Indicator Dots --}}
-        <div class="flex items-center gap-2 mt-4 justify-center">
-            <button @click="activeSlide = 1"
-                    class="h-2 rounded-full transition-all duration-300 focus:outline-none"
-                    :class="activeSlide === 1 ? 'w-7 bg-white' : 'w-2 bg-white/40 hover:bg-white/60'"></button>
-            <button @click="activeSlide = 2"
-                    class="h-2 rounded-full transition-all duration-300 focus:outline-none"
-                    :class="activeSlide === 2 ? 'w-7 bg-white' : 'w-2 bg-white/40 hover:bg-white/60'"></button>
-        </div>
+        <p class="mt-2 text-xs leading-5 text-slate-500 sm:text-sm">
+            Karena itu, DownloadRumah membantu mempertemukan kebutuhan,
+            properti, dan orang yang tepat sebelum percakapan dimulai.
+        </p>
+
     </div>
+
+    <div class="hidden md:block">
+
+        <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-400">
+
+            <span>Intent</span>
+            <span class="text-sky-500">→</span>
+            <span>Match</span>
+            <span class="text-sky-500">→</span>
+            <span>Conversation</span>
+
+        </div>
+
+    </div>
+
 </div>
