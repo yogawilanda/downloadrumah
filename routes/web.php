@@ -24,7 +24,7 @@
  * </meta_config>
  */
 
-use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Sitemap\SitemapController;
 use App\Livewire\Pages\AgentDashboard;
 use App\Livewire\Pages\Catalog\PublicCatalog;
 use App\Livewire\Pages\Catalog\PublicCatalogDetail;
