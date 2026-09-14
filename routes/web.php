@@ -24,6 +24,7 @@
  * </meta_config>
  */
 
+use App\Http\Controllers\SitemapController;
 use App\Livewire\Pages\AgentDashboard;
 use App\Livewire\Pages\Catalog\PublicCatalog;
 use App\Livewire\Pages\Catalog\PublicCatalogDetail;
@@ -62,6 +63,9 @@ Route::get('/privacy', PrivacyPolicy::class)->name('privacy');
 Route::get('/terms', TermsAndConditions::class)->name('terms');
 Route::get('/support', SupportCenter::class)->name('support');
 Route::get('/release-notes', ReleaseNotes::class)->name('release-notes');
+
+// generative sitemap to register dynamic xml on public
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 /*
 |--------------------------------------------------------------------------
