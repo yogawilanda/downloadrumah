@@ -1,20 +1,24 @@
 <?php
+/* -------------- Yoga Wilanda Documentation V.1.0.0 -----------------
+| <meta_config>
+| Author_______________: yogawilanda <eayogawilanda@gmail.com>
+| Path_________________: app/DataObjects/GuestIntentMap.php
+| Usage________________: DownloadRumah — Guest Intent Semantic Mapping
+| Type_________________: Data Object / Static Data Mapping
+| expected_data________: [intents, search_states, property_types, purposes]
+| purpose______________: Centralize user-facing labels and semantic pointers
+|                         used by the guest intent experience and matching flow.
+| ruling_______________: UI labels may change without changing the semantic
+|                         identifiers used by the matching layer.
+| ruling_structure_____: Intent -> State / Property Type / Purpose -> Pointer
+| status_______________: Active
+</meta_config>
+-------------- For Data Objects like Map, Array, Or List ----------- */
+
+
 
 namespace App\DataObjects;
 
-/* ------------------------------------------------------------------------------------------------------
-| <meta_config>
-| @path                : app/DataObjects/GuestIntentMap.php
-| @usage               : DownloadRumah — Guest Intent Definition & Matching Pointers
-| @type                : Domain Data Mapping
-| @expected_data       : [intents, search_states, property_types, purposes]
-| @purpose             : Centralize user-facing intent labels and semantic pointers used by the matching flow.
-| @ruling               : UI text remains editable without changing matching semantics. Pointers are the stable identifiers.
-| @ruling_structure     : Intent → State / Property Type / Purpose → Pointer
-| @status               : Intent Experience — Prototype / Refactor
-| @author               : yogawilanda <eaywilanda@gmail.com>
-</meta_config>
--------------------------------------------------------------------------------------------------------- */
 
 class GuestIntentMap
 {
@@ -23,27 +27,27 @@ class GuestIntentMap
         return [
             'intents' => [
                 'search' => [
-                    'label' => 'Saya mencari properti',
+                    'label' => 'mencari properti',
                 ],
                 'offer' => [
-                    'label' => 'Saya punya properti',
+                    'label' => 'punya properti',
                 ],
             ],
             'search_states' => [
                 'known' => [
-                    'label' => 'Saya sudah tahu yang saya cari',
+                    'label' => 'sudah tahu yang cari',
                 ],
                 'browsing' => [
-                    'label' => 'Saya masih lihat-lihat',
+                    'label' => 'mau lihat lihat dulu',
                 ],
                 'undecided' => [
-                    'label' => 'Saya belum yakin',
+                    'label' => 'belum yakin',
                 ],
                 'comparing' => [
-                    'label' => 'Saya sedang membandingkan',
+                    'label' => 'sedang membandingkan',
                 ],
                 'starting' => [
-                    'label' => 'Saya baru mulai mencari',
+                    'label' => 'baru mulai mencari',
                 ],
             ],
             'property_types' => [

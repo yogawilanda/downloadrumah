@@ -19,7 +19,7 @@ Namun, ada cara otomatis supaya tidak perlu, jadi dimasukkan ke DatabaseSeeder
 -->
 php artisan stub:publish
 
-   INFO  Stubs published successfully.
+INFO  Stubs published successfully.
 
 
 <!-- erd generator -->

@@ -1,27 +1,27 @@
 <?php
 
+/* -------------- Yoga Wilanda Documentation V.1.1.6 -----------------
+| <meta_config>
+| Author_______________: yogawilanda <eayogawilanda@gmail.com>
+| Path_________________: app/Livewire/Pages/Home/GuestIntentController.php
+| Render_______________: return view('livewire.pages.home.sections.hero');
+| Usage________________: DownloadRumah — Guest Intent Controller
+| type_________________: Livewire Component
+| expected_data________: [intent, step, propertyType, searchState, location, budget, purpose]
+| purpose______________: Manage step navigation, form states, label resolution, and query payload assembly.
+| ruling_______________: Always update every changes following to this documentation.
+| ruling_structure_____: Action methods modify step/state -> Computed properties resolve dynamic labels & matching payload.
+| status_______________: Active
+</meta_config>
+------------------------------------------------------------------ */
+
 namespace App\Livewire\Pages\Home;
 
 use App\DataObjects\GuestIntentMap;
+
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Renderless;
 use Livewire\Component;
-use function Termwind\render;
-
-/* ------------------------------------------------------------------------------------------------------
-| <meta_config>
-| @path                : app/Livewire/Pages/Home/GuestIntentController.php
-| @usage               : DownloadRumah — Guest Intent Controller
-| @type                : Livewire Component
-| @expected_data       : [intent, step, propertyType, searchState, location, budget, purpose]
-| @purpose             : Manage step navigation, form states, label resolution, and query payload assembly.
-| @ruling               : Business logic and navigation state reside here; raw data mapping stays in GuestIntentMap.
-| @ruling_structure     : Action methods modify step/state -> Computed properties resolve dynamic labels & matching payload.
-| @status               : Active / Refactored
-| @author               : yogawilanda <eaywilanda@gmail.com>
-</meta_config>
--------------------------------------------------------------------------------------------------------- */
 
 class GuestIntentController extends Component
 {
@@ -84,8 +84,6 @@ class GuestIntentController extends Component
             $this->step--;
         }
     }
-
-
 
     public function resetMatching(): void
     {
@@ -151,6 +149,9 @@ class GuestIntentController extends Component
         return $this->intentMap['purposes'][$this->intent] ?? [];
     }
 
+    /**
+     *
+     */
     #[Computed]
     public function payload(): array
     {
@@ -162,7 +163,7 @@ class GuestIntentController extends Component
                 : null,
             'location' => trim($this->location),
             'budget' => (int) preg_replace('/[^0-9]/', '', $this->budget),
-            'purpose_pointer' => $this->purpose
+          'purpose_pointer' => $this->purpose
                 ? ($this->intentMap['purposes'][$this->intent][$this->purpose]['pointer'] ?? null)
                 : null,
         ];
