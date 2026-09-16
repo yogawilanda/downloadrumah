@@ -23,7 +23,7 @@ class DiscoveryIntent extends Component
     {
         $params = array_filter([
             'search' => $this->search,
-            'city' => Str::slug($this->city), // Otomatis format ke slug "buleleng" / "kota-surabaya"
+            'city' => Str::slug($this->city),
             'transaction_type' => $this->transaction_type,
             'max_price' => $this->max_price,
         ]);

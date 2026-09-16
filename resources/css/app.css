@@ -82,3 +82,24 @@ body {
     background: rgb(226 232 240 / 0.9);
 }
 
+/*
+|--------------------------------------------------------------------------
+| Hero Word Reveal
+|--------------------------------------------------------------------------
+*/
+.word-reveal {
+    display: inline-block;
+    animation: word-reveal 160ms ease-out;
+}
+
+@keyframes word-reveal {
+    from {
+        transform: translateY(-0.08em);
+        opacity: 0.6;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

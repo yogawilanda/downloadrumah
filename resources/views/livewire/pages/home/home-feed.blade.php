@@ -1,23 +1,27 @@
 {{-- ------------------------------------------------------------------------------------------------------
 | <meta_config>
 | @path             : resources/views/livewire/pages/home/home-feed.blade.php
-| @usage            : DownloadRumah Home Feed — Primary Discovery & Property Exploration Surface
-| @type             : Root Livewire Page View (Stateful Container & Orchestrator)
+| @usage            : DownloadRumah Home — Intent Discovery Entry
+| @type             : Root Livewire Page View
 | @layout           : components.layouts.app
 |
-| @expected_data    : [$recentEstates, $recommendedEstates]
+| @expected_data    : []
 | @expected_events  : [open-search-modal]
 | @techstack        : Laravel 13.17, Livewire 3.6.4, Alpine.js 3.x, Tailwind CSS
 | @design_tokens    : Font: Outfit | Theme: White / Slate / Sky Accent
-| @seo_context      : Public Home Feed
+| @seo_context      : Public Home
 |
-| @ruling           : Page orchestrates state and section composition. Structural visuals are delegated.
+| @ruling           : Homepage currently focuses on demonstrating the core
+|                     intent-discovery experience before introducing the
+|                     broader DownloadRumah ecosystem.
+|
 | @ruling_ui        : Mobile-first. Strong section boundaries. Restrained rounding.
 | @ruling_modal     : Pure UI state uses Alpine.js. Stateful content remains with Livewire.
 | @ruling_motion    : Snappy transitions only. No continuous decorative animation.
-| @ruling_performance : Preserve LCP priority. Avoid unnecessary visual layers and eager media.
+| @ruling_performance : Keep homepage lightweight during intent-experience development.
+|                       Avoid eager recommendation queries and unnecessary media.
 |
-| @status           : Facelift — Structural Section Extraction
+| @status           : Intent Experience — Prototype / Refactor
 | @author           : yogawilanda <eaywilanda@gmail.com>
 | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
@@ -30,110 +34,92 @@
     <x-layouts.structural-background>
 
         {{-- =============================================================
-             01. HERO / DISCOVERY ENTRY
+             01. INTENT EXPERIENCE
 
-             Primary entry point.
-             Establishes the product promise and lets the visitor begin
-             exploring without requiring a fully defined intent.
+             Primary homepage experience.
+
+             The visitor is not asked to understand DownloadRumah first.
+             Instead, the interface lets them demonstrate what they need
+             or what property they have.
+
+             Current focus:
+             - Saya mencari
+             - Saya punya properti
+             - Guided questions
+             - Intent summary
+
+             Matching and authentication will be connected later.
              ============================================================= --}}
-        @include('livewire.pages.home.sections.hero')
+        <livewire:pages.home.guest-intent-controller />
 
 
         {{-- =============================================================
-             02. RECENT DISCOVERY
+             TEMPORARILY DISABLED
 
-             Immediate property discovery.
-             Gives the visitor something concrete to explore after the hero.
+             The sections below are intentionally disabled while the
+             intent experience becomes the primary homepage entry point.
+
+             Do not delete yet. They may be reintroduced after the new
+             interaction and information hierarchy are validated.
              ============================================================= --}}
+
+        {{-- 02. RECENT DISCOVERY --}}
+        {{--
         @include('livewire.pages.home.sections.recent-discovery')
+        --}}
 
-
-        {{-- =============================================================
-             03. RECOMMENDATION
-
-             Expands discovery beyond the first visible set.
-             Communicates that relevant choices are not limited to the
-             newest properties.
-             ============================================================= --}}
+        {{-- 03. RECOMMENDATION --}}
+        {{--
         @include('livewire.pages.home.sections.recommendation')
+        --}}
 
-
-        {{-- =============================================================
-             04. WHY DISCOVERY
-
-             Introduces the problem behind property discovery:
-             attractive does not necessarily mean suitable.
-             This shifts the page from "listing catalog" into
-             guided decision-making.
-             ============================================================= --}}
+        {{-- 04. WHY DISCOVERY --}}
+        {{--
         @include('livewire.pages.home.sections.why-discovery')
+        --}}
 
-
-        {{-- =============================================================
-             05. HOW IT WORKS
-
-             Explains DownloadRumah's mechanism after the visitor has
-             already seen the discovery experience and understood
-             the problem it is trying to solve.
-             ============================================================= --}}
+        {{-- 05. HOW IT WORKS --}}
+        {{--
         @include('livewire.pages.home.sections.how-it-works')
+        --}}
 
-
-        {{-- =============================================================
-             06. PROPERTY ↔ PROFESSIONAL
-
-             Explains the relationship between a property and the person
-             behind it, preparing the visitor for a contextual conversation
-             rather than treating the listing as the final destination.
-             ============================================================= --}}
+        {{-- 06. PROPERTY ↔ PROFESSIONAL --}}
+        {{--
         @include('livewire.pages.home.sections.property-professional')
+        --}}
 
-
-        {{-- =============================================================
-             07. START ANYWHERE
-
-             Removes the assumption that visitors must already know exactly
-             what they want. Provides several natural discovery entry points.
-             ============================================================= --}}
+        {{-- 07. START ANYWHERE --}}
+        {{--
         @include('livewire.pages.home.sections.start-anywhere')
+        --}}
 
-
-        {{-- =============================================================
-             08. NEXT STEP
-
-             Converts accumulated understanding back into a concrete action:
-             continue exploring properties.
-             ============================================================= --}}
+        {{-- 08. NEXT STEP --}}
+        {{--
         @include('livewire.pages.home.sections.next-step')
+        --}}
 
-
-        {{-- =============================================================
-             09. CONTEXTUAL MESSAGE
-
-             Supporting explanation / contextual communication.
-             Keep this section lightweight so it does not compete with
-             the primary discovery flow.
-             ============================================================= --}}
+        {{-- 09. CONTEXTUAL MESSAGE --}}
+        {{--
         @include('livewire.pages.home.sections.promotion')
+        --}}
 
-
-        {{-- =============================================================
-             10. OWNER ACQUISITION
-
-             Secondary path for property owners.
-             This should remain separate from the main discovery journey
-             so the homepage does not feel like an advertisement marketplace.
-             ============================================================= --}}
+        {{-- 10. OWNER ACQUISITION --}}
+        {{--
         @include('livewire.pages.home.sections.owner-acquisition')
+        --}}
 
 
         {{-- =============================================================
-             11. MODALS
+             TEMPORARILY DISABLED
 
-             Search and needs-analysis interfaces.
-             Kept at the root level so their state remains independent
-             from individual visual sections.
+             Existing search / needs-analysis modals are not part of the
+             current homepage experiment.
+
+             The new hero interaction will eventually replace or connect
+             to the appropriate discovery flow.
              ============================================================= --}}
+
+        {{--
         <div wire:key="search-advanced-modal-wrapper">
             <x-layouts.home.home-feed-search-advanced
                 :transaction_type="''"
@@ -145,16 +131,18 @@
         <div wire:key="needs-analysis-modal-wrapper">
             @livewire(\App\Livewire\Pages\Home\NeedsAnalysisModal::class)
         </div>
+        --}}
 
 
         {{-- =============================================================
-             RESERVED / DEPRECATED SECTIONS
+             RESERVED / DEPRECATED
 
-             Kept commented intentionally for possible reuse.
-             Do not remove until the new homepage structure is fully locked.
+             Kept for possible future structural reuse.
              ============================================================= --}}
 
-        {{-- @include('livewire.pages.home.sections.structural-pause') --}}
+        {{--
+        @include('livewire.pages.home.sections.structural-pause')
+        --}}
 
     </x-layouts.structural-background>
 </div>
