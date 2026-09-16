@@ -1,38 +1,74 @@
-{{-- resources/views/livewire/pages/estates/partials/agent-owner-edit.blade.php --}}
-<div class="z-40 pointer-events-none">
-    <div class="max-w-md mx-auto px-4 pointer-events-auto">
-        <div
-            class="bg-white/95 backdrop-blur-md border border-slate-200/80 p-3 rounded-md shadow-xl shadow-slate-900/10 flex items-center justify-between gap-3">
+{{--
+|--------------------------------------------------------------------------
+| Context & Meta Configuration
+|--------------------------------------------------------------------------
+| @path       : resources/views/livewire/pages/estates/partials/agent-owner-edit.blade.php
+| @usage      : Owner listing status and edit action overlay
+| @version    : 1.2.0
+| @ruling     : sharp architectural UI / responsive / dark mode
+|--------------------------------------------------------------------------
+--}}
 
+<div class="pointer-events-none z-40">
+    <div class="pointer-events-auto mx-auto w-full max-w-md px-4">
+        <div
+            class="flex items-center justify-between gap-4 border border-slate-200
+                   bg-white p-3
+                   dark:border-slate-800 dark:bg-slate-900"
+        >
             {{-- Status & Label Info --}}
-            <div class="min-w-0 pl-1">
+            <div class="min-w-0">
                 @php
-                    $badgeStyle = match ($estate->publicity_status) {
-                        'published' => 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
-                        'archived' => 'bg-rose-50 text-rose-700 border-rose-200/60',
-                        default => 'bg-amber-50 text-amber-700 border-amber-200/60',
+                    $statusLabel = strtoupper($estate->publicity_status);
+
+                    $statusStyle = match ($estate->publicity_status) {
+                        'published' => 'border-slate-950 bg-slate-950 text-white dark:border-white dark:bg-white dark:text-slate-950',
+                        'archived' => 'border-red-600 text-red-600 dark:border-red-400 dark:text-red-400',
+                        default => 'border-slate-300 text-slate-600 dark:border-slate-700 dark:text-slate-300',
                     };
                 @endphp
 
                 <div class="flex items-center gap-2">
                     <span
-                        class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border {{ $badgeStyle }}">
-                        {{ $estate->publicity_status }}
+                        class="border px-2 py-1 text-[10px] font-bold uppercase
+                               tracking-[0.14em] {{ $statusStyle }}"
+                    >
+                        {{ $statusLabel }}
+                    </span>
+
+                    <span
+                        class="text-[10px] font-semibold uppercase tracking-[0.12em]
+                               text-slate-400 dark:text-slate-500"
+                    >
+                        Owner
                     </span>
                 </div>
-                <p class="text-xs text-slate-500 font-semibold truncate mt-1">Listing milik Anda</p>
+
+                <p class="mt-1 truncate text-xs font-medium text-slate-500 dark:text-slate-400">
+                    Listing milik Anda
+                </p>
             </div>
 
             {{-- Action Button Edit --}}
-            <a href="{{ route('estates.edit', $estate->slug) }}" wire:navigate
-                class="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-md transition shadow-sm shadow-blue-200 flex items-center gap-1.5 shrink-0 active:scale-95">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            <a
+                href="{{ route('estates.edit', $estate->slug) }}"
+                wire:navigate
+                class="flex shrink-0 items-center gap-2 border border-slate-950
+                       bg-slate-950 px-4 py-2.5 text-xs font-bold text-white
+                       transition hover:bg-white hover:text-slate-950
+                       dark:border-white dark:bg-white dark:text-slate-950
+                       dark:hover:bg-slate-900 dark:hover:text-white"
+            >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                        stroke-linecap="square"
+                        stroke-linejoin="miter"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
                 </svg>
                 <span>Edit Listing</span>
             </a>
-
         </div>
     </div>
 </div>

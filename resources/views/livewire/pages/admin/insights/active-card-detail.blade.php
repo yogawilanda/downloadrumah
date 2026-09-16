@@ -1,42 +1,125 @@
-{{-- @path: resources/views/livewire/pages/admin/insights/active-card-detail.blade.php --}}
-<div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" x-data>
-    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closeCardDetail"></div>
+{{-- ----------- Yoga Wilanda Documentation v1.1.6 -----------------
+<meta_config>
+    0. author________________: yogawilanda <eayogawilanda@gmail.com>
+    1. path__________________: resources/views/livewire/pages/admin/insights/active-card-detail.blade.php
+    2. usage_________________: Admin Insights — Active Card Detail Modal
+    3. type__________________: Livewire Blade View
+    4. expected_data_________: [activeCardDetail, cardDetailsData]
+    5. purpose_______________: Display telemetry breakdown details for an active insight card.
+    6. ruling________________: Presentation only; interaction is delegated to Livewire actions.
+    7. ruling_structure______: Livewire Component → Active Card Detail View
+    8. status_______________: Active
+</meta_config>
+------------------------------------------------------------------ --}}
+
+<div
+    class="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-4"
+    x-data
+>
+    {{-- Backdrop --}}
     <div
-        class="relative w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-100 flex flex-col max-h-[80vh] overflow-hidden z-10">
-        <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+        wire:click="closeCardDetail"
+    ></div>
+
+    {{-- Modal --}}
+    <div
+        class="relative z-10 flex max-h-[80vh] w-full flex-col overflow-hidden
+               rounded-t-3xl border border-slate-200 bg-white shadow-2xl
+               dark:border-slate-700 dark:bg-slate-900
+               sm:max-w-md sm:rounded-2xl"
+    >
+        {{-- Header --}}
+        <div
+            class="flex items-center justify-between border-b border-slate-100
+                   bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-800/60"
+        >
             <div>
-                <h2 class="text-sm font-bold text-slate-800">Breakdown Detail Telemetry</h2>
-                <p class="text-[10px] text-slate-500 uppercase tracking-wider font-bold mt-0.5">Kategori:
-                    {{ $activeCardDetail }}</p>
+                <h2 class="text-sm font-bold text-slate-800 dark:text-slate-100">
+                    Breakdown Detail Telemetry
+                </h2>
+
+                <p
+                    class="mt-0.5 text-[10px] font-bold uppercase tracking-wider
+                           text-slate-500 dark:text-slate-400"
+                >
+                    Kategori: {{ $activeCardDetail }}
+                </p>
             </div>
-            <button wire:click="closeCardDetail"
-                class="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:bg-slate-200/60 transition">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+
+            <button
+                wire:click="closeCardDetail"
+                class="flex h-8 w-8 items-center justify-center rounded-full
+                       text-slate-400 transition hover:bg-slate-200/60
+                       hover:text-slate-700 dark:hover:bg-slate-700
+                       dark:hover:text-slate-200"
+            >
+                <svg
+                    class="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="M6 18L18 6M6 6l12 12"
+                    />
                 </svg>
             </button>
         </div>
-        <div class="p-4 overflow-y-auto flex-1">
-            <div class="divide-y divide-slate-100">
+
+        {{-- Data --}}
+        <div class="flex-1 overflow-y-auto p-4">
+            <div class="divide-y divide-slate-100 dark:divide-slate-800">
                 @forelse($cardDetailsData as $row)
-                    <div class="py-2.5 flex items-center justify-between gap-3 text-xs">
-                        <span class="font-mono text-slate-700 truncate max-w-[200px] sm:max-w-xs text-[11px]"
-                            title="{{ $row->key_name }}">
+                    <div class="flex items-center justify-between gap-3 py-2.5 text-xs">
+                        <span
+                            class="max-w-[200px] truncate font-mono text-[11px] text-slate-700
+                                   dark:text-slate-300 sm:max-w-xs"
+                            title="{{ $row->key_name }}"
+                        >
                             {{ $row->key_name }}
                         </span>
+
                         <span
-                            class="shrink-0 px-2.5 py-1 rounded-full bg-sky-50 text-blue-600 font-bold font-mono text-[10px] whitespace-nowrap border border-blue-100">
+                            class="shrink-0 whitespace-nowrap rounded-full border
+                                   border-sky-100 bg-sky-50 px-2.5 py-1 font-mono
+                                   text-[10px] font-bold text-sky-600
+                                   dark:border-sky-900/70 dark:bg-sky-950/40
+                                   dark:text-sky-400"
+                        >
                             {{ number_format($row->total) }} Hits
                         </span>
                     </div>
                 @empty
-                    <div class="text-center py-6 text-xs text-slate-400">Data breakdown tidak ditemukan.</div>
+                    <div
+                        class="py-6 text-center text-xs text-slate-400
+                               dark:text-slate-500"
+                    >
+                        Data breakdown tidak ditemukan.
+                    </div>
                 @endforelse
             </div>
         </div>
-        <div class="p-3.5 bg-slate-50 border-t border-slate-100 flex justify-end">
-            <button wire:click="closeCardDetail"
-                class="w-full sm:w-auto px-4 py-2 bg-white border border-slate-200 rounded-md text-xs font-bold text-slate-700 hover:bg-slate-100 transition shadow-sm active:scale-95">Tutup</button>
+
+        {{-- Footer --}}
+        <div
+            class="flex justify-end border-t border-slate-100 bg-slate-50 p-3.5
+                   dark:border-slate-800 dark:bg-slate-800/60"
+        >
+            <button
+                wire:click="closeCardDetail"
+                class="w-full rounded-md border border-slate-200 bg-white px-4 py-2
+                       text-xs font-bold text-slate-700 shadow-sm transition
+                       hover:bg-slate-100 active:scale-95
+                       dark:border-slate-700 dark:bg-slate-900
+                       dark:text-slate-200 dark:hover:bg-slate-800
+                       sm:w-auto"
+            >
+                Tutup
+            </button>
         </div>
     </div>
 </div>

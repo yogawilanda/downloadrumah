@@ -1,6 +1,6 @@
 {{-- ----------- Yoga Wilanda Documentation v1.0.0 -----------------
 <meta_config>
-0. author________________: yogawilanda <eaywilanda@gmail.com>
+0. author________________: yogawilanda <eayogwilanda@gmail.com>
 1. path__________________: resources/views/components/widgets/tabs/tabs.blade.php
 2. usage_________________: Application-wide UI / Design System
 3. type__________________: Blade UI Component
@@ -14,15 +14,14 @@
 
 @props(['items'])
 
-<div class="grid grid-cols-2 border border-slate-300">
+<div class="grid grid-cols-2 border border-slate-300 dark:border-slate-700">
     @foreach ($items as $item)
         <x-widgets.tabs.tab
             :active="$item['active'] ?? false"
             :action="$item['action'] ?? null"
             :label="$item['label']"
             :value="$item['value'] ?? null"
-            :class="$loop->first ? '' : 'border-l border-slate-300'"
+            :class="$loop->first ? '' : 'border-l border-slate-300 dark:border-slate-700'"
         />
     @endforeach
 </div>
-

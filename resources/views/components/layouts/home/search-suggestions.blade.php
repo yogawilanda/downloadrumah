@@ -16,7 +16,7 @@
 | @ruling_performance : No additional JavaScript, image loading strategy, or query logic introduced.
 |
 | @status           : Active
-| @author           : yogawilanda <eayogawilanda@gmail.com>
+| @author           : yogawilanda <eayogwilanda@gmail.com>
 | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
 
@@ -32,41 +32,36 @@
     x-transition:enter="transition ease-out duration-150"
     x-transition:enter-start="opacity-0 -translate-y-1"
     x-transition:enter-end="opacity-100 translate-y-0"
-    class="absolute left-0 right-0 top-full z-50 overflow-hidden border border-slate-300 bg-white shadow-[4px_4px_0_0_rgba(15,23,42,0.03)]"
+    class="absolute left-0 right-0 top-full z-50 overflow-hidden border border-slate-300
+           bg-white shadow-[4px_4px_0_0_rgba(15,23,42,0.03)]
+           dark:border-slate-700 dark:bg-slate-900
+           dark:shadow-[4px_4px_0_0_rgba(0,0,0,0.2)]"
 >
 
-    {{-- --------------------------------------------------------------------------------------------------
-    | STATE 1 — Loading
-    | ----------------------------------------------------------------------------------------------- --}}
+    {{-- STATE 1 — Loading --}}
 
     @include('components.layouts.home.search-in-progress')
 
 
-    {{-- --------------------------------------------------------------------------------------------------
-    | STATE 2 — Search Content
-    | ----------------------------------------------------------------------------------------------- --}}
+    {{-- STATE 2 — Search Content --}}
 
     <div wire:loading.remove wire:target="search, selectCitySuggestion">
 
         @if (strlen(trim($search)) < 2)
 
-            {{-- ------------------------------------------------------------------------------------------
-            | STATE 2A — Standby
-            | --------------------------------------------------------------------------------------- --}}
+            {{-- STATE 2A — Standby --}}
 
             @include('components.layouts.home.search-standby')
 
         @else
 
-            {{-- ------------------------------------------------------------------------------------------
-            | STATE 2B — Search Results
-            | --------------------------------------------------------------------------------------- --}}
+            {{-- STATE 2B — Search Results --}}
 
             {{-- City Results --}}
 
             @if (isset($suggestions['cities']) && $suggestions['cities']->isNotEmpty())
 
-                <div class="border-b border-slate-200 p-4 sm:p-5">
+                <div class="border-b border-slate-200 p-4 sm:p-5 dark:border-slate-800">
 
                     <div class="mb-3 flex items-center gap-2">
 
@@ -86,15 +81,23 @@
                                 type="button"
                                 wire:click="selectCitySuggestion('{{ $city->name }}')"
                                 @click="searchOpen = false"
-                                class="group flex w-full items-center gap-3 border border-transparent px-3 py-2.5 text-left transition-colors duration-150 hover:border-sky-200 hover:bg-sky-50"
+                                class="group flex w-full items-center gap-3 border border-transparent px-3 py-2.5
+                                       text-left transition-colors duration-150
+                                       hover:border-sky-200 hover:bg-sky-50
+                                       dark:hover:border-sky-900 dark:hover:bg-slate-800/70"
                             >
 
                                 <span
-                                    class="h-1.5 w-1.5 shrink-0 bg-slate-300 transition-colors duration-150 group-hover:bg-sky-500"
+                                    class="h-1.5 w-1.5 shrink-0 bg-slate-300 transition-colors duration-150
+                                           group-hover:bg-sky-500 dark:bg-slate-600"
                                     aria-hidden="true"
                                 ></span>
 
-                                <span class="text-xs font-semibold text-slate-700 group-hover:text-sky-700">
+                                <span
+                                    class="text-xs font-semibold text-slate-700
+                                           group-hover:text-sky-700 dark:text-slate-200
+                                           dark:group-hover:text-sky-400"
+                                >
                                     {{ $city->name }}
                                 </span>
 
@@ -117,7 +120,7 @@
 
                     <div class="flex items-center gap-2">
 
-                        <span class="h-1.5 w-1.5 bg-slate-300"></span>
+                        <span class="h-1.5 w-1.5 bg-slate-300 dark:bg-slate-600"></span>
 
                         <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
                             Properti
@@ -131,7 +134,9 @@
                             type="button"
                             wire:click="submitSearch"
                             @click="searchOpen = false"
-                            class="shrink-0 text-[10px] font-bold text-sky-700 transition-colors duration-150 hover:text-sky-900"
+                            class="shrink-0 text-[10px] font-bold text-sky-700 transition-colors
+                                   duration-150 hover:text-sky-900
+                                   dark:text-sky-400 dark:hover:text-sky-300"
                         >
                             Lihat semua →
                         </button>
@@ -151,10 +156,16 @@
                                 href="{{ route('estates.show', $estate->slug) }}"
                                 wire:navigate
                                 @click="searchOpen = false"
-                                class="group flex items-center gap-3 border border-transparent px-2.5 py-2.5 transition-colors duration-150 hover:border-slate-200 hover:bg-slate-50"
+                                class="group flex items-center gap-3 border border-transparent px-2.5 py-2.5
+                                       transition-colors duration-150
+                                       hover:border-slate-200 hover:bg-slate-50
+                                       dark:hover:border-slate-700 dark:hover:bg-slate-800/70"
                             >
 
-                                <div class="h-10 w-10 shrink-0 overflow-hidden border border-slate-200 bg-slate-100">
+                                <div
+                                    class="h-10 w-10 shrink-0 overflow-hidden border border-slate-200
+                                           bg-slate-100 dark:border-slate-700 dark:bg-slate-800"
+                                >
 
                                     @if ($estate->primaryImage?->url)
 
@@ -170,18 +181,20 @@
 
                                 <div class="min-w-0 flex-1">
 
-                                    <p class="truncate text-xs font-bold text-slate-800">
+                                    <p class="truncate text-xs font-bold text-slate-800 dark:text-slate-100">
                                         {{ $estate->title }}
                                     </p>
 
-                                    <p class="mt-0.5 text-[10px] font-semibold text-sky-700">
+                                    <p class="mt-0.5 text-[10px] font-semibold text-sky-700 dark:text-sky-400">
                                         {{ $estate->short_price }}
                                     </p>
 
                                 </div>
 
                                 <span
-                                    class="hidden text-[11px] font-semibold text-slate-300 transition-colors duration-150 group-hover:text-sky-500 sm:block"
+                                    class="hidden text-[11px] font-semibold text-slate-300 transition-colors
+                                           duration-150 group-hover:text-sky-500
+                                           dark:text-slate-600 dark:group-hover:text-sky-400 sm:block"
                                     aria-hidden="true"
                                 >
                                     →
@@ -191,13 +204,16 @@
 
                         @empty
 
-                            <div class="border border-dashed border-slate-200 px-3 py-4">
+                            <div
+                                class="border border-dashed border-slate-200 px-3 py-4
+                                       dark:border-slate-700"
+                            >
 
-                                <p class="text-xs font-medium text-slate-500">
+                                <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
                                     Belum ada properti yang cocok.
                                 </p>
 
-                                <p class="mt-1 text-[10px] text-slate-400">
+                                <p class="mt-1 text-[10px] text-slate-400 dark:text-slate-500">
                                     Coba gunakan lokasi atau kata kunci lain.
                                 </p>
 

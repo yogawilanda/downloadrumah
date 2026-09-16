@@ -1,43 +1,58 @@
-{{--
-|--------------------------------------------------------------------------
-| Context & Meta Configuration
-|--------------------------------------------------------------------------
-| @path       : resources/views/livewire/pages/estates/estate-show.blade.php
-| @usage      : Responsive View for Estate Detail (Mobile, Tablet, Desktop)
-| @ruling     : max line of code 80%, max doc 20% | max total lines = 100
-| @author     : yogawilanda <eayogawilanda@gmail.com>
-|--------------------------------------------------------------------------
---}}
+{{-- resources/views/livewire/pages/estates/estate-show.blade.php --}}
 
-@php($defaultWa = $estate->user->phone_number ?? '')
-@php($isOwner = auth()->check() && auth()->id() === $estate->user_id)
+@php
+    $defaultWa = $estate->user->phone_number ?? '';
+    $isOwner = auth()->check() && auth()->id() === $estate->user_id;
+@endphp
 
-<div x-data="{ shareModal: false, waModal: false, toastModal: false, shareTargetNumber: '{{ $defaultWa }}', activeSlide: 0 }" class="min-h-screen bg-slate-50/50 pb-28 lg:pb-12 relative font-sans antialiased">
+<div
+    x-data="{
+        shareModal: false,
+        waModal: false,
+        toastModal: false,
+        shareTargetNumber: '{{ $defaultWa }}',
+        activeSlide: 0
+    }"
+    class="relative min-h-screen bg-slate-50 dark:bg-slate-950 pb-28 lg:pb-12 font-sans antialiased"
+>
     {{-- todo: jangan hapus dulu kalau filenya belum dihapus --}}
     {{-- <x-layouts.estate.top-nav :estate="$estate" /> --}}
+
     <x-layouts.estate.header-control :estate="$estate" />
 
-    <div class="max-w-6xl mx-auto px-0 sm:px-4 md:px-6 lg:px-8 pt-0 sm:pt-6">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+    <div class="mx-auto max-w-6xl px-0 sm:px-4 md:px-6 lg:px-8 pt-0 sm:pt-6">
+        <div class="grid grid-cols-1 items-start gap-5 lg:grid-cols-12 lg:gap-6">
 
-            {{-- KOLOM KIRI (Gallery & Content Detail) --}}
-            <div
-                class="lg:col-span-8 bg-white sm:rounded-md sm:border sm:border-slate-200/80 sm:shadow-sm overflow-hidden">
-                @include('livewire.pages.estates.partials.gallery')
+            {{-- Gallery & Property Detail --}}
+            <main class="lg:col-span-8">
+                <div class="overflow-hidden bg-white dark:bg-slate-900 sm:border sm:border-slate-200 dark:sm:border-slate-800">
+                    @include('livewire.pages.estates.partials.gallery')
 
-                <div class="p-4 sm:p-6 lg:p-8 bg-white -none -mt-5 sm:mt-0 relative z-10 space-y-6">
-                    @include('livewire.pages.estates.partials.summary')
+                    <div class="relative z-10 -mt-5 space-y-6 bg-white p-4 dark:bg-slate-900 sm:mt-0 sm:p-6 lg:p-8">
+                        @include('livewire.pages.estates.partials.summary')
+                    </div>
                 </div>
-            </div>
+            </main>
 
-            {{-- KOLOM KANAN (Desktop/Tablet Sticky Contact Card & Bottom Bar Mobile) --}}
-            <div class="lg:col-span-4 lg:sticky lg:top-22">
-                {{-- Desktop Side Card Container --}}
-                <div class="hidden lg:block bg-white p-6 rounded-md border border-slate-200/80 shadow-sm space-y-5">
-                    <div class="pb-4 border-b border-slate-100">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Dikelola
-                            Oleh</span>
+            {{-- Contact / Owner Panel --}}
+            <aside class="lg:col-span-4 lg:sticky lg:top-22">
+                <div class="hidden space-y-5 border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 lg:block">
 
+                    <div class="border-b border-slate-200 pb-4 dark:border-slate-800">
+                        <div class="flex items-end justify-between gap-3">
+                            <div>
+                                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
+                                    Property / Contact
+                                </span>
+                                <h2 class="mt-1 text-sm font-bold text-slate-950 dark:text-white">
+                                    Dikelola Oleh
+                                </h2>
+                            </div>
+
+                            <span class="text-[8px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                                {{ $isOwner ? 'Owner' : 'Agent' }}
+                            </span>
+                        </div>
                     </div>
 
                     @if ($isOwner)
@@ -46,7 +61,7 @@
                         @include('livewire.pages.estates.partials.agent-contact')
                     @endif
                 </div>
-            </div>
+            </aside>
 
         </div>
     </div>

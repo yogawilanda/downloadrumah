@@ -10,7 +10,7 @@
 | @ruling_motion    : Short 150–200ms transitions only.
 |
 | @status           : Active
-| @author           : yogawilanda <eayogawilanda@gmail.com>
+| @author           : yogawilanda <eaywilanda@gmail.com>
 | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
 
@@ -24,31 +24,42 @@
 
             <span class="h-1.5 w-1.5 bg-sky-500"></span>
 
-            <label class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+            <label class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
                 Kemampuan utama
             </label>
 
         </div>
 
-        <label class="mb-2 block text-sm font-semibold text-slate-800">
+        <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">
             Berapa cicilan yang nyaman setiap bulan?
         </label>
 
         <div
-            class="relative border border-slate-300 bg-white transition-colors duration-150 focus-within:border-sky-400">
+            class="relative border border-slate-300 bg-white transition-colors duration-150
+                   focus-within:border-sky-400
+                   dark:border-slate-700 dark:bg-slate-900"
+        >
 
             <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-xs font-semibold text-slate-400">
                 Rp
             </span>
 
-            <input type="text" :value="buyer.monthlyBudget ? buyer.monthlyBudget.toLocaleString('id-ID') : ''"
-                @input="formatInput($event, buyer, 'monthlyBudget')" placeholder="5.000.000"
-                class="w-full border-0 bg-transparent py-3.5 pl-10 pr-4 text-base font-semibold text-slate-900 outline-none placeholder:text-slate-300 focus:ring-0">
+            <input
+                type="text"
+                :value="buyer.monthlyBudget ? buyer.monthlyBudget.toLocaleString('id-ID') : ''"
+                @input="formatInput($event, buyer, 'monthlyBudget')"
+                placeholder="5.000.000"
+                class="w-full border-0 bg-transparent py-3.5 pl-10 pr-4 text-base font-semibold
+                       text-slate-900 outline-none placeholder:text-slate-300 focus:ring-0
+                       dark:text-slate-100 dark:placeholder:text-slate-600"
+            >
 
         </div>
 
-        <p class="mt-1.5 pl-1 text-[10px] font-medium text-sky-600" x-text="formatTerbilangShort(buyer.monthlyBudget)">
-        </p>
+        <p
+            class="mt-1.5 pl-1 text-[10px] font-medium text-sky-600 dark:text-sky-400"
+            x-text="formatTerbilangShort(buyer.monthlyBudget)"
+        ></p>
 
     </div>
 
@@ -57,12 +68,17 @@
 
     <div>
 
-        <label class="mb-2 block text-xs font-semibold text-slate-700">
+        <label class="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-300">
             Di mana kamu ingin mencari?
         </label>
 
-        <select x-model="buyer.location"
-            class="w-full cursor-pointer border border-slate-300 bg-white px-3 py-3 text-xs font-medium text-slate-700 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0">
+        <select
+            x-model="buyer.location"
+            class="w-full cursor-pointer border border-slate-300 bg-white px-3 py-3
+                   text-xs font-medium text-slate-700 outline-none transition-colors duration-150
+                   focus:border-sky-400 focus:ring-0
+                   dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+        >
             <option value="">Semua Lokasi</option>
             <option value="surabaya">Surabaya & Sekitarnya</option>
             <option value="sidoarjo">Sidoarjo</option>
@@ -75,15 +91,15 @@
 
     {{-- Planning Assumptions --}}
 
-    <div class="border-t border-slate-200 pt-5">
+    <div class="border-t border-slate-200 pt-5 dark:border-slate-800">
 
         <div class="mb-3">
 
-            <p class="text-xs font-semibold text-slate-700">
+            <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 Rencana pembiayaan
             </p>
 
-            <p class="mt-0.5 text-[10px] text-slate-400">
+            <p class="mt-0.5 text-[10px] text-slate-400 dark:text-slate-500">
                 Sesuaikan asumsi untuk mendapatkan perkiraan yang lebih relevan.
             </p>
 
@@ -95,14 +111,21 @@
 
             <div>
 
-                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
                     Bunga / Tahun
                 </label>
 
                 <div class="relative">
 
-                    <input type="number" step="0.1" x-model.number="buyer.interest"
-                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0">
+                    <input
+                        type="number"
+                        step="0.1"
+                        x-model.number="buyer.interest"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8
+                               text-xs font-medium text-slate-800 outline-none transition-colors
+                               duration-150 focus:border-sky-400 focus:ring-0
+                               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                    >
 
                     <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
                         %
@@ -117,14 +140,20 @@
 
             <div>
 
-                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
                     Tenor
                 </label>
 
                 <div class="relative">
 
-                    <input type="number" x-model.number="buyer.tenure"
-                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-12 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0">
+                    <input
+                        type="number"
+                        x-model.number="buyer.tenure"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-12
+                               text-xs font-medium text-slate-800 outline-none transition-colors
+                               duration-150 focus:border-sky-400 focus:ring-0
+                               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                    >
 
                     <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
                         Tahun
@@ -143,35 +172,47 @@
 
     <div>
 
-        <label class="mb-2 block text-xs font-semibold text-slate-700">
+        <label class="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-300">
             Dana awal yang sudah disiapkan
         </label>
 
         <div
-            class="relative border border-slate-300 bg-white transition-colors duration-150 focus-within:border-sky-400">
+            class="relative border border-slate-300 bg-white transition-colors duration-150
+                   focus-within:border-sky-400
+                   dark:border-slate-700 dark:bg-slate-900"
+        >
 
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-xs font-semibold text-slate-400">
                 Rp
             </span>
 
-            <input type="text" :value="buyer.dp ? buyer.dp.toLocaleString('id-ID') : ''"
-                @input="formatInput($event, buyer, 'dp')" placeholder="50.000.000"
-                class="w-full border-0 bg-transparent py-3 pl-9 pr-3 text-sm font-medium text-slate-800 outline-none placeholder:text-slate-300 focus:ring-0">
+            <input
+                type="text"
+                :value="buyer.dp ? buyer.dp.toLocaleString('id-ID') : ''"
+                @input="formatInput($event, buyer, 'dp')"
+                placeholder="50.000.000"
+                class="w-full border-0 bg-transparent py-3 pl-9 pr-3 text-sm font-medium
+                       text-slate-800 outline-none placeholder:text-slate-300 focus:ring-0
+                       dark:text-slate-200 dark:placeholder:text-slate-600"
+            >
 
         </div>
 
-        <p class="mt-1 pl-1 text-[10px] font-medium text-slate-400" x-text="formatTerbilangShort(buyer.dp)"></p>
+        <p
+            class="mt-1 pl-1 text-[10px] font-medium text-slate-400 dark:text-slate-500"
+            x-text="formatTerbilangShort(buyer.dp)"
+        ></p>
 
     </div>
 
 
     {{-- Result --}}
 
-    <div class="border border-slate-300 bg-slate-50">
+    <div class="border border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/60">
 
-        <div class="border-b border-slate-200 px-4 py-3">
+        <div class="border-b border-slate-200 px-4 py-3 dark:border-slate-700">
 
-            <p class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
                 Perkiraan kemampuan
             </p>
 
@@ -181,37 +222,44 @@
 
             <div class="flex items-center justify-between gap-4 text-xs">
 
-                <span class="text-slate-500">
+                <span class="text-slate-500 dark:text-slate-400">
                     Target cicilan
                 </span>
 
-                <span class="font-semibold text-slate-800"
-                    x-text="formatRupiah(calcBuyer.maxMonthlyInstallment)"></span>
+                <span
+                    class="font-semibold text-slate-800 dark:text-slate-200"
+                    x-text="formatRupiah(calcBuyer.maxMonthlyInstallment)"
+                ></span>
 
             </div>
 
 
             <div class="flex items-center justify-between gap-4 text-xs">
 
-                <span class="text-slate-500">
+                <span class="text-slate-500 dark:text-slate-400">
                     Perkiraan plafon bank
                 </span>
 
-                <span class="font-semibold text-slate-800" x-text="formatRupiah(calcBuyer.maxPlafon)"></span>
+                <span
+                    class="font-semibold text-slate-800 dark:text-slate-200"
+                    x-text="formatRupiah(calcBuyer.maxPlafon)"
+                ></span>
 
             </div>
 
 
-            <div class="border-t border-slate-200 pt-3">
+            <div class="border-t border-slate-200 pt-3 dark:border-slate-700">
 
                 <div class="flex items-end justify-between gap-4">
 
-                    <span class="text-xs font-semibold text-slate-700">
+                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Kisaran harga properti
                     </span>
 
-                    <span class="text-lg font-bold tracking-tight text-sky-600"
-                        x-text="formatRupiah(calcBuyer.maxPropertyPrice)"></span>
+                    <span
+                        class="text-lg font-bold tracking-tight text-sky-600 dark:text-sky-400"
+                        x-text="formatRupiah(calcBuyer.maxPropertyPrice)"
+                    ></span>
 
                 </div>
 
@@ -224,21 +272,32 @@
 
     {{-- Discovery CTA --}}
 
-    <a :href="searchUrl" wire:navigate
-        class="group flex w-full items-center justify-between border border-slate-950 bg-slate-950 px-4 py-3.5 text-xs font-semibold text-white transition-colors duration-150 hover:border-sky-600 hover:bg-sky-600">
+    <a
+        :href="searchUrl"
+        wire:navigate
+        class="group flex w-full items-center justify-between
+               border border-slate-950 bg-slate-950 px-4 py-3.5
+               text-xs font-semibold text-white transition-colors duration-150
+               hover:border-sky-600 hover:bg-sky-600
+               dark:border-slate-700 dark:bg-slate-900
+               dark:hover:border-sky-600 dark:hover:bg-sky-600"
+    >
 
         <span>
             Cari properti dalam kisaran ini
         </span>
 
-        <span class="text-slate-400 transition-colors duration-150 group-hover:text-white" aria-hidden="true">
+        <span
+            class="text-slate-400 transition-colors duration-150 group-hover:text-white"
+            aria-hidden="true"
+        >
             →
         </span>
 
     </a>
 
 
-    <p class="text-center text-[10px] leading-5 text-slate-400">
+    <p class="text-center text-[10px] leading-5 text-slate-400 dark:text-slate-500">
         Perhitungan ini adalah perkiraan untuk membantu perencanaan,
         bukan keputusan persetujuan kredit dari bank.
     </p>

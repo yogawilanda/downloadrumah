@@ -26,14 +26,15 @@
     @endif
     {{ $attributes->class([
         'relative px-5 py-5 text-left transition-all duration-150 sm:px-7 sm:py-6',
-        'bg-white text-slate-950' => $active,
-        'bg-slate-200/60 text-slate-500 hover:bg-slate-200' => !$active,
+        'bg-white text-slate-950 dark:bg-slate-900 dark:text-slate-100' => $active,
+        'bg-slate-200/60 text-slate-500 hover:bg-slate-200
+         dark:bg-slate-800/60 dark:text-slate-400 dark:hover:bg-slate-800' => !$active,
     ]) }}
 >
     <span @class([
         'block text-[10px] font-black uppercase tracking-[0.16em]',
-        'text-sky-600' => $active,
-        'text-slate-400' => !$active,
+        'text-sky-600 dark:text-sky-400' => $active,
+        'text-slate-400 dark:text-slate-500' => !$active,
     ])>
         {{ $label }}
     </span>
@@ -48,4 +49,3 @@
         <span class="absolute inset-x-0 bottom-0 h-1 bg-sky-500"></span>
     @endif
 </button>
-

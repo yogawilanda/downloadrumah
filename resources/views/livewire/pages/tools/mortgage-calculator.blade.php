@@ -18,7 +18,7 @@
 | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
 
-<div class="min-h-screen bg-slate-100">
+<div class="min-h-screen bg-slate-100 dark:bg-slate-950">
 
     <div
         x-data="kprApp"
@@ -33,17 +33,17 @@
 
                 <span class="h-1.5 w-1.5 bg-sky-500"></span>
 
-                <span class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                     Perencanaan KPR
                 </span>
 
             </div>
 
-            <h1 class="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-950 dark:text-slate-100 sm:text-3xl">
                 Rencanakan kemampuan beli
             </h1>
 
-            <p class="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+            <p class="mt-2 max-w-xl text-sm leading-6 text-slate-500 dark:text-slate-400">
                 Hitung kisaran kemampuanmu sebelum memilih properti atau melihat cicilan unit tertentu.
             </p>
 
@@ -52,11 +52,11 @@
 
         {{-- Calculator Surface --}}
 
-        <div class="border border-slate-300 bg-white">
+        <div class="border border-slate-300 bg-white dark:border-slate-800 dark:bg-slate-900">
 
             {{-- Mode Switcher --}}
 
-            <div class="border-b border-slate-200">
+            <div class="border-b border-slate-200 dark:border-slate-800">
 
                 <div class="grid grid-cols-2">
 
@@ -64,8 +64,8 @@
                         type="button"
                         @click="mode = 'buyer'"
                         :class="mode === 'buyer'
-                            ? 'border-b-2 border-sky-500 bg-slate-50 text-slate-950'
-                            : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'"
+                            ? 'border-b-2 border-sky-500 bg-slate-50 text-slate-950 dark:bg-slate-800 dark:text-slate-100'
+                            : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200'"
                         class="px-4 py-3 text-xs font-semibold transition-colors duration-150 sm:px-6"
                     >
                         Cari sesuai kemampuan
@@ -75,9 +75,9 @@
                         type="button"
                         @click="mode = 'agent'"
                         :class="mode === 'agent'
-                            ? 'border-b-2 border-sky-500 bg-slate-50 text-slate-950'
-                            : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'"
-                        class="border-l border-slate-200 px-4 py-3 text-xs font-semibold transition-colors duration-150 sm:px-6"
+                            ? 'border-b-2 border-sky-500 bg-slate-50 text-slate-950 dark:bg-slate-800 dark:text-slate-100'
+                            : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200'"
+                        class="border-l border-slate-200 px-4 py-3 text-xs font-semibold transition-colors duration-150 dark:border-slate-800 sm:px-6"
                     >
                         Hitung cicilan properti
                     </button>

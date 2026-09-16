@@ -15,10 +15,6 @@
 | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
 
-
-
-
-
 <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
 
     <div class="max-w-2xl">
@@ -33,11 +29,11 @@
 
         </div>
 
-        <h3 class="text-base font-bold leading-snug tracking-tight text-slate-900 sm:text-lg">
+        <h3 class="text-base font-bold leading-snug tracking-tight text-slate-900 dark:text-slate-100 sm:text-lg">
             Tidak semua orang datang dengan kebutuhan yang sudah jelas.
         </h3>
 
-        <p class="mt-2 text-xs leading-5 text-slate-500 sm:text-sm">
+        <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400 sm:text-sm">
             Karena itu, DownloadRumah membantu mempertemukan kebutuhan,
             properti, dan orang yang tepat sebelum percakapan dimulai.
         </p>

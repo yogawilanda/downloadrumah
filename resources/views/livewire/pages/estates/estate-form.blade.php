@@ -1,21 +1,24 @@
-{{--
-|--------------------------------------------------------------------------
-| Context & Meta Configuration
-|--------------------------------------------------------------------------
-| @path : resources/views/livewire/pages/estates/estate-form.blade.php
-| @usage : Main View Container for Estate Multi-Step Wizard Form
-| @ruling : max line of code 80%, max doc 20% | max total lines = 100
-| @author : yogawilanda <eayogawilanda@gmail.com>
-|--------------------------------------------------------------------------
---}}
+{{-- resources/views/livewire/pages/estates/estate-form.blade.php --}}
 
-<div class="w-full pb-32 pt-4 px-4 max-w-md mx-auto" x-data="{ wizardStep: $wire.entangle('currentStep') }" x-init="window.estateFormDirty = false"
-    @input="window.estateFormDirty = true" @estate-form-saved.window="window.estateFormDirty = false"
-    @estate-form-error.window="setTimeout(() => { const field = $event.detail.field; const target = document.querySelector('[wire\\:model=\'form.' + field + '\']'); target?.scrollIntoView({ behavior: 'smooth', block: 'center' }); target?.focus(); }, 50)">
-
+<div
+    class="w-full max-w-md mx-auto px-4 pt-4 pb-32"
+    x-data="{ wizardStep: $wire.entangle('currentStep') }"
+    x-init="window.estateFormDirty = false"
+    @input="window.estateFormDirty = true"
+    @estate-form-saved.window="window.estateFormDirty = false"
+    @estate-form-error.window="
+        setTimeout(() => {
+            const field = $event.detail.field;
+            const target = document.querySelector('[wire\\:model=\'form.' + field + '\']');
+            target?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            target?.focus();
+        }, 50)
+    "
+>
+    {{-- Validation --}}
     @if ($errors->any())
-        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 text-xs rounded-md">
-            <p class="font-bold mb-1">Ada input yang belum valid:</p>
+        <div class="mb-4 border border-red-300 bg-red-50 dark:border-red-900/60 dark:bg-red-950/30 px-3 py-3 text-xs text-red-700 dark:text-red-400">
+            <p class="mb-1 font-bold uppercase tracking-wide">Input belum valid</p>
             <ul class="list-disc pl-4 space-y-1">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -24,90 +27,149 @@
         </div>
     @endif
 
-    {{-- Header Navigation --}}
-    <div class="mb-4 flex items-center justify-between">
-        <a href="{{ route('dashboard') }}" wire:navigate
+    {{-- Header --}}
+    <div class="mb-5 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+        <a
+            href="{{ route('dashboard') }}"
+            wire:navigate
             @click="if (window.estateFormDirty && !confirm('Isian belum disimpan. Keluar dari form?')) $event.preventDefault()"
-            class="text-gray-600 hover:text-gray-900">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            class="flex h-8 w-8 items-center justify-center border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-950 hover:text-white dark:hover:bg-white dark:hover:text-slate-950 transition"
+            aria-label="Keluar"
+        >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </a>
-        <h1 class="text-base font-bold text-gray-900">{{ $form->isEdit() ? 'Ubah Properti' : 'Pasang Properti' }}</h1>
-        <div class="w-6"></div>
+
+        <div class="text-center">
+            <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
+                Estate / Form
+            </span>
+            <h1 class="mt-0.5 text-sm font-bold text-slate-950 dark:text-white">
+                {{ $form->isEdit() ? 'Ubah Properti' : 'Pasang Properti' }}
+            </h1>
+        </div>
+
+        <div class="w-8"></div>
     </div>
 
-    {{-- Stepper Progress Bar --}}
-    <div class="mb-6 px-2" aria-label="Progress pengisian">
-        <p class="mb-2 text-center text-xs font-semibold text-gray-500">Langkah {{ $currentStep }} dari 4</p>
-        <div class="relative flex items-center justify-between">
-            <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-0.5 bg-gray-200 -z-10"></div>
-            <div class="absolute left-0 top-1/2 transform -translate-y-1/2 h-0.5 bg-sky-600 -z-10 transition-all duration-300"
-                style="width: {{ (($currentStep - 1) / 3) * 100 }}%;"></div>
-            @foreach ([1 => 'Info Umum', 2 => 'Detail Properti', 3 => 'Info Tambahan', 4 => 'Konfirmasi'] as $step => $label)
-                <div class="flex flex-col items-center">
-                    <button type="button" wire:click="setStep({{ $step }})" wire:loading.attr="disabled"
-                        class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition {{ $currentStep >= $step ? 'bg-sky-600 text-white ring-4 ring-blue-100' : 'bg-gray-200 text-gray-500' }}">{{ $step }}</button>
-                    <span
-                        class="text-[10px] font-medium mt-1 {{ $currentStep === $step ? 'text-gray-900 font-bold' : 'text-gray-400' }}">{{ $label }}</span>
+    {{-- Stepper --}}
+    <div class="mb-6" aria-label="Progress pengisian">
+        <div class="mb-3 flex items-center justify-between">
+            <span class="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+                Progress
+            </span>
+            <span class="text-[10px] font-bold text-slate-950 dark:text-white">
+                {{ str_pad($currentStep, 2, '0', STR_PAD_LEFT) }} / 04
+            </span>
+        </div>
+
+        <div class="relative flex items-start justify-between">
+            <div class="absolute left-0 right-0 top-3 h-px bg-slate-200 dark:bg-slate-800"></div>
+            <div
+                class="absolute left-0 top-3 h-px bg-slate-950 dark:bg-white transition-all duration-300"
+                style="width: {{ (($currentStep - 1) / 3) * 100 }}%;"
+            ></div>
+
+            @foreach ([1 => 'Info Umum', 2 => 'Detail', 3 => 'Tambahan', 4 => 'Konfirmasi'] as $step => $label)
+                <div class="relative flex flex-col items-center">
+                    <button
+                        type="button"
+                        wire:click="setStep({{ $step }})"
+                        wire:loading.attr="disabled"
+                        class="flex h-6 w-6 items-center justify-center border text-[9px] font-bold transition
+                            {{ $currentStep >= $step
+                                ? 'border-slate-950 bg-slate-950 text-white dark:border-white dark:bg-white dark:text-slate-950'
+                                : 'border-slate-300 bg-white text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-500' }}"
+                    >
+                        {{ $step }}
+                    </button>
+
+                    <span class="mt-2 text-[8px] font-bold uppercase tracking-wide
+                        {{ $currentStep === $step
+                            ? 'text-slate-950 dark:text-white'
+                            : 'text-slate-400 dark:text-slate-600' }}">
+                        {{ $label }}
+                    </span>
                 </div>
             @endforeach
         </div>
     </div>
 
-    {{-- Flash Error Message --}}
+    {{-- Flash Error --}}
     @if (session('error'))
-        <div class="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+        <div class="mb-4 border-l-2 border-red-500 bg-red-50 dark:bg-red-950/30 px-3 py-2 text-xs text-red-700 dark:text-red-400">
             {{ session('error') }}
         </div>
     @endif
 
-    {{-- Form Content --}}
-    <form wire:submit.prevent="save" class="space-y-4"
-        onkeydown="if(event.keyCode == 13 && event.target.tagName !== 'TEXTAREA') { event.preventDefault(); }">
+    {{-- Form --}}
+    <form
+        wire:submit.prevent="save"
+        class="space-y-4"
+        onkeydown="if(event.keyCode == 13 && event.target.tagName !== 'TEXTAREA') event.preventDefault();"
+    >
         <div x-show="wizardStep === 1" wire:key="estate-step-1">
             @include('livewire.pages.estates.partials.step-one')
         </div>
+
         <div x-show="wizardStep === 2" wire:key="estate-step-2">
             @include('livewire.pages.estates.partials.step-two')
         </div>
+
         <div x-show="wizardStep === 3" wire:key="estate-step-3">
             @include('livewire.pages.estates.partials.step-three')
         </div>
+
         <div x-show="wizardStep === 4" wire:key="estate-step-4">
             @include('livewire.pages.estates.partials.step-four')
         </div>
 
-        {{-- Action Buttons --}}
-        <div
-            class="fixed bottom-16 left-0 right-0 z-30 border-t border-gray-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur-md">
+        {{-- Actions --}}
+        <div class="fixed bottom-16 left-0 right-0 z-30 border-t border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950 px-4 py-3">
             <div class="mx-auto flex max-w-md gap-2">
-                <button type="button" wire:click="saveDraft" wire:loading.attr="disabled" wire:target="saveDraft"
-                    class="min-h-11 flex-1 rounded-md border border-gray-300 bg-white px-3 text-xs font-bold text-gray-700 disabled:opacity-50">
-                    <span wire:loading.remove wire:target="saveDraft">Simpan Sebagai Draft</span>
+                <button
+                    type="button"
+                    wire:click="saveDraft"
+                    wire:loading.attr="disabled"
+                    wire:target="saveDraft"
+                    class="min-h-11 flex-1 border border-slate-300 bg-white px-3 text-[10px] font-bold uppercase tracking-wide text-slate-700 transition hover:border-slate-950 hover:text-slate-950 disabled:opacity-50 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300 dark:hover:border-white dark:hover:text-white"
+                >
+                    <span wire:loading.remove wire:target="saveDraft">Simpan Draft</span>
                     <span wire:loading wire:target="saveDraft">Menyimpan...</span>
                 </button>
+
                 @if ($currentStep > 1)
-                    <button type="button" wire:click="previousStep" wire:loading.attr="disabled"
-                        class="min-h-11 w-1/4 rounded-md border border-gray-300 bg-white text-xs font-bold text-gray-700 shadow-sm active:bg-gray-50">
-                        Sebelumnya
+                    <button
+                        type="button"
+                        wire:click="previousStep"
+                        wire:loading.attr="disabled"
+                        class="min-h-11 w-1/4 border border-slate-300 bg-white text-[10px] font-bold uppercase tracking-wide text-slate-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300"
+                    >
+                        Kembali
                     </button>
                 @endif
 
                 @if ($currentStep < 4)
-                    <button type="button" wire:click="nextStep" wire:loading.attr="disabled"
-                        class="min-h-11 flex-1 rounded-md bg-sky-600 text-xs font-bold text-white shadow-md transition active:bg-sky-700">
+                    <button
+                        type="button"
+                        wire:click="nextStep"
+                        wire:loading.attr="disabled"
+                        class="min-h-11 flex-1 border border-slate-950 bg-slate-950 text-[10px] font-bold uppercase tracking-wide text-white transition hover:bg-slate-800 dark:border-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+                    >
                         Selanjutnya
                     </button>
                 @else
-                    <button type="submit" wire:loading.attr="disabled" wire:target="save"
-                        class="min-h-11 flex-1 rounded-md bg-sky-600 text-xs font-bold text-white shadow-md transition hover:bg-sky-700 active:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-50">
+                    <button
+                        type="submit"
+                        wire:loading.attr="disabled"
+                        wire:target="save"
+                        class="min-h-11 flex-1 border border-slate-950 bg-slate-950 text-[10px] font-bold uppercase tracking-wide text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+                    >
                         <span wire:loading.remove wire:target="save">
                             {{ $form->isEdit() ? 'Update Properti' : 'Simpan & Terbitkan' }}
                         </span>
-                        <span wire:loading wire:target="save">
-                            Memproses...
-                        </span>
+                        <span wire:loading wire:target="save">Memproses...</span>
                     </button>
                 @endif
             </div>

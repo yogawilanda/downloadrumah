@@ -14,7 +14,10 @@ new #[Layout('layouts.guest')] class extends Component
     public function sendVerification(): void
     {
         if (Auth::user()->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+            $this->redirectIntended(
+                default: route('dashboard', absolute: false),
+                navigate: true
+            );
 
             return;
         }
@@ -36,22 +39,30 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-gray-600">
+    <div class="mb-4 text-sm text-slate-600 dark:text-slate-400">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
     </div>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
+        <div class="mb-4 text-sm font-medium text-emerald-600 dark:text-emerald-400">
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
         </div>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
+    <div class="mt-4 flex items-center justify-between gap-4">
         <x-primary-button wire:click="sendVerification">
             {{ __('Resend Verification Email') }}
         </x-primary-button>
 
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <button
+            wire:click="logout"
+            type="submit"
+            class="rounded-md text-sm text-slate-600 underline transition
+                   hover:text-slate-900 focus:outline-none focus:ring-2
+                   focus:ring-sky-500 focus:ring-offset-2
+                   dark:text-slate-400 dark:hover:text-slate-100
+                   dark:focus:ring-sky-500 dark:focus:ring-offset-slate-900"
+        >
             {{ __('Log Out') }}
         </button>
     </div>

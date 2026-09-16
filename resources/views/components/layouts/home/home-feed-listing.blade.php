@@ -1,4 +1,3 @@
-
 {{-- ------------------------------------------------------------------------------------------------------
 | <meta_config>
 | @path             : resources/views/components/layouts/home/home-feed-listing.blade.php
@@ -25,9 +24,7 @@
 
 @if ($variant === 'vertical')
 
-    {{-- ----------------------------------------------------------------------------------------------
-    | Public Listing — Responsive Property Rows
-    | ----------------------------------------------------------------------------------------------- --}}
+    {{-- Public Listing — Responsive Property Rows --}}
 
     <div class="mx-auto w-full max-w-4xl space-y-4 px-4 pt-4">
 
@@ -36,12 +33,18 @@
             <a
                 href="{{ route('estates.show', $estate->slug) }}"
                 wire:navigate
-                class="group flex flex-col overflow-hidden border border-slate-300 bg-white transition-colors duration-150 hover:border-sky-300 md:flex-row"
+                class="group flex flex-col overflow-hidden border border-slate-300 bg-white
+                       transition-colors duration-150 hover:border-sky-300
+                       dark:border-slate-700 dark:bg-slate-900 dark:hover:border-sky-700
+                       md:flex-row"
             >
 
                 {{-- Image --}}
 
-                <div class="relative h-52 shrink-0 overflow-hidden bg-slate-200 md:h-44 md:w-64 lg:w-72">
+                <div
+                    class="relative h-52 shrink-0 overflow-hidden bg-slate-200
+                           dark:bg-slate-800 md:h-44 md:w-64 lg:w-72"
+                >
 
                     <img
                         src="{{ $estate->primaryImage?->url ?? 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80' }}"
@@ -54,7 +57,10 @@
                     {{-- Status --}}
 
                     <span
-                        class="absolute left-3 top-3 flex items-center gap-1.5 border border-white/70 bg-white/95 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-slate-700"
+                        class="absolute left-3 top-3 flex items-center gap-1.5
+                               border border-white/70 bg-white/95 px-2 py-1
+                               text-[9px] font-bold uppercase tracking-wide text-slate-700
+                               dark:border-slate-600/70 dark:bg-slate-900/95 dark:text-slate-200"
                     >
                         <span class="h-1.5 w-1.5 bg-sky-500"></span>
 
@@ -69,7 +75,9 @@
                     {{-- Mobile Price --}}
 
                     <span
-                        class="absolute bottom-3 right-3 border border-white/20 bg-slate-950/90 px-2.5 py-1 text-xs font-bold text-white md:hidden"
+                        class="absolute bottom-3 right-3 border border-white/20
+                               bg-slate-950/90 px-2.5 py-1 text-xs font-bold text-white
+                               md:hidden"
                     >
                         {{ $estate->short_price }}
                     </span>
@@ -84,16 +92,21 @@
                     <div>
 
                         <h2
-                            class="line-clamp-1 text-base font-bold tracking-tight text-slate-900 transition-colors duration-150 group-hover:text-sky-600 md:text-lg"
+                            class="line-clamp-1 text-base font-bold tracking-tight text-slate-900
+                                   transition-colors duration-150 group-hover:text-sky-600
+                                   dark:text-slate-100 dark:group-hover:text-sky-400 md:text-lg"
                         >
                             {{ $estate->title }}
                         </h2>
 
 
-                        <p class="mt-1.5 mb-4 flex items-center text-xs text-slate-500">
+                        <p
+                            class="mb-4 mt-1.5 flex items-center text-xs
+                                   text-slate-500 dark:text-slate-400"
+                        >
 
                             <svg
-                                class="mr-1.5 h-3.5 w-3.5 shrink-0 text-slate-400"
+                                class="mr-1.5 h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -125,50 +138,60 @@
 
                     {{-- Specs / Price --}}
 
-                    <div class="flex flex-col gap-3 border-t border-slate-200 pt-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div
+                        class="flex flex-col gap-3 border-t border-slate-200 pt-3
+                               dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between"
+                    >
 
-                        <div class="flex items-center gap-3 overflow-x-auto text-xs text-slate-600 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div
+                            class="flex items-center gap-3 overflow-x-auto text-xs text-slate-600
+                                   [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+                                   dark:text-slate-400"
+                        >
 
                             @if ($estate->bedroom)
                                 <div class="flex shrink-0 items-center gap-1">
-                                    <span class="font-bold text-slate-800">
+                                    <span class="font-bold text-slate-800 dark:text-slate-200">
                                         {{ $estate->bedroom }}
                                     </span>
-                                    <span class="text-slate-400">KT</span>
+                                    <span class="text-slate-400 dark:text-slate-500">KT</span>
                                 </div>
                             @endif
 
                             @if ($estate->bathroom)
                                 <div class="flex shrink-0 items-center gap-1">
-                                    <span class="font-bold text-slate-800">
+                                    <span class="font-bold text-slate-800 dark:text-slate-200">
                                         {{ $estate->bathroom }}
                                     </span>
-                                    <span class="text-slate-400">KM</span>
+                                    <span class="text-slate-400 dark:text-slate-500">KM</span>
                                 </div>
                             @endif
 
                             @if ($estate->building_size)
                                 <div class="flex shrink-0 items-center gap-1">
-                                    <span class="font-bold text-slate-800">
+                                    <span class="font-bold text-slate-800 dark:text-slate-200">
                                         {{ $estate->building_size }}
                                     </span>
-                                    <span class="text-slate-400">m² LB</span>
+                                    <span class="text-slate-400 dark:text-slate-500">m² LB</span>
                                 </div>
                             @endif
 
                             @if ($estate->land_size)
                                 <div class="flex shrink-0 items-center gap-1">
-                                    <span class="font-bold text-slate-800">
+                                    <span class="font-bold text-slate-800 dark:text-slate-200">
                                         {{ $estate->land_size }}
                                     </span>
-                                    <span class="text-slate-400">m² LT</span>
+                                    <span class="text-slate-400 dark:text-slate-500">m² LT</span>
                                 </div>
                             @endif
 
                         </div>
 
 
-                        <span class="hidden shrink-0 text-right text-base font-bold tracking-tight text-sky-600 md:block">
+                        <span
+                            class="hidden shrink-0 text-right text-base font-bold tracking-tight
+                                   text-sky-600 dark:text-sky-400 md:block"
+                        >
                             {{ $estate->short_price }}
                         </span>
 
@@ -200,9 +223,7 @@
 
 @else
 
-    {{-- ----------------------------------------------------------------------------------------------
-    | Home Feed — Horizontal Property Carousel
-    | ----------------------------------------------------------------------------------------------- --}}
+    {{-- Home Feed — Horizontal Property Carousel --}}
 
     @forelse ($estates as $estate)
 
@@ -211,12 +232,16 @@
             <a
                 href="{{ route('estates.show', $estate->slug) }}"
                 wire:navigate
-                class="group block overflow-hidden border border-slate-300 bg-white transition-colors duration-150 hover:border-sky-300"
+                class="group block overflow-hidden border border-slate-300 bg-white
+                       transition-colors duration-150 hover:border-sky-300
+                       dark:border-slate-700 dark:bg-slate-900 dark:hover:border-sky-700"
             >
 
                 {{-- Image --}}
 
-                <div class="relative h-44 w-full overflow-hidden bg-slate-200">
+                <div
+                    class="relative h-44 w-full overflow-hidden bg-slate-200 dark:bg-slate-800"
+                >
 
                     <img
                         src="{{ $estate->primaryImage?->url }}"
@@ -231,7 +256,10 @@
                     {{-- Status --}}
 
                     <span
-                        class="absolute left-3 top-3 flex items-center gap-1.5 border border-white/70 bg-white/95 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-slate-700"
+                        class="absolute left-3 top-3 flex items-center gap-1.5
+                               border border-white/70 bg-white/95 px-2 py-1
+                               text-[9px] font-bold uppercase tracking-wide text-slate-700
+                               dark:border-slate-600/70 dark:bg-slate-900/95 dark:text-slate-200"
                     >
                         <span class="h-1.5 w-1.5 bg-sky-500"></span>
 
@@ -247,7 +275,8 @@
                     {{-- Price --}}
 
                     <span
-                        class="absolute bottom-3 right-3 border border-white/20 bg-slate-950/90 px-2.5 py-1 text-xs font-bold text-white"
+                        class="absolute bottom-3 right-3 border border-white/20
+                               bg-slate-950/90 px-2.5 py-1 text-xs font-bold text-white"
                     >
                         {{ $estate->short_price }}
                     </span>
@@ -259,15 +288,22 @@
 
                 <div class="p-3.5">
 
-                    <h2 class="mb-1 line-clamp-1 text-sm font-bold tracking-tight text-slate-900 transition-colors duration-150 group-hover:text-sky-600">
+                    <h2
+                        class="mb-1 line-clamp-1 text-sm font-bold tracking-tight text-slate-900
+                               transition-colors duration-150 group-hover:text-sky-600
+                               dark:text-slate-100 dark:group-hover:text-sky-400"
+                    >
                         {{ $estate->title }}
                     </h2>
 
 
-                    <p class="mb-3 flex items-center text-xs text-slate-500">
+                    <p
+                        class="mb-3 flex items-center text-xs
+                               text-slate-500 dark:text-slate-400"
+                    >
 
                         <svg
-                            class="mr-1.5 h-3.5 w-3.5 shrink-0 text-slate-400"
+                            class="mr-1.5 h-3.5 w-3.5 shrink-0 text-slate-400 dark:text-slate-500"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -297,41 +333,47 @@
 
                     {{-- Specs --}}
 
-                    <div class="flex items-center gap-3 overflow-x-auto border-t border-slate-200 pt-2.5 text-[11px] text-slate-600 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    <div
+                        class="flex items-center gap-3 overflow-x-auto border-t border-slate-200 pt-2.5
+                               text-[11px] text-slate-600
+                               [scrollbar-width:none] [-ms-overflow-style:none]
+                               [&::-webkit-scrollbar]:hidden
+                               dark:border-slate-800 dark:text-slate-400"
+                    >
 
                         @if ($estate->bedroom)
                             <div class="flex shrink-0 items-center gap-1">
-                                <span class="font-bold text-slate-800">
+                                <span class="font-bold text-slate-800 dark:text-slate-200">
                                     {{ $estate->bedroom }}
                                 </span>
-                                <span class="text-slate-400">KT</span>
+                                <span class="text-slate-400 dark:text-slate-500">KT</span>
                             </div>
                         @endif
 
                         @if ($estate->bathroom)
                             <div class="flex shrink-0 items-center gap-1">
-                                <span class="font-bold text-slate-800">
+                                <span class="font-bold text-slate-800 dark:text-slate-200">
                                     {{ $estate->bathroom }}
                                 </span>
-                                <span class="text-slate-400">KM</span>
+                                <span class="text-slate-400 dark:text-slate-500">KM</span>
                             </div>
                         @endif
 
                         @if ($estate->building_size)
                             <div class="flex shrink-0 items-center gap-1">
-                                <span class="font-bold text-slate-800">
+                                <span class="font-bold text-slate-800 dark:text-slate-200">
                                     {{ $estate->building_size }}
                                 </span>
-                                <span class="text-slate-400">m² LB</span>
+                                <span class="text-slate-400 dark:text-slate-500">m² LB</span>
                             </div>
                         @endif
 
                         @if ($estate->land_size)
                             <div class="flex shrink-0 items-center gap-1">
-                                <span class="font-bold text-slate-800">
+                                <span class="font-bold text-slate-800 dark:text-slate-200">
                                     {{ $estate->land_size }}
                                 </span>
-                                <span class="text-slate-400">m² LT</span>
+                                <span class="text-slate-400 dark:text-slate-500">m² LT</span>
                             </div>
                         @endif
 
@@ -345,8 +387,12 @@
 
     @empty
 
-        <div class="flex w-full items-center justify-center border border-dashed border-slate-300 bg-white px-4 py-8 text-center">
-            <p class="text-xs font-medium text-slate-400">
+        <div
+            class="flex w-full items-center justify-center border border-dashed
+                   border-slate-300 bg-white px-4 py-8 text-center
+                   dark:border-slate-700 dark:bg-slate-900"
+        >
+            <p class="text-xs font-medium text-slate-400 dark:text-slate-500">
                 Belum ada properti tersedia.
             </p>
         </div>

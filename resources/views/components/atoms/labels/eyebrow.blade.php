@@ -13,9 +13,9 @@
 ------------------------------------------------------------------ --}}
 
 @props([
-'value',
+    'value',
 ])
 
-<span {{ $attributes->class('text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400') }}>
+<span {{ $attributes->class('text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500') }}>
     {{ $value }}
 </span>

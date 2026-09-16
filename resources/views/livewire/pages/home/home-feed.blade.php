@@ -1,67 +1,64 @@
 {{-- ------------------------------------------------------------------------------------------------------
 | <meta_config>
-| @path             : resources/views/livewire/pages/home/home-feed.blade.php
-| @usage            : DownloadRumah Home — Intent Discovery Entry
-| @type             : Root Livewire Page View
-| @layout           : components.layouts.app
-|
-| @expected_data    : []
-| @expected_events  : [open-search-modal]
-| @techstack        : Laravel 13.17, Livewire 3.6.4, Alpine.js 3.x, Tailwind CSS
-| @design_tokens    : Font: Outfit | Theme: White / Slate / Sky Accent
-| @seo_context      : Public Home
-|
-| @ruling           : Homepage currently focuses on demonstrating the core
-|                     intent-discovery experience before introducing the
-|                     broader DownloadRumah ecosystem.
-|
-| @ruling_ui        : Mobile-first. Strong section boundaries. Restrained rounding.
-| @ruling_modal     : Pure UI state uses Alpine.js. Stateful content remains with Livewire.
-| @ruling_motion    : Snappy transitions only. No continuous decorative animation.
-| @ruling_performance : Keep homepage lightweight during intent-experience development.
-|                       Avoid eager recommendation queries and unnecessary media.
-|
-| @status           : Intent Experience — Prototype / Refactor
-| @author           : yogawilanda <eaywilanda@gmail.com>
-| </meta_config>
+    | @path : resources/views/livewire/pages/home/home-feed.blade.php
+    | @usage : DownloadRumah Home — Intent Discovery Entry
+    | @type : Root Livewire Page View
+    | @layout : components.layouts.app
+    |
+    | @expected_data : []
+    | @expected_events : [open-search-modal]
+    | @techstack : Laravel 13.17, Livewire 3.6.4, Alpine.js 3.x, Tailwind CSS
+    | @design_tokens : Font: Outfit | Theme: White / Slate / Sky Accent
+    | @seo_context : Public Home
+    |
+    | @ruling : Homepage currently focuses on demonstrating the core
+    | intent-discovery experience before introducing the
+    | broader DownloadRumah ecosystem.
+    |
+    | @ruling_ui : Mobile-first. Strong section boundaries. Restrained rounding.
+    | @ruling_modal : Pure UI state uses Alpine.js. Stateful content remains with Livewire.
+    | @ruling_motion : Snappy transitions only. No continuous decorative animation.
+    | @ruling_performance : Keep homepage lightweight during intent-experience development.
+    | Avoid eager recommendation queries and unnecessary media.
+    |
+    | @status : Intent Experience — Prototype / Refactor
+    | @author : yogawilanda <eaywilanda@gmail.com>
+        | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
 
-<div
-    x-data="{ openSearchModal: false }"
-    @open-search-modal.window="openSearchModal = true"
-    class="relative w-full"
->
+<div x-data="{ openSearchModal: false }" @open-search-modal.window="openSearchModal = true" class="relative w-full">
+
     <x-layouts.structural-background>
-
+        
         {{-- =============================================================
-             01. INTENT EXPERIENCE
+        01. INTENT EXPERIENCE
 
-             Primary homepage experience.
+        Primary homepage experience.
 
-             The visitor is not asked to understand DownloadRumah first.
-             Instead, the interface lets them demonstrate what they need
-             or what property they have.
+        The visitor is not asked to understand DownloadRumah first.
+        Instead, the interface lets them demonstrate what they need
+        or what property they have.
 
-             Current focus:
-             - Saya mencari
-             - Saya punya properti
-             - Guided questions
-             - Intent summary
+        Current focus:
+        - Saya mencari
+        - Saya punya properti
+        - Guided questions
+        - Intent summary
 
-             Matching and authentication will be connected later.
-             ============================================================= --}}
+        Matching and authentication will be connected later.
+        ============================================================= --}}
         <livewire:pages.home.guest-intent-controller />
 
 
         {{-- =============================================================
-             TEMPORARILY DISABLED
+        TEMPORARILY DISABLED
 
-             The sections below are intentionally disabled while the
-             intent experience becomes the primary homepage entry point.
+        The sections below are intentionally disabled while the
+        intent experience becomes the primary homepage entry point.
 
-             Do not delete yet. They may be reintroduced after the new
-             interaction and information hierarchy are validated.
-             ============================================================= --}}
+        Do not delete yet. They may be reintroduced after the new
+        interaction and information hierarchy are validated.
+        ============================================================= --}}
 
         {{-- 02. RECENT DISCOVERY --}}
         {{--
@@ -110,22 +107,18 @@
 
 
         {{-- =============================================================
-             TEMPORARILY DISABLED
+        TEMPORARILY DISABLED
 
-             Existing search / needs-analysis modals are not part of the
-             current homepage experiment.
+        Existing search / needs-analysis modals are not part of the
+        current homepage experiment.
 
-             The new hero interaction will eventually replace or connect
-             to the appropriate discovery flow.
-             ============================================================= --}}
+        The new hero interaction will eventually replace or connect
+        to the appropriate discovery flow.
+        ============================================================= --}}
 
         {{--
         <div wire:key="search-advanced-modal-wrapper">
-            <x-layouts.home.home-feed-search-advanced
-                :transaction_type="''"
-                :cities="[]"
-                :districts="[]"
-            />
+            <x-layouts.home.home-feed-search-advanced :transaction_type="''" :cities="[]" :districts="[]" />
         </div>
 
         <div wire:key="needs-analysis-modal-wrapper">
@@ -135,10 +128,10 @@
 
 
         {{-- =============================================================
-             RESERVED / DEPRECATED
+        RESERVED / DEPRECATED
 
-             Kept for possible future structural reuse.
-             ============================================================= --}}
+        Kept for possible future structural reuse.
+        ============================================================= --}}
 
         {{--
         @include('livewire.pages.home.sections.structural-pause')

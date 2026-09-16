@@ -8,7 +8,7 @@
 | @expected_data    : [$slot]
 | @expected_events  : []
 | @techstack        : Laravel 13.17, Blade Components, Tailwind CSS
-| @design_tokens    : Font: Outfit | Theme: White / Slate / Sky Accent
+| @design_tokens    : Font: Outfit | Theme: White / Slate / Sky Accent | Dark Mode
 | @seo_context      : Inherited from Parent Layout
 |
 | @ruling           : Provide reusable section boundaries without owning page content.
@@ -31,7 +31,7 @@
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 
         <div @class([
-            'border-x border-slate-300' => $framed,
+            'border-x border-slate-300 dark:border-slate-800' => $framed,
         ])>
             {{ $slot }}
         </div>

@@ -1,4 +1,3 @@
-
 {{-- ------------------------------------------------------------------------------------------------------
 | <meta_config>
 | @path             : resources/views/livewire/pages/tools/extension/object.blade.php
@@ -29,20 +28,25 @@
 
             <span class="h-1.5 w-1.5 bg-sky-500"></span>
 
-            <label class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+            <label class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
                 Properti
             </label>
 
         </div>
 
-        <label class="mb-2 block text-sm font-semibold text-slate-800">
+        <label class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">
             Berapa harga properti yang ingin dihitung?
         </label>
 
-        <div class="relative border border-slate-300 bg-white transition-colors duration-150 focus-within:border-sky-400">
+        <div
+            class="relative border border-slate-300 bg-white transition-colors duration-150
+                   focus-within:border-sky-400
+                   dark:border-slate-700 dark:bg-slate-900"
+        >
 
             <span
-                class="absolute inset-y-0 left-0 flex items-center pl-4 text-xs font-semibold text-slate-400"
+                class="absolute inset-y-0 left-0 flex items-center pl-4
+                       text-xs font-semibold text-slate-400"
             >
                 Rp
             </span>
@@ -52,13 +56,16 @@
                 :value="agent.propertyPrice ? agent.propertyPrice.toLocaleString('id-ID') : ''"
                 @input="formatInput($event, agent, 'propertyPrice')"
                 placeholder="650.000.000"
-                class="w-full border-0 bg-transparent py-3.5 pl-10 pr-4 text-base font-semibold text-slate-900 outline-none placeholder:text-slate-300 focus:ring-0"
+                class="w-full border-0 bg-transparent py-3.5 pl-10 pr-4 text-base
+                       font-semibold text-slate-900 outline-none placeholder:text-slate-300
+                       focus:ring-0
+                       dark:text-slate-100 dark:placeholder:text-slate-600"
             >
 
         </div>
 
         <p
-            class="mt-1.5 pl-1 text-[10px] font-medium text-sky-600"
+            class="mt-1.5 pl-1 text-[10px] font-medium text-sky-600 dark:text-sky-400"
             x-text="formatTerbilangShort(agent.propertyPrice)"
         ></p>
 
@@ -69,18 +76,18 @@
 
     <div>
 
-        <label class="mb-2 block text-xs font-semibold text-slate-700">
+        <label class="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-300">
             Kondisi properti
         </label>
 
-        <div class="grid grid-cols-2 border border-slate-300">
+        <div class="grid grid-cols-2 border border-slate-300 dark:border-slate-700">
 
             <button
                 type="button"
                 @click="agent.condition = 'new'"
                 :class="agent.condition === 'new'
-                    ? 'bg-slate-50 text-slate-950 border-b-2 border-sky-500'
-                    : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'"
+                    ? 'bg-slate-50 text-slate-950 border-b-2 border-sky-500 dark:bg-slate-800 dark:text-slate-100'
+                    : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200'"
                 class="px-3 py-3 text-xs font-semibold transition-colors duration-150"
             >
                 Properti baru
@@ -90,9 +97,10 @@
                 type="button"
                 @click="agent.condition = 'used'"
                 :class="agent.condition === 'used'
-                    ? 'bg-slate-50 text-slate-950 border-b-2 border-sky-500'
-                    : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700'"
-                class="border-l border-slate-300 px-3 py-3 text-xs font-semibold transition-colors duration-150"
+                    ? 'bg-slate-50 text-slate-950 border-b-2 border-sky-500 dark:bg-slate-800 dark:text-slate-100'
+                    : 'text-slate-400 hover:bg-slate-50 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200'"
+                class="border-l border-slate-300 px-3 py-3 text-xs font-semibold
+                       transition-colors duration-150 dark:border-slate-700"
             >
                 Properti bekas
             </button>
@@ -104,15 +112,15 @@
 
     {{-- Financing Assumptions --}}
 
-    <div class="border-t border-slate-200 pt-5">
+    <div class="border-t border-slate-200 pt-5 dark:border-slate-800">
 
         <div class="mb-3">
 
-            <p class="text-xs font-semibold text-slate-700">
+            <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 Rencana pembiayaan
             </p>
 
-            <p class="mt-0.5 text-[10px] text-slate-400">
+            <p class="mt-0.5 text-[10px] text-slate-400 dark:text-slate-500">
                 Tentukan uang muka dan asumsi KPR untuk memperkirakan cicilan.
             </p>
 
@@ -124,7 +132,7 @@
 
             <div>
 
-                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
                     Uang muka
                 </label>
 
@@ -133,7 +141,10 @@
                     <input
                         type="number"
                         x-model.number="agent.dpPercent"
-                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8
+                               text-xs font-medium text-slate-800 outline-none
+                               transition-colors duration-150 focus:border-sky-400 focus:ring-0
+                               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
                     >
 
                     <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
@@ -149,7 +160,7 @@
 
             <div>
 
-                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+                <label class="mb-1.5 block text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
                     Bunga / Tahun
                 </label>
 
@@ -159,7 +170,10 @@
                         type="number"
                         step="0.1"
                         x-model.number="agent.interest"
-                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0"
+                        class="w-full border border-slate-300 bg-white px-3 py-3 pr-8
+                               text-xs font-medium text-slate-800 outline-none
+                               transition-colors duration-150 focus:border-sky-400 focus:ring-0
+                               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
                     >
 
                     <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
@@ -179,7 +193,7 @@
 
     <div>
 
-        <label class="mb-2 block text-xs font-semibold text-slate-700">
+        <label class="mb-2 block text-xs font-semibold text-slate-700 dark:text-slate-300">
             Tenor KPR
         </label>
 
@@ -188,7 +202,10 @@
             <input
                 type="number"
                 x-model.number="agent.tenure"
-                class="w-full border border-slate-300 bg-white px-3 py-3 pr-16 text-xs font-medium text-slate-800 outline-none transition-colors duration-150 focus:border-sky-400 focus:ring-0"
+                class="w-full border border-slate-300 bg-white px-3 py-3 pr-16
+                       text-xs font-medium text-slate-800 outline-none
+                       transition-colors duration-150 focus:border-sky-400 focus:ring-0
+                       dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
             >
 
             <span class="absolute inset-y-0 right-3 flex items-center text-xs font-semibold text-slate-400">
@@ -202,11 +219,11 @@
 
     {{-- Result --}}
 
-    <div class="border border-slate-300 bg-slate-50">
+    <div class="border border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-800/60">
 
-        <div class="border-b border-slate-200 px-4 py-3">
+        <div class="border-b border-slate-200 px-4 py-3 dark:border-slate-700">
 
-            <p class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
                 Perkiraan pembiayaan
             </p>
 
@@ -216,12 +233,12 @@
 
             <div class="flex items-center justify-between gap-4 text-xs">
 
-                <span class="text-slate-500">
+                <span class="text-slate-500 dark:text-slate-400">
                     Uang muka
                 </span>
 
                 <span
-                    class="font-semibold text-slate-800"
+                    class="font-semibold text-slate-800 dark:text-slate-200"
                     x-text="formatRupiah(calcAgent.dpAmount)"
                 ></span>
 
@@ -230,12 +247,12 @@
 
             <div class="flex items-center justify-between gap-4 text-xs">
 
-                <span class="text-slate-500">
+                <span class="text-slate-500 dark:text-slate-400">
                     Plafon pinjaman KPR
                 </span>
 
                 <span
-                    class="font-semibold text-slate-800"
+                    class="font-semibold text-slate-800 dark:text-slate-200"
                     x-text="formatRupiah(calcAgent.plafon)"
                 ></span>
 
@@ -244,28 +261,28 @@
 
             <div class="flex items-center justify-between gap-4 text-xs">
 
-                <span class="text-slate-500">
+                <span class="text-slate-500 dark:text-slate-400">
                     Estimasi surat & pajak
                 </span>
 
                 <span
-                    class="font-medium text-slate-600"
+                    class="font-medium text-slate-600 dark:text-slate-400"
                     x-text="formatRupiah(calcAgent.estimatedLegalFee)"
                 ></span>
 
             </div>
 
 
-            <div class="border-t border-slate-200 pt-3">
+            <div class="border-t border-slate-200 pt-3 dark:border-slate-700">
 
                 <div class="flex items-end justify-between gap-4">
 
-                    <span class="text-xs font-semibold text-slate-700">
+                    <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">
                         Estimasi cicilan / bulan
                     </span>
 
                     <span
-                        class="text-lg font-bold tracking-tight text-sky-600"
+                        class="text-lg font-bold tracking-tight text-sky-600 dark:text-sky-400"
                         x-text="formatRupiah(calcAgent.monthlyInstallment)"
                     ></span>
 
@@ -280,7 +297,7 @@
 
     {{-- Context Note --}}
 
-    <p class="text-center text-[10px] leading-5 text-slate-400">
+    <p class="text-center text-[10px] leading-5 text-slate-400 dark:text-slate-500">
         Hasil merupakan estimasi berdasarkan asumsi yang kamu masukkan dan
         dapat berbeda dari perhitungan bank.
     </p>

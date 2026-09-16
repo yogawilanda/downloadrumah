@@ -20,84 +20,105 @@
 | </meta_config>
 -------------------------------------------------------------------------------------------------------- --}}
 
-<div x-data="{
-    openMenu: false,
+<div
+    x-data="{
+        openMenu: false,
 
-    activeTab: '{{ request()->routeIs('home')
-        ? 'home'
-        : (request()->routeIs('mortgage.*')
-            ? 'kpr'
-            : (request()->routeIs('listings.*')
-                ? 'listings'
-                : 'menu')) }}',
+        activeTab: '{{ request()->routeIs('home')
+            ? 'home'
+            : (request()->routeIs('mortgage.*')
+                ? 'kpr'
+                : (request()->routeIs('listings.*')
+                    ? 'listings'
+                    : 'menu')) }}',
 
-    setTab(tab) {
-        this.activeTab = tab;
-    },
+        setTab(tab) {
+            this.activeTab = tab;
+        },
 
-    confirmNavigation(event) {
-        if (
-            window.estateFormDirty &&
-            event.target.closest('a') &&
-            !confirm('Isian belum disimpan. Keluar dari form?')
-        ) {
-            event.preventDefault();
+        confirmNavigation(event) {
+            if (
+                window.estateFormDirty &&
+                event.target.closest('a') &&
+                !confirm('Isian belum disimpan. Keluar dari form?')
+            ) {
+                event.preventDefault();
+            }
         }
-    }
-}" x-on:livewire:navigated.window="window.estateFormDirty = false"
-    @click.capture="confirmNavigation($event)">
+    }"
+    x-on:livewire:navigated.window="window.estateFormDirty = false"
+    @click.capture="confirmNavigation($event)"
+>
 
     {{-- =============================================================
          NAVIGATION FRAME
          ============================================================= --}}
-    <div class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-300 bg-white">
+    <div
+        class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-300
+               bg-white/95 shadow-[0_-2px_12px_rgba(15,23,42,0.04)]
+               backdrop-blur-md
+               dark:border-slate-800
+               dark:bg-slate-950/95
+               dark:shadow-[0_-2px_16px_rgba(0,0,0,0.25)]"
+    >
 
         {{-- Structural rail --}}
-        <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-slate-100"></div>
+        <div
+            class="pointer-events-none absolute inset-x-0 top-0 h-px
+                   bg-slate-100 dark:bg-slate-800"
+        ></div>
 
         <div class="mx-auto flex h-16 max-w-6xl items-center px-3 sm:px-6 lg:px-8">
 
             {{-- =====================================================
                  01. HOME
                  ===================================================== --}}
-            <a href="{{ route('home') }}" wire:navigate @click="setTab('home')"
+            <a
+                href="{{ route('home') }}"
+                wire:navigate
+                @click="setTab('home')"
                 :class="activeTab === 'home'
-                    ?
-                    'text-sky-600' :
-                    'text-slate-400 hover:text-slate-700'"
-                class="group relative flex h-full flex-1 flex-col items-center justify-center gap-1 transition-colors duration-150">
-
-                <span :class="activeTab === 'home' ? 'bg-sky-500' : 'bg-transparent'"
-                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"></span>
+                    ? 'text-sky-600 dark:text-sky-400'
+                    : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200'"
+                class="group relative flex h-full flex-1 flex-col items-center
+                       justify-center gap-1 transition-colors duration-150"
+            >
+                <span
+                    :class="activeTab === 'home' ? 'bg-sky-500' : 'bg-transparent'"
+                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"
+                ></span>
 
                 <x-icons.icons-home class="h-5 w-5 shrink-0" />
 
                 <span class="text-[10px] font-semibold tracking-tight sm:text-[11px]">
                     Beranda
                 </span>
-
             </a>
 
 
             {{-- =====================================================
                  02. KPR
                  ===================================================== --}}
-            <a href="{{ route('mortgage.calculator') }}" wire:navigate @click="setTab('kpr')"
+            <a
+                href="{{ route('mortgage.calculator') }}"
+                wire:navigate
+                @click="setTab('kpr')"
                 :class="activeTab === 'kpr'
-                    ?
-                    'text-sky-600' :
-                    'text-slate-400 hover:text-slate-700'"
-                class="group relative flex h-full flex-1 flex-col items-center justify-center gap-1 transition-colors duration-150">
-
-                <span :class="activeTab === 'kpr' ? 'bg-sky-500' : 'bg-transparent'"
-                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"></span>
+                    ? 'text-sky-600 dark:text-sky-400'
+                    : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200'"
+                class="group relative flex h-full flex-1 flex-col items-center
+                       justify-center gap-1 transition-colors duration-150"
+            >
+                <span
+                    :class="activeTab === 'kpr' ? 'bg-sky-500' : 'bg-transparent'"
+                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"
+                ></span>
 
                 <x-icons.icons-calculator class="h-5 w-5 shrink-0" />
 
                 <span class="text-[10px] font-semibold tracking-tight sm:text-[11px]">
                     KPR
                 </span>
-
             </a>
 
 
@@ -106,15 +127,26 @@
                  ===================================================== --}}
             <div class="flex h-full flex-1 items-center justify-center px-2">
 
-                <a href="{{ auth()->check() ? route('estates.create') : route('login') }}" wire:navigate
+                <a
+                    href="{{ auth()->check() ? route('estates.create') : route('login') }}"
+                    wire:navigate
                     title="Tambahkan properti"
-                    class="group relative flex h-11 w-11 items-center justify-center border border-slate-900 bg-slate-950 text-white transition duration-150 hover:bg-sky-600 hover:border-sky-600 active:translate-y-px sm:h-12 sm:w-12">
-
-                    <span class="absolute -right-1 -top-1 h-2 w-2 border border-white bg-sky-500"
-                        aria-hidden="true"></span>
+                    class="group relative flex h-11 w-11 items-center justify-center
+                           border border-slate-900 bg-slate-950 text-white
+                           transition duration-150
+                           hover:border-sky-600 hover:bg-sky-600
+                           active:translate-y-px
+                           dark:border-slate-700 dark:bg-slate-900
+                           dark:hover:border-sky-600 dark:hover:bg-sky-600
+                           sm:h-12 sm:w-12"
+                >
+                    <span
+                        class="absolute -right-1 -top-1 h-2 w-2
+                               border border-white bg-sky-500"
+                        aria-hidden="true"
+                    ></span>
 
                     <x-icons.icons-adds class="h-5 w-5 sm:h-6 sm:w-6" />
-
                 </a>
 
             </div>
@@ -123,48 +155,55 @@
             {{-- =====================================================
                  04. LISTINGS
                  ===================================================== --}}
-            <a href="{{ route('listings.index') }}" wire:navigate @click="setTab('listings')"
+            <a
+                href="{{ route('listings.index') }}"
+                wire:navigate
+                @click="setTab('listings')"
                 :class="activeTab === 'listings'
-                    ?
-                    'text-sky-600' :
-                    'text-slate-400 hover:text-slate-700'"
-                class="group relative flex h-full flex-1 flex-col items-center justify-center gap-1 transition-colors duration-150">
-
-                <span :class="activeTab === 'listings' ? 'bg-sky-500' : 'bg-transparent'"
-                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"></span>
+                    ? 'text-sky-600 dark:text-sky-400'
+                    : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200'"
+                class="group relative flex h-full flex-1 flex-col items-center
+                       justify-center gap-1 transition-colors duration-150"
+            >
+                <span
+                    :class="activeTab === 'listings' ? 'bg-sky-500' : 'bg-transparent'"
+                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"
+                ></span>
 
                 <x-icons.icons-listings class="h-5 w-5 shrink-0" />
 
                 <span class="text-[10px] font-semibold tracking-tight sm:text-[11px]">
                     Cari
                 </span>
-
             </a>
 
 
             {{-- =====================================================
                  05. MENU
                  ===================================================== --}}
-            <button type="button" @click="openMenu = true; setTab('menu')"
+            <button
+                type="button"
+                @click="openMenu = true; setTab('menu')"
                 :class="activeTab === 'menu'
-                    ?
-                    'text-sky-600' :
-                    'text-slate-400 hover:text-slate-700'"
-                class="group relative flex h-full flex-1 flex-col items-center justify-center gap-1 transition-colors duration-150 focus:outline-none">
-
-                <span :class="activeTab === 'menu' ? 'bg-sky-500' : 'bg-transparent'"
-                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"></span>
+                    ? 'text-sky-600 dark:text-sky-400'
+                    : 'text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200'"
+                class="group relative flex h-full flex-1 flex-col items-center
+                       justify-center gap-1 transition-colors duration-150
+                       focus:outline-none"
+            >
+                <span
+                    :class="activeTab === 'menu' ? 'bg-sky-500' : 'bg-transparent'"
+                    class="absolute inset-x-5 top-0 h-0.5 transition-colors duration-150"
+                ></span>
 
                 <x-icons.icons-menus class="h-5 w-5 shrink-0" />
 
                 <span class="text-[10px] font-semibold tracking-tight sm:text-[11px]">
                     Menu
                 </span>
-
             </button>
 
         </div>
-
     </div>
 
 

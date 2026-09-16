@@ -37,11 +37,13 @@ Override
     {{ $attributes->class([
         'w-full border border-slate-300 bg-slate-50 px-4 py-4 text-left text-sm font-bold text-slate-700 transition',
         'hover:border-slate-950 hover:bg-white',
+        'dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200',
+        'dark:hover:border-sky-500 dark:hover:bg-slate-800 dark:hover:text-slate-100',
     ]) }}
 >
     {{ $value }}
 
-    <span class="float-right text-slate-400">
+    <span class="float-right text-slate-400 dark:text-slate-500">
         →
     </span>
 </button>
