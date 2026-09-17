@@ -29,7 +29,7 @@
 <div x-data="{ openSearchModal: false }" @open-search-modal.window="openSearchModal = true" class="relative w-full">
 
     <x-layouts.structural-background>
-        
+
         {{-- =============================================================
         01. INTENT EXPERIENCE
 
@@ -48,6 +48,8 @@
         Matching and authentication will be connected later.
         ============================================================= --}}
         <livewire:pages.home.guest-intent-controller />
+        <livewire:pages.home.discovery-intent />
+
 
 
         {{-- =============================================================
@@ -61,9 +63,9 @@
         ============================================================= --}}
 
         {{-- 02. RECENT DISCOVERY --}}
-        {{--
-        @include('livewire.pages.home.sections.recent-discovery')
-        --}}
+
+        {{-- @include('livewire.pages.home.sections.recent-discovery') --}}
+
 
         {{-- 03. RECOMMENDATION --}}
         {{--
