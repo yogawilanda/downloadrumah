@@ -10,6 +10,27 @@ use Illuminate\Support\Facades\Cache;
 class CityService
 {
     /**
+     * Resolve a city from user-provided location text.
+     */
+    public function findByName(string $name): ?City
+    {
+        $name = trim($name);
+
+        if ($name === '') {
+            return null;
+        }
+
+        $normalized = mb_strtolower($name);
+
+        return City::query()
+            ->select(['code', 'name', 'province_code'])
+            ->whereRaw('LOWER(name) = ?', [$normalized])
+            ->orWhereRaw('LOWER(name) = ?', ['kota ' . $normalized])
+            ->orWhereRaw('LOWER(name) = ?', ['kabupaten ' . $normalized])
+            ->first();
+    }
+
+    /**
      * Cache daftar kota dropdown
      */
     public function getDropdownCities(int $limit = 12): Collection

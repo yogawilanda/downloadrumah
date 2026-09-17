@@ -1,5 +1,7 @@
 {{-- resources/views/livewire/pages/home/sections/hero-title.blade.php --}}
-<div x-data="{
+
+<div
+    x-data="{
         words: ['rumah', 'kos', 'tanah', 'ruko'],
         word: 0,
         length: 1,
@@ -32,11 +34,13 @@
         destroy() {
             clearTimeout(this.timer);
         }
-    }" class="mx-auto max-w-5xl">
+    }"
+    class="mx-auto max-w-5xl"
+>
     {{-- Brand --}}
     <div class="mb-5 flex items-center gap-2 text-[10px] font-bold
-               uppercase tracking-[0.2em] text-slate-500
-               dark:text-slate-400">
+                uppercase tracking-[0.2em] text-slate-500
+                dark:text-slate-400">
         <span class="h-1.5 w-1.5 bg-slate-950 dark:bg-white"></span>
         DownloadRumah
     </div>
@@ -45,33 +49,30 @@
     <h1 class="max-w-4xl text-[2.5rem] font-black leading-[1.01]
                tracking-[-0.05em] text-slate-950
                dark:text-white sm:text-5xl lg:text-[3.5rem]">
+
         <span class="inline-flex flex-wrap items-baseline">
             <span>Ceritakan</span>
 
-            <span class="word-reveal mx-1.5 text-sky-500 dark:text-sky-400" x-text="visibleWord"></span>
+            <span
+                class="word-reveal mx-1.5 text-sky-500 dark:text-sky-400"
+                x-text="visibleWord"
+            ></span>
 
             <span>yang kamu butuhkan.</span>
         </span>
 
         <br class="hidden sm:block">
 
-        {{-- Dynamic intent --}}
         <span>
-            <span class="text-slate-950 dark:text-white">Cari</span>
-
-            @if ($intent === 'search')
-            <span class="text-slate-500 dark:text-slate-400">yang</span>
-            <span class="text-sky-500 dark:text-sky-400">cocok.</span>
-            @else
-            <span class="text-slate-500 dark:text-slate-400">yang</span>
-            <span class="text-sky-500 dark:text-sky-400">mencari.</span>
-            @endif
+            <span class="text-slate-950 dark:text-white">Kami bantu</span>
+            <span class="text-slate-500 dark:text-slate-400">menemukan</span>
+            <span class="text-sky-500 dark:text-sky-400">arahnya.</span>
         </span>
     </h1>
 
     {{-- Supporting text --}}
     <p class="mt-6 max-w-2xl text-base font-medium leading-7
-               text-slate-600 dark:text-slate-400 lg:text-lg">
+              text-slate-600 dark:text-slate-400 lg:text-lg">
         Mulai dari kebutuhanmu.
     </p>
 </div>

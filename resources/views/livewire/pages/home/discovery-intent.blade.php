@@ -1,14 +1,15 @@
 {{-- ------------------------------------------------------------------------------------------------------
 | <meta_config>
 | @path             : resources/views/livewire/pages/home/discovery-intent.blade.php
-| @usage            : Shared discovery/search controller with contextual suggestion surface
+| @usage            : Shared discovery/search surface with contextual intent gateway
 | @type             : Livewire View
-| @expected_data    : [$variant, $search, $city, $transaction_type, $suggestions, $cities, $popularCities]
-| @expected_events  : [submitSearch, selectCitySuggestion]
+| @controller       : <livewire:pages.home.discovery-intent />
+| @expected_data    : [$variant, $search, $suggestions, $popularCities]
+| @expected_events  : [submitSearch]
 | @techstack        : Laravel 13.17, Livewire 3.6.4, Alpine.js 3.x, Tailwind CSS
 | @design_tokens    : Font: Outfit | Theme: White / Slate / Architectural Accent
 | @status           : Active
-| @author            : yogawilanda <eayogawilanda@gmail.com>
+| @author           : yogawilanda <eayogawilanda@gmail.com>
 -------------------------------------------------------------------------------------------------------- --}}
 
 @if ($variant === 'compact')
@@ -110,9 +111,10 @@
                 class="hidden text-[10px] font-medium tracking-wide
                        text-slate-400 dark:text-slate-500 sm:block"
             >
-                Cari apa yang sudah kamu bayangkan
+                Tidak harus sudah tahu persis apa yang dicari
             </span>
         </div>
+
 
         {{-- Main Discovery Surface --}}
         <div
@@ -143,6 +145,7 @@
                        border-slate-300/80 dark:border-slate-700"
             ></div>
 
+
             {{-- Corner Accents --}}
             <span
                 aria-hidden="true"
@@ -155,6 +158,7 @@
                 class="pointer-events-none absolute -bottom-px -right-px h-3 w-3
                        border-b border-r border-slate-400 dark:border-slate-500"
             ></span>
+
 
             <div class="relative">
 
@@ -210,6 +214,7 @@
                         />
                     </div>
 
+
                     {{-- Mobile Submit --}}
                     <div
                         class="border-t border-slate-200/80 p-3
@@ -230,11 +235,13 @@
                         </button>
                     </div>
 
-                    {{-- Exploration Starters --}}
+
+                    {{-- Intent Gateways --}}
                     <div
                         class="border-t border-slate-200/70 px-4 py-4
                                dark:border-slate-800 sm:px-5"
                     >
+
                         <div class="mb-3 flex items-center gap-2">
                             <span class="h-px w-5 bg-slate-300 dark:bg-slate-700"></span>
 
@@ -242,30 +249,132 @@
                                 class="text-[10px] font-semibold uppercase tracking-[0.14em]
                                        text-slate-400 dark:text-slate-500"
                             >
-                                Mulai dari kota
+                                Atau mulai dari sini
                             </span>
                         </div>
 
-                        <div class="flex flex-wrap gap-x-5 gap-y-2">
-                            @foreach ($popularCities as $popularCity)
-                                <button
-                                    type="button"
-                                    wire:click="selectCitySuggestion('{{ $popularCity->name }}')"
-                                    class="border-b border-slate-200 py-1 text-xs font-medium
-                                           text-slate-600 transition
-                                           hover:border-sky-500 hover:text-slate-950
-                                           dark:border-slate-700 dark:text-slate-300
-                                           dark:hover:border-sky-400 dark:hover:text-white"
+
+                        <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+
+                            {{-- Search Intent --}}
+                            <a
+                                href="{{ route('matching.search') }}"
+                                wire:navigate
+                                class="group flex min-h-16 items-center justify-between
+                                       border border-slate-200 bg-slate-50 px-4 py-3
+                                       text-left transition
+                                       hover:border-slate-400 hover:bg-white
+                                       dark:border-slate-700 dark:bg-slate-800/40
+                                       dark:hover:border-slate-500 dark:hover:bg-slate-800"
+                            >
+                                <span>
+                                    <span
+                                        class="block text-xs font-bold text-slate-800
+                                               dark:text-slate-100"
+                                    >
+                                        Bantu saya mencari
+                                    </span>
+
+                                    <span
+                                        class="mt-1 block text-[10px] font-medium
+                                               text-slate-400 dark:text-slate-500"
+                                    >
+                                        Temukan properti yang sesuai
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="ml-3 text-sm text-slate-400 transition
+                                           group-hover:translate-x-1 group-hover:text-slate-900
+                                           dark:group-hover:text-white"
                                 >
-                                    {{ $popularCity->name }}
-                                </button>
-                            @endforeach
+                                    →
+                                </span>
+                            </a>
+
+
+                            {{-- Offer Intent --}}
+                            <a
+                                href="{{ route('matching.offer') }}"
+                                wire:navigate
+                                class="group flex min-h-16 items-center justify-between
+                                       border border-slate-200 bg-slate-50 px-4 py-3
+                                       text-left transition
+                                       hover:border-slate-400 hover:bg-white
+                                       dark:border-slate-700 dark:bg-slate-800/40
+                                       dark:hover:border-slate-500 dark:hover:bg-slate-800"
+                            >
+                                <span>
+                                    <span
+                                        class="block text-xs font-bold text-slate-800
+                                               dark:text-slate-100"
+                                    >
+                                        Bantu saya menjual
+                                    </span>
+
+                                    <span
+                                        class="mt-1 block text-[10px] font-medium
+                                               text-slate-400 dark:text-slate-500"
+                                    >
+                                        Temukan cara menawarkan properti
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="ml-3 text-sm text-slate-400 transition
+                                           group-hover:translate-x-1 group-hover:text-slate-900
+                                           dark:group-hover:text-white"
+                                >
+                                    →
+                                </span>
+                            </a>
+
+
+                            {{-- Analysis Intent --}}
+                            <button
+                                type="button"
+                                class="group flex min-h-16 items-center justify-between
+                                       border border-slate-200 bg-slate-50 px-4 py-3
+                                       text-left transition
+                                       hover:border-slate-400 hover:bg-white
+                                       dark:border-slate-700 dark:bg-slate-800/40
+                                       dark:hover:border-slate-500 dark:hover:bg-slate-800"
+                            >
+                                <span>
+                                    <span
+                                        class="block text-xs font-bold text-slate-800
+                                               dark:text-slate-100"
+                                    >
+                                        Bantu saya menganalisa
+                                    </span>
+
+                                    <span
+                                        class="mt-1 block text-[10px] font-medium
+                                               text-slate-400 dark:text-slate-500"
+                                    >
+                                        Pahami nilai dan kondisi properti
+                                    </span>
+                                </span>
+
+                                <span
+                                    class="ml-3 text-sm text-slate-400 transition
+                                           group-hover:translate-x-1 group-hover:text-slate-900
+                                           dark:group-hover:text-white"
+                                >
+                                    →
+                                </span>
+                            </button>
+
                         </div>
+
                     </div>
 
                 </form>
+
             </div>
+
         </div>
+
 
         {{-- Supporting Note --}}
         <div
@@ -275,7 +384,7 @@
             <span class="h-px w-6 bg-slate-300 dark:bg-slate-700"></span>
 
             <span>
-                Tidak harus sudah tahu persis apa yang dicari.
+                Kamu bisa mulai dengan kata-kata sendiri.
             </span>
         </div>
 

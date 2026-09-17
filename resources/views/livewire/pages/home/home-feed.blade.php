@@ -47,97 +47,98 @@
 
         Matching and authentication will be connected later.
         ============================================================= --}}
-        <livewire:pages.home.guest-intent-controller />
-        <livewire:pages.home.discovery-intent />
+        <livewire:pages.home.sections.hero>
+            {{--
+            <livewire:pages.home.guest-matching /> --}}
 
 
 
-        {{-- =============================================================
-        TEMPORARILY DISABLED
+            {{-- =============================================================
+            TEMPORARILY DISABLED
 
-        The sections below are intentionally disabled while the
-        intent experience becomes the primary homepage entry point.
+            The sections below are intentionally disabled while the
+            intent experience becomes the primary homepage entry point.
 
-        Do not delete yet. They may be reintroduced after the new
-        interaction and information hierarchy are validated.
-        ============================================================= --}}
+            Do not delete yet. They may be reintroduced after the new
+            interaction and information hierarchy are validated.
+            ============================================================= --}}
 
-        {{-- 02. RECENT DISCOVERY --}}
+            {{-- 02. RECENT DISCOVERY --}}
 
-        {{-- @include('livewire.pages.home.sections.recent-discovery') --}}
-
-
-        {{-- 03. RECOMMENDATION --}}
-        {{--
-        @include('livewire.pages.home.sections.recommendation')
-        --}}
-
-        {{-- 04. WHY DISCOVERY --}}
-        {{--
-        @include('livewire.pages.home.sections.why-discovery')
-        --}}
-
-        {{-- 05. HOW IT WORKS --}}
-        {{--
-        @include('livewire.pages.home.sections.how-it-works')
-        --}}
-
-        {{-- 06. PROPERTY ↔ PROFESSIONAL --}}
-        {{--
-        @include('livewire.pages.home.sections.property-professional')
-        --}}
-
-        {{-- 07. START ANYWHERE --}}
-        {{--
-        @include('livewire.pages.home.sections.start-anywhere')
-        --}}
-
-        {{-- 08. NEXT STEP --}}
-        {{--
-        @include('livewire.pages.home.sections.next-step')
-        --}}
-
-        {{-- 09. CONTEXTUAL MESSAGE --}}
-        {{--
-        @include('livewire.pages.home.sections.promotion')
-        --}}
-
-        {{-- 10. OWNER ACQUISITION --}}
-        {{--
-        @include('livewire.pages.home.sections.owner-acquisition')
-        --}}
+            {{-- @include('livewire.pages.home.sections.recent-discovery') --}}
 
 
-        {{-- =============================================================
-        TEMPORARILY DISABLED
+            {{-- 03. RECOMMENDATION --}}
+            {{--
+            @include('livewire.pages.home.sections.recommendation')
+            --}}
 
-        Existing search / needs-analysis modals are not part of the
-        current homepage experiment.
+            {{-- 04. WHY DISCOVERY --}}
+            {{--
+            @include('livewire.pages.home.sections.why-discovery')
+            --}}
 
-        The new hero interaction will eventually replace or connect
-        to the appropriate discovery flow.
-        ============================================================= --}}
+            {{-- 05. HOW IT WORKS --}}
+            {{--
+            @include('livewire.pages.home.sections.how-it-works')
+            --}}
 
-        {{--
-        <div wire:key="search-advanced-modal-wrapper">
-            <x-layouts.home.home-feed-search-advanced :transaction_type="''" :cities="[]" :districts="[]" />
-        </div>
+            {{-- 06. PROPERTY ↔ PROFESSIONAL --}}
+            {{--
+            @include('livewire.pages.home.sections.property-professional')
+            --}}
 
-        <div wire:key="needs-analysis-modal-wrapper">
-            @livewire(\App\Livewire\Pages\Home\NeedsAnalysisModal::class)
-        </div>
-        --}}
+            {{-- 07. START ANYWHERE --}}
+            {{--
+            @include('livewire.pages.home.sections.start-anywhere')
+            --}}
+
+            {{-- 08. NEXT STEP --}}
+            {{--
+            @include('livewire.pages.home.sections.next-step')
+            --}}
+
+            {{-- 09. CONTEXTUAL MESSAGE --}}
+            {{--
+            @include('livewire.pages.home.sections.promotion')
+            --}}
+
+            {{-- 10. OWNER ACQUISITION --}}
+            {{--
+            @include('livewire.pages.home.sections.owner-acquisition')
+            --}}
 
 
-        {{-- =============================================================
-        RESERVED / DEPRECATED
+            {{-- =============================================================
+            TEMPORARILY DISABLED
 
-        Kept for possible future structural reuse.
-        ============================================================= --}}
+            Existing search / needs-analysis modals are not part of the
+            current homepage experiment.
 
-        {{--
-        @include('livewire.pages.home.sections.structural-pause')
-        --}}
+            The new hero interaction will eventually replace or connect
+            to the appropriate discovery flow.
+            ============================================================= --}}
+
+            {{--
+            <div wire:key="search-advanced-modal-wrapper">
+                <x-layouts.home.home-feed-search-advanced :transaction_type="''" :cities="[]" :districts="[]" />
+            </div>
+
+            <div wire:key="needs-analysis-modal-wrapper">
+                @livewire(\App\Livewire\Pages\Home\NeedsAnalysisModal::class)
+            </div>
+            --}}
+
+
+            {{-- =============================================================
+            RESERVED / DEPRECATED
+
+            Kept for possible future structural reuse.
+            ============================================================= --}}
+
+            {{--
+            @include('livewire.pages.home.sections.structural-pause')
+            --}}
 
     </x-layouts.structural-background>
 </div>
