@@ -145,15 +145,26 @@ class GuestMatching extends Component
      *
      * Livewire does not perform matching or query construction.
      */
+    // public function submit(GuestMatchingService $matchingService): void
+    // {
+    //     $result = $matchingService->match($this->payload);
+
+    //     $this->matchingResults = $result['results'] ?? [];
+
+    //     $this->matchingExplanation = $result['explanation'] ?? [];
+
+    //     $this->showResults = true;
+    // }
+
     public function submit(GuestMatchingService $matchingService): void
     {
         $result = $matchingService->match($this->payload);
 
         $this->matchingResults = $result['results'] ?? [];
-
         $this->matchingExplanation = $result['explanation'] ?? [];
-
         $this->showResults = true;
+
+        session()->put('property_matching', $this->payload);
     }
 
 
@@ -254,3 +265,4 @@ class GuestMatching extends Component
         return view('livewire.pages.home.guest-matching');
     }
 }
+

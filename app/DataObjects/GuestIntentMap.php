@@ -25,6 +25,7 @@ class GuestIntentMap
     public static function map(): array
     {
         return [
+            // option for both parties.
             'intents' => [
                 'search' => [
                     'label' => 'mencari properti',
@@ -33,9 +34,11 @@ class GuestIntentMap
                     'label' => 'punya properti',
                 ],
             ],
+            // search state 1
+            // state 1.1. analyze user state intentions
             'search_states' => [
                 'known' => [
-                    'label' => 'sudah tahu yang cari',
+                    'label' => 'sudah tahu yang saya cari',
                 ],
                 'browsing' => [
                     'label' => 'mau lihat lihat dulu',
@@ -50,13 +53,18 @@ class GuestIntentMap
                     'label' => 'baru mulai mencari',
                 ],
             ],
+            // state 1.2 state user housing options/any word that describe if they want to
+            // a. buy a house,
+            // b. rent a house,
+            // c. rent a shop house,
+            // d. boarding (ngekost)
             'property_types' => [
                 'house' => [
-                    'label' => 'Rumah',
+                    'label' => 'Rumah untuk dibeli',
                     'pointer' => 'property.house',
                 ],
                 'kos' => [
-                    'label' => 'Kos',
+                    'label' => 'Sewa Kontrakan',
                     'pointer' => 'property.kos',
                 ],
                 'land' => [
@@ -68,6 +76,7 @@ class GuestIntentMap
                     'pointer' => 'property.shop',
                 ],
             ],
+            // state user
             'purposes' => [
                 'search' => [
                     'near_work' => [

@@ -64,15 +64,14 @@
         <br class="hidden sm:block">
 
         <span>
-            <span class="text-slate-950 dark:text-white">Kami bantu</span>
-            <span class="text-slate-500 dark:text-slate-400">menemukan</span>
+            Kami bantu menemukan
             <span class="text-sky-500 dark:text-sky-400">arahnya.</span>
         </span>
     </h1>
 
     {{-- Supporting text --}}
-    <p class="mt-6 max-w-2xl text-base font-medium leading-7
+    <p class="mt-5 max-w-2xl text-base font-normal leading-relaxed
               text-slate-600 dark:text-slate-400 lg:text-lg">
-        Mulai dari kebutuhanmu.
+        Temukan tempat yang masuk akal untukmu.
     </p>
 </div>

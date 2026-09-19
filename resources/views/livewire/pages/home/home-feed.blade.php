@@ -62,6 +62,7 @@
             Do not delete yet. They may be reintroduced after the new
             interaction and information hierarchy are validated.
             ============================================================= --}}
+            {{-- @include('livewire.pages.home.sections.intent-flow') work on this later --}}
 
             {{-- 02. RECENT DISCOVERY --}}
 
@@ -74,9 +75,9 @@
             --}}
 
             {{-- 04. WHY DISCOVERY --}}
-            {{--
-            @include('livewire.pages.home.sections.why-discovery')
-            --}}
+
+            {{-- @include('livewire.pages.home.sections.why-discovery') --}}
+
 
             {{-- 05. HOW IT WORKS --}}
             {{--

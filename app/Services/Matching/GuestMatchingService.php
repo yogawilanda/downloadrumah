@@ -16,8 +16,8 @@
 | ruling_evidence______: Every result should expose what matched, what remains
 |                        unverified, what was relaxed, and what conflicts with
 |                        the user's request.
-| ruling_widening______: Matching may widen criteria when exact results are
-|                        insufficient, but every relaxation MUST be explicit.
+| ruling_widening______: Matching may widen criteria when exact results
+|                        are insufficient, but every relaxation MUST be explicit.
 | ruling_scope_________: Service coordinates matching behavior.
 |                        Complex query construction may later be isolated into
 |                        Query Classes.
@@ -37,6 +37,7 @@ class GuestMatchingService
     ) {
     }
 
+
     /**
      * Resolve semantic property pointer into Estate storage value.
      *
@@ -48,16 +49,17 @@ class GuestMatchingService
     {
         return match ($pointer) {
             'property.house' => 'house',
-            'property.land'  => 'land',
-            'property.shop'  => 'shophouse',
+            'property.land' => 'land',
+            'property.shop' => 'shophouse',
 
             // Understood by the intent layer, but not supported
             // by the current Estate inventory.
-            'property.kos'   => null,
+            'property.kos' => null,
 
             default => null,
         };
     }
+
 
     /**
      * Execute exact guest property matching.
@@ -118,8 +120,13 @@ class GuestMatchingService
             ];
         }
 
+        /*
+         * Match only against supply that is publicly published
+         * and currently available.
+         */
         $query = Estate::query()
-            ->active()
+            ->published()
+            ->available()
             ->where('city_id', $city->code);
 
         if ($propertyType) {
@@ -132,8 +139,14 @@ class GuestMatchingService
             $query->where('price', '<=', $budget);
         }
 
+        /*
+         * Guest Matching only needs matching data.
+         *
+         * Do not eager-load images or listing presentation
+         * relationships here. Public property presentation already
+         * belongs to the existing Discovery/Public Listing flow.
+         */
         $estates = $query
-            ->with('primaryImage')
             ->latest()
             ->limit(20)
             ->get();
@@ -180,6 +193,7 @@ class GuestMatchingService
         ];
     }
 
+
     /**
      * Criteria verified by the exact matcher globally.
      */
@@ -205,6 +219,7 @@ class GuestMatchingService
 
         return $matched;
     }
+
 
     /**
      * Criteria verified for an individual Estate result.
@@ -234,6 +249,7 @@ class GuestMatchingService
 
         return $matched;
     }
+
 
     /**
      * Identify semantic criteria that V1 cannot verify yet.
